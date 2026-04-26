@@ -135,3 +135,44 @@ export interface WeeklyCommitment {
   doneIds: string[];
   updatedAt: string;
 }
+
+// 12-week quarterly goals (Dyrdek-style). Goals can map to a Pillar
+// or to extra categories like Finance.
+export type GoalCategory = Pillar | "finance" | "other";
+
+export const GOAL_CATEGORIES: { key: GoalCategory; label: string; color: string }[] = [
+  { key: "health", label: "Health", color: "#6F8B6E" },
+  { key: "business", label: "Business", color: "#5A7B8E" },
+  { key: "relationships", label: "Relationships", color: "#C49B7C" },
+  { key: "energy", label: "Energy", color: "#D4A04C" },
+  { key: "fun", label: "Fun", color: "#B07AAC" },
+  { key: "finance", label: "Finance", color: "#A98B4A" },
+  { key: "other", label: "Other", color: "#7B7E8A" },
+];
+
+export interface QuarterConfig {
+  label: string; // e.g. "Q2 2026"
+  startISO: string; // Monday of week 1
+}
+
+export type GoalStatus = "on" | "risk" | "off";
+
+export interface GoalCheckIn {
+  weekStart: string;
+  progress: number; // 0-100
+  status: GoalStatus;
+  note: string;
+  createdAt: string;
+}
+
+export interface QuarterGoal {
+  id: string;
+  category: GoalCategory;
+  title: string;
+  target: string;
+  why: string;
+  progress: number; // 0-100 current
+  microActions: { id: string; label: string; doneIds: string[] }[];
+  checkIns: GoalCheckIn[];
+  createdAt: string;
+}

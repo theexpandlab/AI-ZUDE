@@ -70,3 +70,21 @@ export function weekRangeLabel(weekStartISO: string): string {
   const endStr = end.toLocaleDateString(undefined, { month: "short", day: "numeric" });
   return `${startStr} – ${endStr}`;
 }
+
+export function quarterLabelFor(d: Date = new Date()): string {
+  const q = Math.floor(d.getMonth() / 3) + 1;
+  return `Q${q} ${d.getFullYear()}`;
+}
+
+// Returns 1..12 (capped) and total weeks (12) for a 12-week quarter starting startISO.
+export function weekOfQuarter(startISO: string): { current: number; total: number; remainingDays: number; endISO: string } {
+  const [y, m, d] = startISO.split("-").map(Number);
+  const start = new Date(y, m - 1, d);
+  const today = new Date();
+  const diffMs = today.getTime() - start.getTime();
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  const current = Math.max(1, Math.min(12, Math.floor(diffDays / 7) + 1));
+  const end = addDays(start, 12 * 7 - 1);
+  const remainingDays = Math.max(0, Math.ceil((end.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)));
+  return { current, total: 12, remainingDays, endISO: toISODate(end) };
+}

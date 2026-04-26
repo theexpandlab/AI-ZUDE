@@ -71,4 +71,6 @@ export const STORAGE_KEYS = {
   business: "business-ideas",
   pillarItems: "pillar-items",
   commitments: "weekly-commitments",
+  quarterConfig: "quarter-config",
+  quarterGoals: "quarter-goals",
 } as const;

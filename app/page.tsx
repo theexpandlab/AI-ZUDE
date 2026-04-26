@@ -7,6 +7,7 @@ import TrendChart from "@/components/TrendChart";
 import { useLocal, STORAGE_KEYS } from "@/lib/storage";
 import {
   PILLARS,
+  GOAL_CATEGORIES,
   type WeeklyAudit,
   type DailyEntry,
   type EnergyEntry,
@@ -14,8 +15,17 @@ import {
   type PillarItem,
   type WeeklyCommitment,
   type Pillar,
+  type QuarterConfig,
+  type QuarterGoal,
 } from "@/lib/types";
-import { lastNWeekStarts, lastNDays, weekStartISO, weekRangeLabel, formatShort } from "@/lib/date";
+import {
+  lastNWeekStarts,
+  lastNDays,
+  weekStartISO,
+  weekRangeLabel,
+  formatShort,
+  weekOfQuarter,
+} from "@/lib/date";
 
 export default function Home() {
   const [audits] = useLocal<WeeklyAudit[]>(STORAGE_KEYS.weeklyAudits, []);
@@ -24,6 +34,8 @@ export default function Home() {
   const [fun] = useLocal<FunEntry[]>(STORAGE_KEYS.fun, []);
   const [pillarItems] = useLocal<PillarItem[]>(STORAGE_KEYS.pillarItems, []);
   const [commitments] = useLocal<WeeklyCommitment[]>(STORAGE_KEYS.commitments, []);
+  const [quarterConfig] = useLocal<QuarterConfig | null>(STORAGE_KEYS.quarterConfig, null);
+  const [quarterGoals] = useLocal<QuarterGoal[]>(STORAGE_KEYS.quarterGoals, []);
 
   const wk = weekStartISO();
   const thisAudit = audits.find((a) => a.weekStart === wk);
@@ -140,6 +152,65 @@ export default function Home() {
             </div>
           );
         })}
+      </section>
+
+      <section className="card mb-6">
+        <div className="flex items-center justify-between mb-3 gap-3 flex-wrap">
+          <div>
+            <div className="label">
+              {quarterConfig ? `${quarterConfig.label} · 12-week arc` : "12-week quarterly goals"}
+            </div>
+            <div className="text-xs text-muted">
+              {quarterConfig
+                ? `${weekOfQuarter(quarterConfig.startISO).current}/12 weeks · ${weekOfQuarter(quarterConfig.startISO).remainingDays} days left`
+                : "Three goals. Twelve weeks. Quality over quantity."}
+            </div>
+          </div>
+          <Link href="/goals" className="text-xs text-muted hover:text-ink">
+            {quarterConfig ? "Open quarter →" : "Start quarter →"}
+          </Link>
+        </div>
+        {!quarterConfig || quarterGoals.length === 0 ? (
+          <div className="text-sm text-muted">
+            <Link href="/goals" className="underline">
+              Set your three goals
+            </Link>{" "}
+            for the next 12 weeks. We&rsquo;ve pre-filled yours — review and start the quarter.
+          </div>
+        ) : (
+          <ul className="space-y-3">
+            {quarterGoals.map((g) => {
+              const cat = GOAL_CATEGORIES.find((c) => c.key === g.category)!;
+              return (
+                <li
+                  key={g.id}
+                  className="flex items-center gap-3 border border-line rounded-xl p-3"
+                  style={{ borderLeft: `3px solid ${cat.color}` }}
+                >
+                  <div className="min-w-0 flex-1">
+                    <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] text-muted">
+                      <span
+                        className="h-1.5 w-1.5 rounded-full"
+                        style={{ backgroundColor: cat.color }}
+                      />
+                      {cat.label}
+                    </div>
+                    <div className="text-sm text-ink truncate mt-0.5">{g.title}</div>
+                    <div className="mt-2 h-1.5 rounded-full bg-canvas border border-line overflow-hidden">
+                      <div
+                        className="h-full rounded-full transition-all"
+                        style={{ width: `${g.progress}%`, backgroundColor: cat.color }}
+                      />
+                    </div>
+                  </div>
+                  <div className="text-sm tabular-nums w-12 text-right" style={{ color: cat.color }}>
+                    {g.progress}%
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        )}
       </section>
 
       <section className="card mb-6">
