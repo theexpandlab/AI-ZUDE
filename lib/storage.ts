@@ -73,4 +73,5 @@ export const STORAGE_KEYS = {
   commitments: "weekly-commitments",
   quarterConfig: "quarter-config",
   quarterGoals: "quarter-goals",
+  profile: "profile",
 } as const;

@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo } from "react";
-import PageHeader from "@/components/PageHeader";
+import { useMemo, useState } from "react";
 import TrendChart from "@/components/TrendChart";
 import { useLocal, STORAGE_KEYS } from "@/lib/storage";
 import {
@@ -17,6 +16,7 @@ import {
   type Pillar,
   type QuarterConfig,
   type QuarterGoal,
+  type Profile,
 } from "@/lib/types";
 import {
   lastNWeekStarts,
@@ -36,6 +36,10 @@ export default function Home() {
   const [commitments] = useLocal<WeeklyCommitment[]>(STORAGE_KEYS.commitments, []);
   const [quarterConfig] = useLocal<QuarterConfig | null>(STORAGE_KEYS.quarterConfig, null);
   const [quarterGoals] = useLocal<QuarterGoal[]>(STORAGE_KEYS.quarterGoals, []);
+  const [profile, setProfile] = useLocal<Profile>(STORAGE_KEYS.profile, {
+    name: "",
+    northStar: "",
+  });
 
   const wk = weekStartISO();
   const thisAudit = audits.find((a) => a.weekStart === wk);
@@ -121,18 +125,14 @@ export default function Home() {
 
   return (
     <div>
-      <PageHeader
-        eyebrow={weekRangeLabel(wk)}
-        title="Live with intention."
-        subtitle="A calm view of how you&rsquo;re moving across the pillars that matter."
-        right={
-          <Link href="/weekly" className="btn-primary">
-            {thisAudit ? "Edit weekly audit" : "Run weekly audit"}
-          </Link>
-        }
+      <Hero
+        weekRange={weekRangeLabel(wk)}
+        thisAudit={Boolean(thisAudit)}
+        profile={profile}
+        onSaveProfile={setProfile}
       />
 
-      <section className="grid sm:grid-cols-5 gap-3 mb-6">
+      <section className="grid grid-cols-2 sm:grid-cols-5 gap-3 mb-6">
         {PILLARS.map((p) => {
           const score = currentScores?.[p.key];
           return (
@@ -140,7 +140,10 @@ export default function Home() {
               <div className="flex items-center gap-2 mb-1">
                 <span
                   className="h-2 w-2 rounded-full"
-                  style={{ backgroundColor: p.color }}
+                  style={{
+                    backgroundColor: p.color,
+                    boxShadow: `0 0 10px ${p.color}80`,
+                  }}
                 />
                 <div className="label">{p.label}</div>
               </div>
@@ -392,6 +395,140 @@ export default function Home() {
         </div>
       </section>
     </div>
+  );
+}
+
+function Hero({
+  weekRange,
+  thisAudit,
+  profile,
+  onSaveProfile,
+}: {
+  weekRange: string;
+  thisAudit: boolean;
+  profile: Profile;
+  onSaveProfile: (p: Profile) => void;
+}) {
+  const [editing, setEditing] = useState(false);
+  const [draft, setDraft] = useState<Profile>(profile);
+
+  function save() {
+    onSaveProfile({
+      name: draft.name.trim(),
+      northStar: draft.northStar.trim(),
+    });
+    setEditing(false);
+  }
+
+  const greeting = profile.name ? `Welcome back, ${profile.name}.` : "Welcome back.";
+  const placeholder = "I am building a life that feels light, lit up, and free.";
+  const showStar = profile.northStar || !editing;
+
+  return (
+    <section className="relative mb-8 sm:mb-10">
+      <div className="hero-orb rounded-xl2 px-6 sm:px-10 py-10 sm:py-14 relative overflow-hidden">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full opacity-60 blur-3xl"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(61,165,255,0.45), rgba(61,165,255,0) 70%)",
+          }}
+        />
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -bottom-24 -left-16 h-72 w-72 rounded-full opacity-50 blur-3xl"
+          style={{
+            background:
+              "radial-gradient(circle, rgba(123,90,200,0.40), rgba(123,90,200,0) 70%)",
+          }}
+        />
+
+        <div className="relative">
+          <div className="text-[11px] uppercase tracking-[0.28em] text-muted mb-4">
+            {weekRange}
+          </div>
+
+          <h1 className="font-serif text-4xl sm:text-6xl leading-[1.05] tracking-tight">
+            <span className="glow-text">{greeting}</span>
+            <br />
+            <span className="text-ink/85 italic font-normal">
+              Design the life you came here for.
+            </span>
+          </h1>
+
+          <div className="mt-6 max-w-2xl">
+            {editing ? (
+              <div className="space-y-3 animate-fadeIn">
+                <input
+                  className="field"
+                  value={draft.name}
+                  onChange={(e) => setDraft({ ...draft, name: e.target.value })}
+                  placeholder="Your name (optional)"
+                />
+                <textarea
+                  className="field min-h-[80px]"
+                  value={draft.northStar}
+                  onChange={(e) =>
+                    setDraft({ ...draft, northStar: e.target.value })
+                  }
+                  placeholder={`Your north star — e.g. "${placeholder}"`}
+                />
+                <div className="flex items-center gap-2">
+                  <button onClick={save} className="btn-primary">
+                    Save
+                  </button>
+                  <button
+                    onClick={() => {
+                      setDraft(profile);
+                      setEditing(false);
+                    }}
+                    className="btn"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            ) : showStar ? (
+              <button
+                type="button"
+                onClick={() => {
+                  setDraft(profile);
+                  setEditing(true);
+                }}
+                className="text-left group"
+              >
+                <div className="label mb-1.5">North star</div>
+                <p className="font-serif text-lg sm:text-xl text-ink/90 italic leading-snug max-w-2xl group-hover:text-ink transition">
+                  {profile.northStar ? (
+                    <>&ldquo;{profile.northStar}&rdquo;</>
+                  ) : (
+                    <span className="text-muted">
+                      Click to write your north star — the line that pulls you forward.
+                    </span>
+                  )}
+                </p>
+                <div className="text-[11px] text-muted mt-2 opacity-70 group-hover:opacity-100 transition">
+                  Edit
+                </div>
+              </button>
+            ) : null}
+          </div>
+
+          <div className="mt-7 flex flex-wrap items-center gap-2.5">
+            <Link href="/weekly" className="btn-primary">
+              {thisAudit ? "Edit this week's audit" : "Run this week's audit"}
+            </Link>
+            <Link href="/daily" className="btn">
+              Daily check-in
+            </Link>
+            <Link href="/goals" className="btn">
+              The 12-week arc
+            </Link>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 

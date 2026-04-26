@@ -1,11 +1,11 @@
 export type Pillar = "health" | "business" | "relationships" | "energy" | "fun";
 
 export const PILLARS: { key: Pillar; label: string; color: string; hint: string }[] = [
-  { key: "health", label: "Health", color: "#6F8B6E", hint: "Sleep, movement, nutrition" },
-  { key: "business", label: "Business", color: "#5A7B8E", hint: "Output, clarity, alignment" },
-  { key: "relationships", label: "Relationships", color: "#C49B7C", hint: "Friends, dating, family" },
-  { key: "energy", label: "Energy & Mood", color: "#D4A04C", hint: "How you feel" },
-  { key: "fun", label: "Fun & Novelty", color: "#B07AAC", hint: "Play, newness, spark" },
+  { key: "health", label: "Health", color: "#8FCAA9", hint: "Sleep, movement, nutrition" },
+  { key: "business", label: "Business", color: "#76A8D6", hint: "Output, clarity, alignment" },
+  { key: "relationships", label: "Relationships", color: "#E2A87E", hint: "Friends, dating, family" },
+  { key: "energy", label: "Energy & Mood", color: "#E5C26B", hint: "How you feel" },
+  { key: "fun", label: "Fun & Novelty", color: "#BCA1E8", hint: "Play, newness, spark" },
 ];
 
 export interface WeeklyAudit {
@@ -58,10 +58,10 @@ export interface EnergyEntry {
 export type DayType = "deep" | "creative" | "admin" | "life";
 
 export const DAY_TYPES: Record<DayType, { label: string; color: string; description: string }> = {
-  deep: { label: "Deep Work / Build", color: "#5A7B8E", description: "Focus, building, output" },
-  creative: { label: "Creative / Expansion", color: "#B07AAC", description: "Ideation, exploration" },
-  admin: { label: "Admin / Light Work", color: "#7B7E8A", description: "Wrap-up, ops, light" },
-  life: { label: "Life / Social / Novelty", color: "#C49B7C", description: "People, play, rest" },
+  deep: { label: "Deep Work / Build", color: "#76A8D6", description: "Focus, building, output" },
+  creative: { label: "Creative / Expansion", color: "#BCA1E8", description: "Ideation, exploration" },
+  admin: { label: "Admin / Light Work", color: "#8B95B0", description: "Wrap-up, ops, light" },
+  life: { label: "Life / Social / Novelty", color: "#E2A87E", description: "People, play, rest" },
 };
 
 export const WEEKDAYS: { key: number; short: string; full: string; defaultType: DayType }[] = [
@@ -110,6 +110,11 @@ export interface BusinessIdea {
   createdAt: string;
 }
 
+export interface Profile {
+  name: string;
+  northStar: string;
+}
+
 // Per-pillar curated items: small recurring "nurture" actions
 // or larger bucket-list priorities (with optional target date).
 export type PillarItemKind = "practice" | "priority";
@@ -141,13 +146,13 @@ export interface WeeklyCommitment {
 export type GoalCategory = Pillar | "finance" | "other";
 
 export const GOAL_CATEGORIES: { key: GoalCategory; label: string; color: string }[] = [
-  { key: "health", label: "Health", color: "#6F8B6E" },
-  { key: "business", label: "Business", color: "#5A7B8E" },
-  { key: "relationships", label: "Relationships", color: "#C49B7C" },
-  { key: "energy", label: "Energy", color: "#D4A04C" },
-  { key: "fun", label: "Fun", color: "#B07AAC" },
-  { key: "finance", label: "Finance", color: "#A98B4A" },
-  { key: "other", label: "Other", color: "#7B7E8A" },
+  { key: "health", label: "Health", color: "#8FCAA9" },
+  { key: "business", label: "Business", color: "#76A8D6" },
+  { key: "relationships", label: "Relationships", color: "#E2A87E" },
+  { key: "energy", label: "Energy", color: "#E5C26B" },
+  { key: "fun", label: "Fun", color: "#BCA1E8" },
+  { key: "finance", label: "Finance", color: "#C9A55C" },
+  { key: "other", label: "Other", color: "#8B95B0" },
 ];
 
 export interface QuarterConfig {

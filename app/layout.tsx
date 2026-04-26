@@ -1,31 +1,53 @@
 import type { Metadata, Viewport } from "next";
+import { Fraunces, Inter } from "next/font/google";
 import "./globals.css";
 import Nav from "@/components/Nav";
+import Starfield from "@/components/Starfield";
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-fraunces",
+  display: "swap",
+});
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "Life Optimization Dashboard",
-  description: "Intentionally design, track, and improve your life across the pillars that matter.",
+  title: "The Dream Life Dashboard",
+  description:
+    "A quiet, dreamy system for designing the life you actually want — across health, business, relationships, energy, and fun.",
 };
 
 export const viewport: Viewport = {
   width: "device-width",
   initialScale: 1,
-  themeColor: "#F7F4EE",
+  themeColor: "#03050E",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className="min-h-screen bg-canvas text-ink">
-        <div className="mx-auto w-full max-w-5xl px-4 sm:px-6 pb-24 pt-6 sm:pt-10">
+    <html lang="en" className={`${fraunces.variable} ${inter.variable}`}>
+      <body className="min-h-screen bg-void text-ink font-sans antialiased relative">
+        <Starfield />
+        <div className="mx-auto w-full max-w-5xl px-4 sm:px-6 pb-32 pt-6 sm:pt-10 relative">
           <header className="mb-8 sm:mb-10">
             <div className="flex items-center justify-between">
-              <a href="/" className="flex items-center gap-2">
-                <span className="inline-block h-2.5 w-2.5 rounded-full bg-ink" />
-                <span className="font-serif text-lg tracking-tight">Life OS</span>
+              <a href="/" className="flex items-center gap-2.5 group">
+                <span className="relative inline-flex items-center justify-center">
+                  <span className="absolute h-3 w-3 rounded-full bg-expand opacity-60 blur-[6px] group-hover:opacity-90 transition" />
+                  <span className="relative h-1.5 w-1.5 rounded-full bg-expandSoft" />
+                </span>
+                <span className="font-serif text-base tracking-tight text-ink/90 group-hover:text-ink transition">
+                  The Dream Life Dashboard
+                </span>
               </a>
               <span className="text-xs text-muted hidden sm:inline">
-                A calm system for intentional living
+                A quiet system for an expansive life
               </span>
             </div>
           </header>

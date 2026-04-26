@@ -19,8 +19,8 @@ const items = [
 export default function Nav() {
   const pathname = usePathname();
   return (
-    <nav className="fixed bottom-3 left-1/2 -translate-x-1/2 z-30 w-[min(96vw,720px)]">
-      <div className="bg-surface/90 backdrop-blur border border-line rounded-full shadow-soft px-2 py-1.5 overflow-x-auto">
+    <nav className="fixed bottom-3 left-1/2 -translate-x-1/2 z-30 w-[min(96vw,760px)]">
+      <div className="glass-nav rounded-full px-2 py-1.5 overflow-x-auto shadow-[0_8px_40px_rgba(3,5,14,0.6)]">
         <ul className="flex items-center gap-1 whitespace-nowrap">
           {items.map((it) => {
             const active =
@@ -32,8 +32,8 @@ export default function Nav() {
                   className={
                     "inline-flex items-center px-3 py-1.5 rounded-full text-sm transition " +
                     (active
-                      ? "bg-ink text-canvas"
-                      : "text-ink/80 hover:bg-canvas")
+                      ? "bg-gradient-to-b from-expandSoft/90 to-expand text-white shadow-[0_0_18px_rgba(61,165,255,0.35)]"
+                      : "text-ink/80 hover:text-ink hover:bg-white/[.06]")
                   }
                 >
                   {it.label}

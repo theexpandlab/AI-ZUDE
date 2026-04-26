@@ -8,27 +8,65 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        canvas: "#F7F4EE",
-        surface: "#FFFFFF",
-        ink: "#1F2430",
-        muted: "#7B7E8A",
-        line: "#E8E3D9",
-        sage: "#6F8B6E",
-        slate: "#5A7B8E",
-        clay: "#C49B7C",
-        amber: "#D4A04C",
-        plum: "#B07AAC",
-        rose: "#C97A7A",
+        // Cosmic page background and deeper void
+        canvas: "#070A18",
+        void: "#03050E",
+        // Glass surface (used via opacity utilities; this is a fallback solid)
+        surface: "#0E1326",
+        // Text
+        ink: "#EDEFF7",
+        muted: "#8B95B0",
+        line: "rgba(255,255,255,0.08)",
+        // Brand accent (Expand Lab blue — placeholder, swap to exact hex)
+        expand: "#3DA5FF",
+        expandSoft: "#7DC4FF",
+        expandDeep: "#1668B8",
+        // Pillar / category palette tuned for dark backgrounds
+        sage: "#8FCAA9",
+        slate: "#76A8D6",
+        clay: "#E2A87E",
+        amber: "#E5C26B",
+        plum: "#BCA1E8",
+        rose: "#E07A8A",
+        gold: "#C9A55C",
+        // Subtle nebula tints used in radial gradients
+        nebulaA: "#1A2466",
+        nebulaB: "#2B1A55",
       },
       fontFamily: {
-        sans: ["ui-sans-serif", "system-ui", "-apple-system", "Inter", "sans-serif"],
-        serif: ["ui-serif", "Georgia", "serif"],
+        sans: ["var(--font-inter)", "ui-sans-serif", "system-ui", "-apple-system", "Inter", "sans-serif"],
+        serif: ["var(--font-fraunces)", "ui-serif", "Georgia", "serif"],
       },
       boxShadow: {
-        soft: "0 1px 2px rgba(31, 36, 48, 0.04), 0 4px 16px rgba(31, 36, 48, 0.04)",
+        soft: "0 1px 2px rgba(0,0,0,0.25), 0 8px 32px rgba(10,18,40,0.45)",
+        glow: "0 0 0 1px rgba(125,196,255,0.18), 0 0 32px rgba(61,165,255,0.18)",
       },
       borderRadius: {
         xl2: "1.25rem",
+      },
+      keyframes: {
+        drift: {
+          "0%, 100%": { transform: "translate3d(0,0,0)" },
+          "50%": { transform: "translate3d(0,-6px,0)" },
+        },
+        nebulaShift: {
+          "0%": { transform: "rotate(0deg) scale(1)" },
+          "100%": { transform: "rotate(360deg) scale(1)" },
+        },
+        shimmer: {
+          "0%, 100%": { opacity: "0.85" },
+          "50%": { opacity: "1" },
+        },
+        fadeIn: {
+          "0%": { opacity: "0", transform: "translateY(8px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+      },
+      animation: {
+        drift: "drift 9s ease-in-out infinite",
+        nebula: "nebulaShift 240s linear infinite",
+        shimmer: "shimmer 6s ease-in-out infinite",
+        fadeIn: "fadeIn 600ms ease-out both",
       },
     },
   },
