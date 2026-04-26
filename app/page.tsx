@@ -157,64 +157,7 @@ export default function Home() {
         })}
       </section>
 
-      <section className="card mb-6">
-        <div className="flex items-center justify-between mb-3 gap-3 flex-wrap">
-          <div>
-            <div className="label">
-              {quarterConfig ? `${quarterConfig.label} · 12-week arc` : "12-week quarterly goals"}
-            </div>
-            <div className="text-xs text-muted">
-              {quarterConfig
-                ? `${weekOfQuarter(quarterConfig.startISO).current}/12 weeks · ${weekOfQuarter(quarterConfig.startISO).remainingDays} days left`
-                : "Three goals. Twelve weeks. Quality over quantity."}
-            </div>
-          </div>
-          <Link href="/goals" className="text-xs text-muted hover:text-ink">
-            {quarterConfig ? "Open quarter →" : "Start quarter →"}
-          </Link>
-        </div>
-        {!quarterConfig || quarterGoals.length === 0 ? (
-          <div className="text-sm text-muted">
-            <Link href="/goals" className="underline">
-              Set your three goals
-            </Link>{" "}
-            for the next 12 weeks. We&rsquo;ve pre-filled yours — review and start the quarter.
-          </div>
-        ) : (
-          <ul className="space-y-3">
-            {quarterGoals.map((g) => {
-              const cat = GOAL_CATEGORIES.find((c) => c.key === g.category)!;
-              return (
-                <li
-                  key={g.id}
-                  className="flex items-center gap-3 border border-line rounded-xl p-3"
-                  style={{ borderLeft: `3px solid ${cat.color}` }}
-                >
-                  <div className="min-w-0 flex-1">
-                    <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] text-muted">
-                      <span
-                        className="h-1.5 w-1.5 rounded-full"
-                        style={{ backgroundColor: cat.color }}
-                      />
-                      {cat.label}
-                    </div>
-                    <div className="text-sm text-ink truncate mt-0.5">{g.title}</div>
-                    <div className="mt-2 h-1.5 rounded-full bg-canvas border border-line overflow-hidden">
-                      <div
-                        className="h-full rounded-full transition-all"
-                        style={{ width: `${g.progress}%`, backgroundColor: cat.color }}
-                      />
-                    </div>
-                  </div>
-                  <div className="text-sm tabular-nums w-12 text-right" style={{ color: cat.color }}>
-                    {g.progress}%
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        )}
-      </section>
+      <QuarterCard quarterConfig={quarterConfig} quarterGoals={quarterGoals} />
 
       <section className="card mb-6">
         <div className="flex items-center justify-between mb-3">
@@ -398,6 +341,148 @@ export default function Home() {
   );
 }
 
+function homePace(delta: number): { label: string; color: string } {
+  if (delta >= 5) return { label: `Ahead +${Math.round(delta)}`, color: "#8FCAA9" };
+  if (delta >= -8) return { label: "On pace", color: "#6F9DD8" };
+  if (delta >= -20) return { label: `Behind ${Math.round(delta)}`, color: "#E5C26B" };
+  return { label: `Behind ${Math.round(delta)}`, color: "#E07A8A" };
+}
+
+function QuarterCard({
+  quarterConfig,
+  quarterGoals,
+}: {
+  quarterConfig: QuarterConfig | null;
+  quarterGoals: QuarterGoal[];
+}) {
+  if (!quarterConfig || quarterGoals.length === 0) {
+    return (
+      <section className="card mb-6">
+        <div className="flex items-center justify-between mb-2">
+          <div className="label">12-week quarterly goals</div>
+          <Link href="/goals" className="text-xs text-muted hover:text-ink">
+            Start quarter →
+          </Link>
+        </div>
+        <div className="text-sm text-muted">
+          <Link href="/goals" className="underline">
+            Set your three goals
+          </Link>{" "}
+          for the next 12 weeks. Three pre-filled — review and begin the arc.
+        </div>
+      </section>
+    );
+  }
+  const wq = weekOfQuarter(quarterConfig.startISO);
+  const expectedPct = Math.round(((wq.current - 1) / 12) * 100);
+  const avgProgress = Math.round(
+    quarterGoals.reduce((s, g) => s + g.progress, 0) / quarterGoals.length
+  );
+  const pace = homePace(avgProgress - expectedPct);
+
+  return (
+    <section className="card mb-6">
+      <div className="flex items-center justify-between gap-3 mb-4 flex-wrap">
+        <div>
+          <div className="label">{quarterConfig.label} · 12-week arc</div>
+          <div className="text-xs text-muted">
+            Week {wq.current} of 12 · {wq.remainingDays} days left
+          </div>
+        </div>
+        <div className="flex items-baseline gap-3">
+          <div className="text-right">
+            <div className="font-serif text-2xl tabular-nums text-ink">
+              {avgProgress}
+              <span className="text-muted text-sm font-sans">%</span>
+            </div>
+            <div className="text-[10px] text-muted">avg progress</div>
+          </div>
+          <span
+            className="pill text-[10px]"
+            style={{ color: pace.color, borderColor: pace.color + "55" }}
+          >
+            {pace.label}
+          </span>
+          <Link href="/goals" className="text-xs text-muted hover:text-ink">
+            Open →
+          </Link>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-12 gap-1 mb-4">
+        {Array.from({ length: 12 }).map((_, i) => {
+          const idx = i + 1;
+          const passed = idx < wq.current;
+          const current = idx === wq.current;
+          return (
+            <div
+              key={i}
+              className={
+                "h-1.5 rounded-full transition " +
+                (current
+                  ? "bg-gradient-to-r from-expandSoft to-expand shadow-[0_0_8px_rgba(63,119,194,0.45)]"
+                  : passed
+                  ? "bg-white/15"
+                  : "bg-white/[.04]")
+              }
+            />
+          );
+        })}
+      </div>
+
+      <ul className="space-y-3">
+        {quarterGoals.map((g) => {
+          const cat = GOAL_CATEGORIES.find((c) => c.key === g.category)!;
+          const goalPace = homePace(g.progress - expectedPct);
+          return (
+            <li
+              key={g.id}
+              className="flex items-center gap-3 border border-white/[.06] rounded-xl p-3 bg-white/[.02]"
+              style={{ borderLeft: `3px solid ${cat.color}` }}
+            >
+              <div className="min-w-0 flex-1">
+                <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.14em] text-muted">
+                  <span
+                    className="h-1.5 w-1.5 rounded-full"
+                    style={{ backgroundColor: cat.color, boxShadow: `0 0 8px ${cat.color}80` }}
+                  />
+                  {cat.label}
+                </div>
+                <div className="text-sm text-ink truncate mt-0.5">{g.title}</div>
+                <div className="relative mt-2 h-1.5 rounded-full bg-white/[.06] border border-white/[.04] overflow-visible">
+                  <div
+                    className="absolute inset-y-0 left-0 rounded-full transition-all"
+                    style={{
+                      width: `${g.progress}%`,
+                      background: `linear-gradient(90deg, ${cat.color}99, ${cat.color})`,
+                      boxShadow: `0 0 10px ${cat.color}55`,
+                    }}
+                  />
+                  <div
+                    className="absolute -top-0.5 bottom-[-2px] w-px"
+                    style={{
+                      left: `${expectedPct}%`,
+                      background: "rgba(255,255,255,0.55)",
+                    }}
+                  />
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="text-sm tabular-nums" style={{ color: cat.color }}>
+                  {g.progress}%
+                </div>
+                <div className="text-[10px]" style={{ color: goalPace.color }}>
+                  {goalPace.label}
+                </div>
+              </div>
+            </li>
+          );
+        })}
+      </ul>
+    </section>
+  );
+}
+
 function Hero({
   weekRange,
   thisAudit,
@@ -426,7 +511,7 @@ function Hero({
 
   return (
     <section className="relative mb-8 sm:mb-10">
-      <div className="hero-orb rounded-xl2 px-6 sm:px-10 py-10 sm:py-14 relative overflow-hidden">
+      <div className="hero-orb rounded-xl2 px-6 sm:px-10 py-8 sm:py-10 relative overflow-hidden">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full opacity-60 blur-3xl"
@@ -445,17 +530,16 @@ function Hero({
         />
 
         <div className="relative">
-          <div className="text-[11px] uppercase tracking-[0.28em] text-muted mb-4">
+          <div className="text-[11px] uppercase tracking-[0.28em] text-muted mb-3">
             {weekRange}
           </div>
 
-          <h1 className="font-serif text-4xl sm:text-6xl leading-[1.05] tracking-tight">
-            <span className="glow-text">{greeting}</span>
-            <br />
-            <span className="text-ink/85 italic font-normal">
-              Design the life you came here for.
-            </span>
-          </h1>
+          <h2 className="font-serif text-2xl sm:text-3xl leading-tight tracking-tight text-ink/90 mb-1">
+            {greeting}
+          </h2>
+          <div className="text-sm text-muted italic">
+            Design the life you came here for.
+          </div>
 
           <div className="mt-6 max-w-2xl">
             {editing ? (

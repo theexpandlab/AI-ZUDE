@@ -10,6 +10,7 @@ type Star = {
   phase: number;
   tspeed: number;
   blue: boolean;
+  glint: boolean;
 };
 
 type Shooter = {
@@ -19,6 +20,15 @@ type Shooter = {
   vy: number;
   life: number;
   ttl: number;
+};
+
+type Sparkle = {
+  x: number;
+  y: number;
+  life: number;
+  ttl: number;
+  size: number;
+  blue: boolean;
 };
 
 export default function Starfield() {
@@ -41,13 +51,15 @@ export default function Starfield() {
 
     const stars: Star[] = [];
     const shooters: Shooter[] = [];
+    const sparkles: Sparkle[] = [];
     let raf = 0;
     let lastTime = performance.now();
-    let nextShooterAt = performance.now() + 8000 + Math.random() * 12000;
+    let nextShooterAt = performance.now() + 6000 + Math.random() * 9000;
+    let nextSparkleAt = performance.now() + 1500;
 
     function resize() {
       width = window.innerWidth;
-      height = window.innerHeight;
+      height = Math.max(window.innerHeight, document.documentElement.scrollHeight);
       canvas!.width = Math.floor(width * dpr);
       canvas!.height = Math.floor(height * dpr);
       canvas!.style.width = width + "px";
@@ -57,17 +69,48 @@ export default function Starfield() {
 
     function seed() {
       stars.length = 0;
-      const density = Math.min(1, (width * height) / (1440 * 900));
-      const count = Math.floor(220 * density);
+      // Density much higher than before — we want it to feel like a galaxy.
+      const area = width * height;
+      const baseDensity = Math.min(1.6, area / (1440 * 900));
+      const count = Math.floor(560 * baseDensity);
+
+      // Diagonal galactic band parameters
+      const bandAngle = Math.PI * 0.18; // gentle tilt
+      const bandCenterY = height * (0.45 + Math.random() * 0.1);
+      const bandWidth = height * 0.32;
+
       for (let i = 0; i < count; i++) {
+        // 60% of stars cluster around the galactic band; 40% scattered
+        let x: number;
+        let y: number;
+        if (Math.random() < 0.6) {
+          x = Math.random() * width;
+          // Distance from band center (gaussian-ish via two random samples)
+          const u1 = Math.random();
+          const u2 = Math.random();
+          const g = Math.sqrt(-2 * Math.log(u1 || 0.0001)) * Math.cos(2 * Math.PI * u2);
+          const offsetY = g * (bandWidth / 3);
+          y =
+            bandCenterY +
+            offsetY +
+            (x - width / 2) * Math.tan(bandAngle) * 0.15;
+          y = Math.max(0, Math.min(height, y));
+        } else {
+          x = Math.random() * width;
+          y = Math.random() * height;
+        }
+
+        const depth = Math.random();
+        const r = Math.random() * 1.2 + 0.2 + (depth > 0.85 ? Math.random() * 0.6 : 0);
         stars.push({
-          x: Math.random() * width,
-          y: Math.random() * height,
-          r: Math.random() * 1.1 + 0.25,
-          depth: Math.random(),
+          x,
+          y,
+          r,
+          depth,
           phase: Math.random() * Math.PI * 2,
-          tspeed: 0.4 + Math.random() * 1.4,
-          blue: Math.random() < 0.18,
+          tspeed: 0.8 + Math.random() * 2.4,
+          blue: Math.random() < 0.22,
+          glint: Math.random() < 0.04 && depth > 0.6,
         });
       }
     }
@@ -88,7 +131,55 @@ export default function Starfield() {
         life: 0,
         ttl: 0.9 + Math.random() * 0.6,
       });
-      nextShooterAt = now + 14000 + Math.random() * 22000;
+      nextShooterAt = now + 9000 + Math.random() * 14000;
+    }
+
+    function maybeSpawnSparkle(now: number) {
+      if (reduce) return;
+      if (now < nextSparkleAt) return;
+      // Burst of 1–3 sparkles
+      const burst = 1 + Math.floor(Math.random() * 3);
+      for (let i = 0; i < burst; i++) {
+        sparkles.push({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          life: 0,
+          ttl: 0.9 + Math.random() * 0.9,
+          size: 5 + Math.random() * 5,
+          blue: Math.random() < 0.55,
+        });
+      }
+      nextSparkleAt = now + 600 + Math.random() * 1400;
+    }
+
+    function drawCross(
+      x: number,
+      y: number,
+      size: number,
+      alpha: number,
+      blue: boolean
+    ) {
+      ctx!.save();
+      ctx!.translate(x, y);
+      const color = blue ? "180, 210, 245" : "255, 255, 255";
+      ctx!.strokeStyle = `rgba(${color}, ${alpha})`;
+      ctx!.lineCap = "round";
+      ctx!.lineWidth = 0.9;
+      ctx!.beginPath();
+      ctx!.moveTo(-size, 0);
+      ctx!.lineTo(size, 0);
+      ctx!.moveTo(0, -size);
+      ctx!.lineTo(0, size);
+      ctx!.stroke();
+      // Inner glow dot
+      const grad = ctx!.createRadialGradient(0, 0, 0, 0, 0, size * 0.6);
+      grad.addColorStop(0, `rgba(${color}, ${alpha})`);
+      grad.addColorStop(1, `rgba(${color}, 0)`);
+      ctx!.fillStyle = grad;
+      ctx!.beginPath();
+      ctx!.arc(0, 0, size * 0.6, 0, Math.PI * 2);
+      ctx!.fill();
+      ctx!.restore();
     }
 
     function frame(now: number) {
@@ -104,28 +195,30 @@ export default function Starfield() {
           if (s.x < -2) s.x = width + 2;
           s.phase += dt * s.tspeed;
         }
-        const tw = reduce ? 1 : 0.45 + 0.55 * (0.5 + 0.5 * Math.sin(s.phase));
-        const opacity = tw * (0.35 + 0.65 * s.depth);
-        ctx!.fillStyle = s.blue
-          ? `rgba(125, 165, 220, ${opacity})`
-          : `rgba(245, 248, 255, ${opacity})`;
+        const tw = reduce ? 1 : 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(s.phase));
+        const opacity = tw * (0.4 + 0.7 * s.depth);
+        const color = s.blue ? "125, 165, 220" : "245, 248, 255";
+
+        // Core
+        ctx!.fillStyle = `rgba(${color}, ${opacity})`;
         ctx!.beginPath();
         ctx!.arc(s.x, s.y, s.r * (0.6 + s.depth), 0, Math.PI * 2);
         ctx!.fill();
 
-        if (s.r > 0.95 && s.depth > 0.6) {
-          const grad = ctx!.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r * 6);
-          grad.addColorStop(
-            0,
-            s.blue
-              ? `rgba(125, 165, 220, ${opacity * 0.35})`
-              : `rgba(220, 232, 255, ${opacity * 0.25})`
-          );
-          grad.addColorStop(1, "rgba(0,0,0,0)");
+        // Bloom
+        if (s.r > 0.9 && s.depth > 0.55) {
+          const grad = ctx!.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r * 7);
+          grad.addColorStop(0, `rgba(${color}, ${opacity * 0.40})`);
+          grad.addColorStop(1, `rgba(${color}, 0)`);
           ctx!.fillStyle = grad;
           ctx!.beginPath();
-          ctx!.arc(s.x, s.y, s.r * 6, 0, Math.PI * 2);
+          ctx!.arc(s.x, s.y, s.r * 7, 0, Math.PI * 2);
           ctx!.fill();
+        }
+
+        // Diffraction cross on glint stars during bright twinkle peaks
+        if (s.glint && tw > 0.85) {
+          drawCross(s.x, s.y, s.r * 5, opacity * 0.85, s.blue);
         }
       }
 
@@ -142,7 +235,7 @@ export default function Starfield() {
           continue;
         }
         const headOpacity = (1 - Math.abs(t - 0.5) * 2) * 0.95;
-        const tailLen = 90;
+        const tailLen = 110;
         const dx = -sh.vx;
         const dy = -sh.vy;
         const mag = Math.hypot(dx, dy) || 1;
@@ -151,10 +244,10 @@ export default function Starfield() {
         const tx = sh.x + ux * tailLen;
         const ty = sh.y + uy * tailLen;
         const grad = ctx!.createLinearGradient(sh.x, sh.y, tx, ty);
-        grad.addColorStop(0, `rgba(160,195,235,${headOpacity})`);
-        grad.addColorStop(1, "rgba(160,195,235,0)");
+        grad.addColorStop(0, `rgba(190, 215, 245, ${headOpacity})`);
+        grad.addColorStop(1, "rgba(190, 215, 245, 0)");
         ctx!.strokeStyle = grad;
-        ctx!.lineWidth = 1.4;
+        ctx!.lineWidth = 1.5;
         ctx!.beginPath();
         ctx!.moveTo(sh.x, sh.y);
         ctx!.lineTo(tx, ty);
@@ -162,8 +255,23 @@ export default function Starfield() {
 
         ctx!.fillStyle = `rgba(245,250,255,${headOpacity})`;
         ctx!.beginPath();
-        ctx!.arc(sh.x, sh.y, 1.3, 0, Math.PI * 2);
+        ctx!.arc(sh.x, sh.y, 1.5, 0, Math.PI * 2);
         ctx!.fill();
+      }
+
+      // Sparkle bursts (random little crosses fading in/out)
+      maybeSpawnSparkle(now);
+      for (let i = sparkles.length - 1; i >= 0; i--) {
+        const sp = sparkles[i];
+        sp.life += dt;
+        const t = sp.life / sp.ttl;
+        if (t >= 1) {
+          sparkles.splice(i, 1);
+          continue;
+        }
+        // Fade in then out
+        const alpha = Math.sin(t * Math.PI) * 0.95;
+        drawCross(sp.x, sp.y, sp.size, alpha, sp.blue);
       }
 
       raf = requestAnimationFrame(frame);
@@ -194,19 +302,28 @@ export default function Starfield() {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(1200px 700px at 80% -10%, rgba(63,119,194,0.13), transparent 60%)," +
-            "radial-gradient(900px 600px at 10% 110%, rgba(123, 90, 200, 0.10), transparent 60%)," +
-            "radial-gradient(700px 500px at 50% 30%, rgba(20, 30, 70, 0.45), transparent 70%)," +
+            "radial-gradient(1200px 800px at 80% -10%, rgba(63,119,194,0.18), transparent 60%)," +
+            "radial-gradient(1100px 700px at 5% 110%, rgba(123, 90, 200, 0.16), transparent 60%)," +
+            "radial-gradient(700px 500px at 50% 30%, rgba(20, 30, 70, 0.55), transparent 70%)," +
             "linear-gradient(180deg, #050816 0%, #03050E 100%)",
         }}
       />
       {/* Slow-rotating nebula tint */}
       <div
-        className="absolute inset-[-20%] opacity-50 motion-reduce:hidden animate-nebula"
+        className="absolute inset-[-20%] opacity-70 motion-reduce:hidden animate-nebula"
         style={{
           background:
-            "conic-gradient(from 90deg at 50% 50%, rgba(63,119,194,0.07), rgba(123,90,200,0.05), rgba(63,119,194,0.04), rgba(20,40,80,0.06), rgba(63,119,194,0.07))",
+            "conic-gradient(from 90deg at 50% 50%, rgba(63,119,194,0.10), rgba(123,90,200,0.07), rgba(63,119,194,0.05), rgba(20,40,80,0.10), rgba(63,119,194,0.10))",
           filter: "blur(60px)",
+        }}
+      />
+      {/* Soft galactic band glow */}
+      <div
+        className="absolute inset-0 opacity-40 motion-reduce:hidden"
+        style={{
+          background:
+            "linear-gradient(110deg, transparent 30%, rgba(120, 160, 220, 0.08) 50%, transparent 70%)",
+          filter: "blur(40px)",
         }}
       />
       <canvas ref={ref} className="absolute inset-0" />

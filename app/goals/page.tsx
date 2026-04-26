@@ -16,6 +16,7 @@ import {
   weekRangeLabel,
   weekOfQuarter,
   quarterLabelFor,
+  firstMondayOfCurrentQuarter,
   formatShort,
 } from "@/lib/date";
 
@@ -76,8 +77,9 @@ export default function GoalsPage() {
   const [goals, setGoals] = useLocal<QuarterGoal[]>(STORAGE_KEYS.quarterGoals, []);
 
   function startQuarter() {
-    const startISO = weekStartISO();
-    setConfig({ label: quarterLabelFor(), startISO });
+    const startISO = firstMondayOfCurrentQuarter();
+    const [y, m] = startISO.split("-").map(Number);
+    setConfig({ label: quarterLabelFor(new Date(y, m - 1, 1)), startISO });
     const seeded: QuarterGoal[] = SEED_GOALS.map((g) => ({
       ...g,
       id: uid(),
@@ -87,9 +89,15 @@ export default function GoalsPage() {
   }
 
   function startBlankQuarter() {
-    const startISO = weekStartISO();
-    setConfig({ label: quarterLabelFor(), startISO });
+    const startISO = firstMondayOfCurrentQuarter();
+    const [y, m] = startISO.split("-").map(Number);
+    setConfig({ label: quarterLabelFor(new Date(y, m - 1, 1)), startISO });
     setGoals([]);
+  }
+
+  function updateQuarterStart(newStartISO: string) {
+    const [y, m] = newStartISO.split("-").map(Number);
+    setConfig({ label: quarterLabelFor(new Date(y, m - 1, 1)), startISO: newStartISO });
   }
 
   function addGoal(partial: Omit<QuarterGoal, "id" | "createdAt">) {
@@ -160,6 +168,13 @@ export default function GoalsPage() {
   }
 
   const wq = weekOfQuarter(config.startISO);
+  const expectedPct = Math.round(((wq.current - 1) / wq.total) * 100);
+  const avgProgress =
+    goals.length === 0
+      ? 0
+      : Math.round(goals.reduce((s, g) => s + g.progress, 0) / goals.length);
+  const overallDelta = avgProgress - expectedPct;
+  const overallPace = pace(overallDelta);
 
   return (
     <div>
@@ -179,17 +194,49 @@ export default function GoalsPage() {
       />
 
       <section className="card mb-6">
-        <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center justify-between mb-4 gap-3 flex-wrap">
           <div>
             <div className="label">Quarter progress</div>
             <div className="text-xs text-muted">
-              {weekRangeLabel(config.startISO)} → {formatShort(wq.endISO)}
+              {weekRangeLabel(config.startISO)} → {formatShort(wq.endISO)} · {wq.total} weeks
             </div>
           </div>
-          <div className="text-xs text-muted">
-            {Math.round((wq.current / wq.total) * 100)}% through
+          <QuarterEditor
+            startISO={config.startISO}
+            onSave={updateQuarterStart}
+          />
+        </div>
+
+        <div className="grid sm:grid-cols-[1fr_auto] gap-4 items-end mb-4">
+          <div>
+            <div className="flex items-baseline justify-between mb-2">
+              <div className="text-xs text-muted">
+                Average progress across {goals.length || "—"} goal{goals.length === 1 ? "" : "s"}
+              </div>
+              <div
+                className="text-[11px] uppercase tracking-[0.14em]"
+                style={{ color: overallPace.color }}
+              >
+                {overallPace.label}
+              </div>
+            </div>
+            <PaceBar
+              progress={avgProgress}
+              expected={expectedPct}
+              color="#6F9DD8"
+            />
+          </div>
+          <div className="text-right">
+            <div className="font-serif text-4xl tabular-nums text-ink">
+              {avgProgress}
+              <span className="text-muted text-lg font-sans">%</span>
+            </div>
+            <div className="text-[11px] text-muted">
+              expected {expectedPct}%
+            </div>
           </div>
         </div>
+
         <div className="grid grid-cols-12 gap-1.5">
           {Array.from({ length: 12 }).map((_, i) => {
             const idx = i + 1;
@@ -199,12 +246,12 @@ export default function GoalsPage() {
               <div
                 key={i}
                 className={
-                  "h-8 rounded-md flex items-center justify-center text-[10px] " +
+                  "h-8 rounded-md flex items-center justify-center text-[10px] transition " +
                   (current
-                    ? "bg-ink text-canvas"
+                    ? "bg-gradient-to-b from-expandSoft to-expand text-white shadow-[0_0_12px_rgba(63,119,194,0.35)]"
                     : passed
-                    ? "bg-ink/15 text-ink"
-                    : "bg-canvas border border-line text-muted")
+                    ? "bg-white/10 text-ink/80"
+                    : "bg-white/[.02] border border-white/[.06] text-muted")
                 }
               >
                 {idx}
@@ -224,6 +271,7 @@ export default function GoalsPage() {
           <GoalCard
             key={g.id}
             goal={g}
+            expectedPct={expectedPct}
             onUpdate={(patch) => updateGoal(g.id, patch)}
             onDelete={() => deleteGoal(g.id)}
           />
@@ -262,10 +310,12 @@ function GoalCard({
   goal,
   onUpdate,
   onDelete,
+  expectedPct,
 }: {
   goal: QuarterGoal;
   onUpdate: (patch: Partial<QuarterGoal>) => void;
   onDelete: () => void;
+  expectedPct: number;
 }) {
   const cat = GOAL_CATEGORIES.find((c) => c.key === goal.category)!;
   const wk = weekStartISO();
@@ -277,6 +327,7 @@ function GoalCard({
     why: goal.why,
     category: goal.category,
   });
+  const goalPace = pace(goal.progress - expectedPct);
 
   useEffect(() => {
     setDraft({
@@ -427,18 +478,20 @@ function GoalCard({
       <div className="mb-4">
         <div className="flex items-end justify-between mb-1">
           <div className="label">Progress</div>
-          <div className="text-sm tabular-nums" style={{ color: cat.color }}>
-            {goal.progress}%
+          <div className="flex items-baseline gap-2">
+            <span className="text-[11px]" style={{ color: goalPace.color }}>
+              {goalPace.label}
+            </span>
+            <span className="text-sm tabular-nums" style={{ color: cat.color }}>
+              {goal.progress}%
+            </span>
           </div>
         </div>
-        <div className="h-2 rounded-full bg-canvas border border-line overflow-hidden">
-          <div
-            className="h-full rounded-full transition-all"
-            style={{
-              width: `${goal.progress}%`,
-              backgroundColor: cat.color,
-            }}
-          />
+        <PaceBar progress={goal.progress} expected={expectedPct} color={cat.color} />
+        <div className="flex justify-between text-[10px] text-muted mt-1.5">
+          <span>0%</span>
+          <span>expected {expectedPct}% by now</span>
+          <span>100%</span>
         </div>
       </div>
 
@@ -710,5 +763,97 @@ function NewGoalForm({
         </button>
       </div>
     </form>
+  );
+}
+
+function pace(delta: number): { label: string; color: string } {
+  if (delta >= 5) return { label: `Ahead +${Math.round(delta)}`, color: "#8FCAA9" };
+  if (delta >= -8) return { label: "On pace", color: "#6F9DD8" };
+  if (delta >= -20) return { label: `Behind ${Math.round(delta)}`, color: "#E5C26B" };
+  return { label: `Behind ${Math.round(delta)}`, color: "#E07A8A" };
+}
+
+function PaceBar({
+  progress,
+  expected,
+  color,
+}: {
+  progress: number;
+  expected: number;
+  color: string;
+}) {
+  const p = Math.max(0, Math.min(100, progress));
+  const e = Math.max(0, Math.min(100, expected));
+  return (
+    <div className="relative h-2.5 rounded-full bg-white/[.05] border border-white/[.06] overflow-visible">
+      <div
+        className="absolute inset-y-0 left-0 rounded-full transition-all"
+        style={{
+          width: `${p}%`,
+          background: `linear-gradient(90deg, ${color}99, ${color})`,
+          boxShadow: `0 0 12px ${color}55`,
+        }}
+      />
+      {/* Expected pace marker */}
+      <div
+        className="absolute -top-1 bottom-[-4px] w-px"
+        style={{
+          left: `${e}%`,
+          background: "rgba(255,255,255,0.55)",
+          boxShadow: "0 0 6px rgba(255,255,255,0.45)",
+        }}
+        aria-hidden="true"
+      />
+    </div>
+  );
+}
+
+function QuarterEditor({
+  startISO,
+  onSave,
+}: {
+  startISO: string;
+  onSave: (iso: string) => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [draft, setDraft] = useState(startISO);
+
+  useEffect(() => setDraft(startISO), [startISO]);
+
+  if (!open) {
+    return (
+      <button onClick={() => setOpen(true)} className="text-xs text-muted hover:text-ink">
+        Edit dates
+      </button>
+    );
+  }
+  return (
+    <div className="flex items-center gap-2 flex-wrap">
+      <label className="text-[11px] text-muted">Starts</label>
+      <input
+        type="date"
+        className="field w-[10rem]"
+        value={draft}
+        onChange={(e) => setDraft(e.target.value)}
+      />
+      <button
+        className="btn-primary text-xs"
+        onClick={() => {
+          onSave(draft);
+          setOpen(false);
+        }}
+      >
+        Save
+      </button>
+      <button
+        className="text-xs text-muted hover:text-ink"
+        onClick={() => {
+          setDraft(startISO);
+          setOpen(false);
+        }}
+      >
+        Cancel
+      </button>
+    </div>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 
 const PREFIX = "lod:v1:";
 
@@ -25,16 +25,22 @@ function write<T>(key: string, value: T): void {
   }
 }
 
-export function useLocal<T>(key: string, initial: T): [T, (v: T | ((prev: T) => T)) => void, boolean] {
+export function useLocal<T>(
+  key: string,
+  initial: T
+): [T, (v: T | ((prev: T) => T)) => void, boolean] {
   const [value, setValue] = useState<T>(initial);
   const [hydrated, setHydrated] = useState(false);
+  const ignoreNextWrite = useRef(false);
 
+  // Hydrate from storage and listen for cross-component changes.
   useEffect(() => {
     setValue(read<T>(key, initial));
     setHydrated(true);
     const onChange = (e: Event) => {
       const detail = (e as CustomEvent).detail as { key?: string } | undefined;
       if (!detail || detail.key === key) {
+        ignoreNextWrite.current = true;
         setValue(read<T>(key, initial));
       }
     };
@@ -47,16 +53,21 @@ export function useLocal<T>(key: string, initial: T): [T, (v: T | ((prev: T) => 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key]);
 
-  const set = useCallback(
-    (v: T | ((prev: T) => T)) => {
-      setValue((prev) => {
-        const next = typeof v === "function" ? (v as (p: T) => T)(prev) : v;
-        write(key, next);
-        return next;
-      });
-    },
-    [key]
-  );
+  // Persist to storage when value changes locally. Side effects belong in
+  // an effect (not in the setState updater), so React strict mode's
+  // double-invocation of updaters cannot duplicate writes.
+  useEffect(() => {
+    if (!hydrated) return;
+    if (ignoreNextWrite.current) {
+      ignoreNextWrite.current = false;
+      return;
+    }
+    write(key, value);
+  }, [key, value, hydrated]);
+
+  const set = useCallback((v: T | ((prev: T) => T)) => {
+    setValue((prev) => (typeof v === "function" ? (v as (p: T) => T)(prev) : v));
+  }, []);
 
   return [value, set, hydrated];
 }

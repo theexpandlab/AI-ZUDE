@@ -125,7 +125,9 @@ export interface PillarItem {
   kind: PillarItemKind;
   label: string;
   notes?: string;
-  // For practices: optional cadence hint ("daily", "weekly", "ad-hoc")
+  // For practices: number of times per cadence period (e.g. 3 with cadence "weekly" = 3× per week).
+  times?: number;
+  // For practices: optional cadence hint ("daily", "weekly", "monthly", "adhoc")
   cadence?: "daily" | "weekly" | "monthly" | "adhoc";
   // For priorities: optional target month (YYYY-MM) or specific date (YYYY-MM-DD)
   targetDate?: string;

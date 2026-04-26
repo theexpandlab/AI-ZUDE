@@ -283,7 +283,7 @@ export default function PillarsPage() {
                     <div className="text-sm text-ink truncate">{it.label}</div>
                     {(it.cadence || it.notes) && (
                       <div className="text-xs text-muted truncate">
-                        {it.cadence && <span className="capitalize">{it.cadence}</span>}
+                        {it.cadence && frequencyLabel(it)}
                         {it.cadence && it.notes ? " · " : ""}
                         {it.notes}
                       </div>
@@ -380,46 +380,79 @@ function PracticeForm({
   onAdd: (partial: Omit<PillarItem, "id" | "createdAt">) => void;
 }) {
   const [label, setLabel] = useState("");
+  const [times, setTimes] = useState(1);
   const [cadence, setCadence] = useState<PillarItem["cadence"]>("weekly");
   const [notes, setNotes] = useState("");
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!label.trim()) return;
-    onAdd({ pillar, kind: "practice", label: label.trim(), cadence, notes: notes.trim() || undefined });
+    onAdd({
+      pillar,
+      kind: "practice",
+      label: label.trim(),
+      times,
+      cadence,
+      notes: notes.trim() || undefined,
+    });
     setLabel("");
+    setTimes(1);
     setNotes("");
   }
 
   return (
-    <form onSubmit={submit} className="grid sm:grid-cols-[1fr_auto_auto_auto] gap-2 mt-2">
+    <form onSubmit={submit} className="space-y-2 mt-2">
       <input
         className="field"
         placeholder="A practice that nurtures this pillar…"
         value={label}
         onChange={(e) => setLabel(e.target.value)}
       />
-      <select
-        className="field sm:w-32"
-        value={cadence}
-        onChange={(e) => setCadence(e.target.value as PillarItem["cadence"])}
-      >
-        <option value="daily">Daily</option>
-        <option value="weekly">Weekly</option>
-        <option value="monthly">Monthly</option>
-        <option value="adhoc">Ad-hoc</option>
-      </select>
-      <input
-        className="field sm:w-44"
-        placeholder="Note (optional)"
-        value={notes}
-        onChange={(e) => setNotes(e.target.value)}
-      />
-      <button type="submit" className="btn-primary">
-        Add
-      </button>
+      <div className="grid sm:grid-cols-[auto_auto_1fr_auto] gap-2 items-center">
+        <select
+          className="field sm:w-24"
+          value={times}
+          onChange={(e) => setTimes(parseInt(e.target.value, 10))}
+          aria-label="How many times"
+        >
+          {[1, 2, 3, 4, 5, 6, 7].map((n) => (
+            <option key={n} value={n}>
+              {n}×
+            </option>
+          ))}
+        </select>
+        <select
+          className="field sm:w-32"
+          value={cadence}
+          onChange={(e) => setCadence(e.target.value as PillarItem["cadence"])}
+          aria-label="Cadence"
+        >
+          <option value="daily">per day</option>
+          <option value="weekly">per week</option>
+          <option value="monthly">per month</option>
+          <option value="adhoc">ad-hoc</option>
+        </select>
+        <input
+          className="field"
+          placeholder="Note (optional)"
+          value={notes}
+          onChange={(e) => setNotes(e.target.value)}
+        />
+        <button type="submit" className="btn-primary">
+          Add
+        </button>
+      </div>
     </form>
   );
+}
+
+function frequencyLabel(it: PillarItem): string {
+  if (!it.cadence) return "";
+  if (it.cadence === "adhoc") return "Ad-hoc";
+  const period =
+    it.cadence === "daily" ? "day" : it.cadence === "weekly" ? "week" : "month";
+  const n = it.times ?? 1;
+  return `${n}× per ${period}`;
 }
 
 function PriorityForm({

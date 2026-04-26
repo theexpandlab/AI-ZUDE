@@ -76,6 +76,16 @@ export function quarterLabelFor(d: Date = new Date()): string {
   return `Q${q} ${d.getFullYear()}`;
 }
 
+// First Monday on or after the start of the current calendar quarter.
+export function firstMondayOfCurrentQuarter(d: Date = new Date()): string {
+  const qStartMonth = Math.floor(d.getMonth() / 3) * 3;
+  const first = new Date(d.getFullYear(), qStartMonth, 1);
+  const day = first.getDay(); // 0=Sun..6=Sat
+  const offset = (1 - day + 7) % 7; // days to next Monday (0 if already Monday)
+  first.setDate(first.getDate() + offset);
+  return toISODate(first);
+}
+
 // Returns 1..12 (capped) and total weeks (12) for a 12-week quarter starting startISO.
 export function weekOfQuarter(startISO: string): { current: number; total: number; remainingDays: number; endISO: string } {
   const [y, m, d] = startISO.split("-").map(Number);
