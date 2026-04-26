@@ -107,7 +107,7 @@ export default function Starfield() {
         const tw = reduce ? 1 : 0.45 + 0.55 * (0.5 + 0.5 * Math.sin(s.phase));
         const opacity = tw * (0.35 + 0.65 * s.depth);
         ctx!.fillStyle = s.blue
-          ? `rgba(140, 200, 255, ${opacity})`
+          ? `rgba(125, 165, 220, ${opacity})`
           : `rgba(245, 248, 255, ${opacity})`;
         ctx!.beginPath();
         ctx!.arc(s.x, s.y, s.r * (0.6 + s.depth), 0, Math.PI * 2);
@@ -118,7 +118,7 @@ export default function Starfield() {
           grad.addColorStop(
             0,
             s.blue
-              ? `rgba(140, 200, 255, ${opacity * 0.35})`
+              ? `rgba(125, 165, 220, ${opacity * 0.35})`
               : `rgba(220, 232, 255, ${opacity * 0.25})`
           );
           grad.addColorStop(1, "rgba(0,0,0,0)");
@@ -151,8 +151,8 @@ export default function Starfield() {
         const tx = sh.x + ux * tailLen;
         const ty = sh.y + uy * tailLen;
         const grad = ctx!.createLinearGradient(sh.x, sh.y, tx, ty);
-        grad.addColorStop(0, `rgba(180,220,255,${headOpacity})`);
-        grad.addColorStop(1, "rgba(180,220,255,0)");
+        grad.addColorStop(0, `rgba(160,195,235,${headOpacity})`);
+        grad.addColorStop(1, "rgba(160,195,235,0)");
         ctx!.strokeStyle = grad;
         ctx!.lineWidth = 1.4;
         ctx!.beginPath();
@@ -194,7 +194,7 @@ export default function Starfield() {
         className="absolute inset-0"
         style={{
           background:
-            "radial-gradient(1200px 700px at 80% -10%, rgba(61,165,255,0.10), transparent 60%)," +
+            "radial-gradient(1200px 700px at 80% -10%, rgba(63,119,194,0.13), transparent 60%)," +
             "radial-gradient(900px 600px at 10% 110%, rgba(123, 90, 200, 0.10), transparent 60%)," +
             "radial-gradient(700px 500px at 50% 30%, rgba(20, 30, 70, 0.45), transparent 70%)," +
             "linear-gradient(180deg, #050816 0%, #03050E 100%)",
@@ -205,7 +205,7 @@ export default function Starfield() {
         className="absolute inset-[-20%] opacity-50 motion-reduce:hidden animate-nebula"
         style={{
           background:
-            "conic-gradient(from 90deg at 50% 50%, rgba(61,165,255,0.06), rgba(123,90,200,0.05), rgba(61,165,255,0.04), rgba(20,40,80,0.06), rgba(61,165,255,0.06))",
+            "conic-gradient(from 90deg at 50% 50%, rgba(63,119,194,0.07), rgba(123,90,200,0.05), rgba(63,119,194,0.04), rgba(20,40,80,0.06), rgba(63,119,194,0.07))",
           filter: "blur(60px)",
         }}
       />

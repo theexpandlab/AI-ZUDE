@@ -17,10 +17,10 @@ const config: Config = {
         ink: "#EDEFF7",
         muted: "#8B95B0",
         line: "rgba(255,255,255,0.08)",
-        // Brand accent (Expand Lab blue — placeholder, swap to exact hex)
-        expand: "#3DA5FF",
-        expandSoft: "#7DC4FF",
-        expandDeep: "#1668B8",
+        // Brand accent — Expand Lab blue
+        expand: "#3F77C2",
+        expandSoft: "#6F9DD8",
+        expandDeep: "#2A5A99",
         // Pillar / category palette tuned for dark backgrounds
         sage: "#8FCAA9",
         slate: "#76A8D6",
@@ -39,7 +39,7 @@ const config: Config = {
       },
       boxShadow: {
         soft: "0 1px 2px rgba(0,0,0,0.25), 0 8px 32px rgba(10,18,40,0.45)",
-        glow: "0 0 0 1px rgba(125,196,255,0.18), 0 0 32px rgba(61,165,255,0.18)",
+        glow: "0 0 0 1px rgba(111,157,216,0.22), 0 0 32px rgba(63,119,194,0.22)",
       },
       borderRadius: {
         xl2: "1.25rem",

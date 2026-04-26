@@ -2,7 +2,7 @@ export type Pillar = "health" | "business" | "relationships" | "energy" | "fun";
 
 export const PILLARS: { key: Pillar; label: string; color: string; hint: string }[] = [
   { key: "health", label: "Health", color: "#8FCAA9", hint: "Sleep, movement, nutrition" },
-  { key: "business", label: "Business", color: "#76A8D6", hint: "Output, clarity, alignment" },
+  { key: "business", label: "Business", color: "#5A8FCC", hint: "Output, clarity, alignment" },
   { key: "relationships", label: "Relationships", color: "#E2A87E", hint: "Friends, dating, family" },
   { key: "energy", label: "Energy & Mood", color: "#E5C26B", hint: "How you feel" },
   { key: "fun", label: "Fun & Novelty", color: "#BCA1E8", hint: "Play, newness, spark" },
@@ -58,7 +58,7 @@ export interface EnergyEntry {
 export type DayType = "deep" | "creative" | "admin" | "life";
 
 export const DAY_TYPES: Record<DayType, { label: string; color: string; description: string }> = {
-  deep: { label: "Deep Work / Build", color: "#76A8D6", description: "Focus, building, output" },
+  deep: { label: "Deep Work / Build", color: "#5A8FCC", description: "Focus, building, output" },
   creative: { label: "Creative / Expansion", color: "#BCA1E8", description: "Ideation, exploration" },
   admin: { label: "Admin / Light Work", color: "#8B95B0", description: "Wrap-up, ops, light" },
   life: { label: "Life / Social / Novelty", color: "#E2A87E", description: "People, play, rest" },
@@ -147,7 +147,7 @@ export type GoalCategory = Pillar | "finance" | "other";
 
 export const GOAL_CATEGORIES: { key: GoalCategory; label: string; color: string }[] = [
   { key: "health", label: "Health", color: "#8FCAA9" },
-  { key: "business", label: "Business", color: "#76A8D6" },
+  { key: "business", label: "Business", color: "#5A8FCC" },
   { key: "relationships", label: "Relationships", color: "#E2A87E" },
   { key: "energy", label: "Energy", color: "#E5C26B" },
   { key: "fun", label: "Fun", color: "#BCA1E8" },

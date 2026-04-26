@@ -432,7 +432,7 @@ function Hero({
           className="pointer-events-none absolute -top-24 -right-24 h-72 w-72 rounded-full opacity-60 blur-3xl"
           style={{
             background:
-              "radial-gradient(circle, rgba(61,165,255,0.45), rgba(61,165,255,0) 70%)",
+              "radial-gradient(circle, rgba(63,119,194,0.50), rgba(63,119,194,0) 70%)",
           }}
         />
         <div
