@@ -34,8 +34,8 @@ const config: Config = {
         nebulaB: "#2B1A55",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "ui-sans-serif", "system-ui", "-apple-system", "Inter", "sans-serif"],
-        serif: ["var(--font-fraunces)", "ui-serif", "Georgia", "serif"],
+        sans: ["ui-sans-serif", "system-ui", "-apple-system", "Inter", "sans-serif"],
+        serif: ["ui-serif", "Georgia", "Cambria", "Times New Roman", "serif"],
       },
       boxShadow: {
         soft: "0 1px 2px rgba(0,0,0,0.25), 0 8px 32px rgba(10,18,40,0.45)",

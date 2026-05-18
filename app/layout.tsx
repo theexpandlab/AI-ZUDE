@@ -1,22 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Inter } from "next/font/google";
 import Link from "next/link";
 import "./globals.css";
 import Nav from "@/components/Nav";
 import Starfield from "@/components/Starfield";
-
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-fraunces",
-  display: "swap",
-});
-
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "The Dream Life Dashboard",
@@ -32,7 +18,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${inter.variable}`}>
+    <html lang="en">
       <body className="min-h-screen bg-void text-ink font-sans antialiased relative">
         <Starfield />
         <div className="mx-auto w-full max-w-5xl px-4 sm:px-6 pb-32 pt-8 sm:pt-12 relative">
