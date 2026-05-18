@@ -115,6 +115,21 @@ export interface Profile {
   northStar: string;
 }
 
+// Dream Vision Board — curated images + video clips that represent the life you're building.
+export type VisionItemType = "image" | "video" | "youtube" | "vimeo";
+
+export interface VisionItem {
+  id: string;
+  type: VisionItemType;
+  // Canonical URL used for rendering (e.g. YouTube embed URL)
+  url: string;
+  // Original URL pasted by the user (kept for reference)
+  rawUrl: string;
+  title?: string;
+  pillar?: Pillar | "finance";
+  createdAt: string;
+}
+
 // Per-pillar curated items: small recurring "nurture" actions
 // or larger bucket-list priorities (with optional target date).
 export type PillarItemKind = "practice" | "priority";

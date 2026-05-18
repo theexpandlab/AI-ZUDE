@@ -328,6 +328,7 @@ export default function Home() {
         <div className="card">
           <div className="label mb-2">Quick paths</div>
           <div className="grid grid-cols-2 gap-2">
+            <Link href="/vision" className="btn justify-start">Vision board</Link>
             <Link href="/daily" className="btn justify-start">Daily check-in</Link>
             <Link href="/weekly" className="btn justify-start">Weekly audit</Link>
             <Link href="/pillars" className="btn justify-start">Pillars of joy</Link>
@@ -602,6 +603,9 @@ function Hero({
           <div className="mt-7 flex flex-wrap items-center gap-2.5">
             <Link href="/weekly" className="btn-primary">
               {thisAudit ? "Edit this week's audit" : "Run this week's audit"}
+            </Link>
+            <Link href="/vision" className="btn">
+              Play vision board
             </Link>
             <Link href="/daily" className="btn">
               Daily check-in

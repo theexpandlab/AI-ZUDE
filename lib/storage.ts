@@ -85,4 +85,5 @@ export const STORAGE_KEYS = {
   quarterConfig: "quarter-config",
   quarterGoals: "quarter-goals",
   profile: "profile",
+  vision: "vision-items",
 } as const;
