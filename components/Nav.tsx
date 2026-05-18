@@ -14,6 +14,7 @@ const items = [
   { href: "/fun", label: "Fun" },
   { href: "/relationships", label: "People" },
   { href: "/business", label: "Business" },
+  { href: "/transcribe", label: "Transcribe" },
 ];
 
 export default function Nav() {
