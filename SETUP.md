@@ -99,6 +99,41 @@ never hits a dead end. Generation latency + failure are logged for monitoring.
 > **Note:** the previous GitHub Pages workflow + static-export config were
 > removed — this is now a server app (API routes can't run on static Pages).
 
+## 7. Connect the domain (Wix main site)
+
+The marketing site `theexpandlab.com` is on **Wix**, which can't reverse-proxy an
+external app onto a subpath — so a transparent `theexpandlab.com/blueprint` that
+serves this Vercel app isn't possible. Use a subdomain (renders full-screen,
+native on mobile) plus an optional redirect for a memorable link.
+
+**a) Subdomain `build.theexpandlab.com` → Vercel**
+1. Vercel → Project → Settings → **Domains** → add `build.theexpandlab.com`.
+   Copy the CNAME target it shows (`cname.vercel-dns.com`).
+2. Wix Dashboard → your domain → **Advanced → Edit DNS / DNS Records** →
+   **Add Record**:
+
+   | Type | Host name | Value |
+   | --- | --- | --- |
+   | CNAME | `build` | `cname.vercel-dns.com` |
+
+3. Save. Vercel auto-issues SSL once DNS resolves (minutes, up to ~24h).
+
+**b) Link to it** — add a button on a Wix page (Link → Web Address →
+`https://build.theexpandlab.com`) and use the same link in the Instagram bio.
+This is the funnel entry.
+
+**c) Optional clean link** — Wix Dashboard →
+**Marketing & SEO → SEO Tools → URL Redirect Manager** → 301-redirect
+`/blueprint` (or `/start`) → `https://build.theexpandlab.com`. Gives a
+memorable `theexpandlab.com/blueprint` (URL changes on redirect; not a proxy).
+
+> Skip the Wix "Embed a Site" (iframe) approach — fixed height + awkward mobile
+> scrolling, and traffic is mostly Instagram-on-phone (PRD §10).
+
+After connecting: set `NEXT_PUBLIC_SITE_URL=https://build.theexpandlab.com`, and
+if using the Cal webhook, point it at
+`https://build.theexpandlab.com/api/cal-webhook?secret=<CAL_WEBHOOK_SECRET>`.
+
 ---
 
 ## Editing content without a redeploy-heavy change (PRD §6.7)
