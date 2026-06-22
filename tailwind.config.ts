@@ -1,72 +1,75 @@
 import type { Config } from "tailwindcss";
 
+/**
+ * The Offer Blueprint — design language (per PRD §10):
+ * warm paper background, ink text, a single deep "blueprint-blue" accent,
+ * technical mono labels, confident sans headings. Architect, not hype.
+ */
 const config: Config = {
-  content: [
-    "./app/**/*.{ts,tsx}",
-    "./components/**/*.{ts,tsx}",
-  ],
+  content: ["./app/**/*.{ts,tsx}", "./components/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        // Cosmic page background and deeper void
-        canvas: "#070A18",
-        void: "#03050E",
-        // Glass surface (used via opacity utilities; this is a fallback solid)
-        surface: "#0E1326",
-        // Text
-        ink: "#EDEFF7",
-        muted: "#8B95B0",
-        line: "rgba(255,255,255,0.08)",
-        // Brand accent — Expand Lab blue
-        expand: "#3F77C2",
-        expandSoft: "#6F9DD8",
-        expandDeep: "#2A5A99",
-        // Pillar / category palette tuned for dark backgrounds
-        sage: "#8FCAA9",
-        slate: "#76A8D6",
-        clay: "#E2A87E",
-        amber: "#E5C26B",
-        plum: "#BCA1E8",
-        rose: "#E07A8A",
-        gold: "#C9A55C",
-        // Subtle nebula tints used in radial gradients
-        nebulaA: "#1A2466",
-        nebulaB: "#2B1A55",
+        // Warm paper canvas
+        paper: "#F4EFE4",
+        paperDeep: "#EBE4D4",
+        card: "#FBF8F1",
+        // Ink
+        ink: "#1F1B16",
+        inkSoft: "#4A443B",
+        muted: "#8A8275",
+        line: "#DAD2C0",
+        lineSoft: "#E6DFD0",
+        // The single deep accent — blueprint blue
+        blueprint: "#3F77C2",
+        blueprintDeep: "#2C5894",
+        blueprintSoft: "#6F9DD8",
+        blueprintWash: "#E4EDF7",
       },
       fontFamily: {
-        sans: ["ui-sans-serif", "system-ui", "-apple-system", "Inter", "sans-serif"],
-        serif: ["ui-serif", "Georgia", "Cambria", "Times New Roman", "serif"],
+        sans: [
+          "ui-sans-serif",
+          "system-ui",
+          "-apple-system",
+          "Segoe UI",
+          "Roboto",
+          "Helvetica",
+          "Arial",
+          "sans-serif",
+        ],
+        mono: [
+          "ui-monospace",
+          "SFMono-Regular",
+          "Menlo",
+          "Monaco",
+          "Cascadia Code",
+          "Consolas",
+          "monospace",
+        ],
+      },
+      letterSpacing: {
+        label: "0.22em",
       },
       boxShadow: {
-        soft: "0 1px 2px rgba(0,0,0,0.25), 0 8px 32px rgba(10,18,40,0.45)",
-        glow: "0 0 0 1px rgba(111,157,216,0.22), 0 0 32px rgba(63,119,194,0.22)",
+        sheet: "0 1px 2px rgba(31,27,22,0.04), 0 12px 32px rgba(31,27,22,0.07)",
+        lift: "0 2px 4px rgba(31,27,22,0.05), 0 18px 48px rgba(31,27,22,0.10)",
       },
       borderRadius: {
-        xl2: "1.25rem",
+        sheet: "0.5rem",
       },
       keyframes: {
-        drift: {
-          "0%, 100%": { transform: "translate3d(0,0,0)" },
-          "50%": { transform: "translate3d(0,-6px,0)" },
-        },
-        nebulaShift: {
-          "0%": { transform: "rotate(0deg) scale(1)" },
-          "100%": { transform: "rotate(360deg) scale(1)" },
-        },
-        shimmer: {
-          "0%, 100%": { opacity: "0.85" },
-          "50%": { opacity: "1" },
-        },
-        fadeIn: {
-          "0%": { opacity: "0", transform: "translateY(8px)" },
+        fadeUp: {
+          "0%": { opacity: "0", transform: "translateY(10px)" },
           "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        barPulse: {
+          "0%, 100%": { opacity: "0.55" },
+          "50%": { opacity: "1" },
         },
       },
       animation: {
-        drift: "drift 9s ease-in-out infinite",
-        nebula: "nebulaShift 240s linear infinite",
-        shimmer: "shimmer 6s ease-in-out infinite",
-        fadeIn: "fadeIn 600ms ease-out both",
+        fadeUp: "fadeUp 480ms cubic-bezier(0.22,1,0.36,1) both",
+        barPulse: "barPulse 1.4s ease-in-out infinite",
       },
     },
   },
