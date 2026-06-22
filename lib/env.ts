@@ -29,7 +29,9 @@ export const env = {
   ghlLocationId: process.env.GHL_LOCATION_ID,
 
   // Scheduling — Cal.com
-  calBookingUrl: process.env.NEXT_PUBLIC_CAL_BOOKING_URL || "https://cal.com/the-expand-lab",
+  calBookingUrl:
+    process.env.NEXT_PUBLIC_CAL_BOOKING_URL ||
+    "https://cal.com/expandlab/10k-business-foundation",
   calWebhookSecret: process.env.CAL_WEBHOOK_SECRET,
 
   // Privacy

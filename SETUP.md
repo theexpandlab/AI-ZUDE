@@ -21,7 +21,7 @@ in env vars / editable config.
 | # | Decision | Where it's set | Default used |
 | - | --- | --- | --- |
 | 1 | **Email/CRM system of record** — confirmed **GoHighLevel** ✅ | `GHL_API_KEY`, `GHL_LOCATION_ID` | sync is skipped until set |
-| 2 | **Scheduling tool + URL** — confirmed **Cal.com** ✅ | `NEXT_PUBLIC_CAL_BOOKING_URL` | `cal.com/the-expand-lab` placeholder — **replace with the real link** |
+| 2 | **Scheduling tool + URL** — confirmed **Cal.com** ✅ | `NEXT_PUBLIC_CAL_BOOKING_URL` | `cal.com/expandlab/10k-business-foundation` ✅ |
 | 3 | **Sender domain** — must verify `theexpandlab.com` (SPF/DKIM/DMARC) in Resend | `EMAIL_FROM` | `hey@theexpandlab.com` — **verify the domain or email won't send** |
 | 4 | **Hosting / build owner + Vercel account** | Vercel project | — (process decision) |
 | 5 | **Domain/subdomain** for the tool | `NEXT_PUBLIC_SITE_URL` + Vercel domains | `build.theexpandlab.com` |
