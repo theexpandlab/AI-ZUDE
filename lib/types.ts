@@ -1,200 +1,95 @@
-export type Pillar = "health" | "business" | "relationships" | "energy" | "fun";
+// Shared domain types for The Offer Blueprint.
 
-export const PILLARS: { key: Pillar; label: string; color: string; hint: string }[] = [
-  { key: "health", label: "Health", color: "#8FCAA9", hint: "Sleep, movement, nutrition" },
-  { key: "business", label: "Business", color: "#5A8FCC", hint: "Output, clarity, alignment" },
-  { key: "relationships", label: "Relationships", color: "#E2A87E", hint: "Friends, dating, family" },
-  { key: "energy", label: "Energy & Mood", color: "#E5C26B", hint: "How you feel" },
-  { key: "fun", label: "Fun & Novelty", color: "#BCA1E8", hint: "Play, newness, spark" },
-];
-
-export interface WeeklyAudit {
-  weekStart: string; // ISO date (Monday)
-  scores: Record<Pillar, number>;
-  reflections: {
-    energized: string;
-    drained: string;
-    aligned: string;
-    forced: string;
-  };
-  decisions: {
-    doubleDown: string;
-    fixOrRemove: string;
-    experiment: string;
-  };
-  updatedAt: string;
+/** The five discovery answers collected from the quiz (PRD §6.2). */
+export interface QuizAnswers {
+  /** PHASE 01 · FOUNDATION — "What do people keep coming to you for?" */
+  expertise: string;
+  /** PHASE 02 · THE PEOPLE — "Who do you most want to help?" */
+  audience: string;
+  /** PHASE 03 · THE TRANSFORMATION — "Paint the after." */
+  transformation: string;
+  /** PHASE 04 · YOUR VISION — multi-select, max 2 (option ids). */
+  vision: string[];
+  /** PHASE 05 · THE SHAPE — single-select (option id). */
+  shape: string;
+  /** PHASE 05 · stage — single-select (option id). */
+  stage: string;
 }
 
-export interface DailyEntry {
-  date: string; // ISO date YYYY-MM-DD
-  morning: {
-    moved: boolean | null;
-    win: string;
-  };
-  midday: {
-    deepWork: boolean | null;
-    outcome: string;
-  };
-  evening: {
-    disconnected: boolean | null;
-    energy: number | null; // 1-10
-  };
-  notes: string;
-  updatedAt: string;
+/** Lead contact details captured at the email gate (PRD §6.3). */
+export interface LeadContact {
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone?: string;
+  consent: boolean;
 }
 
-export type EnergyTag = "energizing" | "neutral" | "draining";
-export type EnergyKind = "activity" | "person" | "task";
-
-export interface EnergyEntry {
-  id: string;
-  label: string;
-  kind: EnergyKind;
-  tag: EnergyTag;
-  note?: string;
-  createdAt: string;
-}
-
-export type DayType = "deep" | "creative" | "admin" | "life";
-
-export const DAY_TYPES: Record<DayType, { label: string; color: string; description: string }> = {
-  deep: { label: "Deep Work / Build", color: "#5A8FCC", description: "Focus, building, output" },
-  creative: { label: "Creative / Expansion", color: "#BCA1E8", description: "Ideation, exploration" },
-  admin: { label: "Admin / Light Work", color: "#8B95B0", description: "Wrap-up, ops, light" },
-  life: { label: "Life / Social / Novelty", color: "#E2A87E", description: "People, play, rest" },
-};
-
-export const WEEKDAYS: { key: number; short: string; full: string; defaultType: DayType }[] = [
-  { key: 1, short: "Mon", full: "Monday", defaultType: "deep" },
-  { key: 2, short: "Tue", full: "Tuesday", defaultType: "deep" },
-  { key: 3, short: "Wed", full: "Wednesday", defaultType: "deep" },
-  { key: 4, short: "Thu", full: "Thursday", defaultType: "creative" },
-  { key: 5, short: "Fri", full: "Friday", defaultType: "admin" },
-  { key: 6, short: "Sat", full: "Saturday", defaultType: "life" },
-  { key: 0, short: "Sun", full: "Sunday", defaultType: "life" },
-];
-
-export interface IdealWeekDay {
-  type: DayType;
-  intentions: string[];
-}
-
-export type IdealWeek = Record<number, IdealWeekDay>;
-
-export interface FunEntry {
-  weekStart: string; // ISO Monday
-  newThing: { done: boolean; note: string };
-  socialExpansion: { done: boolean; note: string };
-  spontaneous: { done: boolean; note: string };
-  updatedAt: string;
-}
-
-export interface RelationshipEntry {
-  id: string;
+/** A single generated offer (PRD Appendix A schema). */
+export interface Offer {
+  label: string; // "OFFER 01"
   name: string;
-  context: string;
-  matchEnergy: boolean;
-  alignValues: boolean;
-  feelsLighter: boolean;
-  notes?: string;
-  createdAt: string;
+  format: string;
+  oneLiner: string;
+  whoFor: string;
+  transformation: string; // "from X to Y"
+  priceBand: string; // "$1.5K–$3K"
+  whyItFits: string;
 }
 
-export interface BusinessIdea {
+/** The full AI (or fallback) result. */
+export interface OfferBlueprint {
+  read: string;
+  offers: Offer[];
+  /** Whether this came from the model or the rules-based fallback. */
+  source: "ai" | "fallback";
+}
+
+/** Attribution captured from the client (PRD §9). */
+export interface Attribution {
+  utmSource?: string;
+  utmMedium?: string;
+  utmCampaign?: string;
+  utmTerm?: string;
+  utmContent?: string;
+  referrer?: string;
+}
+
+/** Request body for POST /api/generate. */
+export interface GenerateRequest {
+  contact: LeadContact;
+  answers: QuizAnswers;
+  attribution?: Attribution;
+  /** Honeypot field — must be empty (PRD §6.3, §8). */
+  company?: string;
+}
+
+/** Response from POST /api/generate. */
+export interface GenerateResponse {
+  blueprint: OfferBlueprint;
+  /** Whether the submission was persisted (false if DB not configured). */
+  persisted: boolean;
+}
+
+/** A submission row as surfaced to the admin dashboard (PRD §7). */
+export interface SubmissionRow {
   id: string;
-  title: string;
-  realProblem: boolean;
-  movesToSale: boolean;
-  systemizable: boolean;
-  notes?: string;
-  createdAt: string;
-}
-
-export interface Profile {
-  name: string;
-  northStar: string;
-}
-
-// Dream Vision Board — curated images + video clips that represent the life you're building.
-export type VisionItemType = "image" | "video" | "youtube" | "vimeo";
-
-export interface VisionItem {
-  id: string;
-  type: VisionItemType;
-  // Canonical URL used for rendering (e.g. YouTube embed URL)
-  url: string;
-  // Original URL pasted by the user (kept for reference)
-  rawUrl: string;
-  title?: string;
-  pillar?: Pillar | "finance";
-  createdAt: string;
-}
-
-// Per-pillar curated items: small recurring "nurture" actions
-// or larger bucket-list priorities (with optional target date).
-export type PillarItemKind = "practice" | "priority";
-
-export interface PillarItem {
-  id: string;
-  pillar: Pillar;
-  kind: PillarItemKind;
-  label: string;
-  notes?: string;
-  // For practices: number of times per cadence period (e.g. 3 with cadence "weekly" = 3× per week).
-  times?: number;
-  // For practices: optional cadence hint ("daily", "weekly", "monthly", "adhoc")
-  cadence?: "daily" | "weekly" | "monthly" | "adhoc";
-  // For priorities: optional target month (YYYY-MM) or specific date (YYYY-MM-DD)
-  targetDate?: string;
-  done?: boolean;
-  createdAt: string;
-}
-
-// Weekly commitment: which PillarItems am I committing to nurture this week.
-export interface WeeklyCommitment {
-  weekStart: string; // ISO Monday
-  itemIds: string[];
-  doneIds: string[];
-  updatedAt: string;
-}
-
-// 12-week quarterly goals (Dyrdek-style). Goals can map to a Pillar
-// or to extra categories like Finance.
-export type GoalCategory = Pillar | "finance" | "other";
-
-export const GOAL_CATEGORIES: { key: GoalCategory; label: string; color: string }[] = [
-  { key: "health", label: "Health", color: "#8FCAA9" },
-  { key: "business", label: "Business", color: "#5A8FCC" },
-  { key: "relationships", label: "Relationships", color: "#E2A87E" },
-  { key: "energy", label: "Energy", color: "#E5C26B" },
-  { key: "fun", label: "Fun", color: "#BCA1E8" },
-  { key: "finance", label: "Finance", color: "#C9A55C" },
-  { key: "other", label: "Other", color: "#8B95B0" },
-];
-
-export interface QuarterConfig {
-  label: string; // e.g. "Q2 2026"
-  startISO: string; // Monday of week 1
-}
-
-export type GoalStatus = "on" | "risk" | "off";
-
-export interface GoalCheckIn {
-  weekStart: string;
-  progress: number; // 0-100
-  status: GoalStatus;
-  note: string;
-  createdAt: string;
-}
-
-export interface QuarterGoal {
-  id: string;
-  category: GoalCategory;
-  title: string;
-  target: string;
-  why: string;
-  progress: number; // 0-100 current
-  microActions: { id: string; label: string; doneIds: string[] }[];
-  checkIns: GoalCheckIn[];
-  createdAt: string;
+  created_at: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  phone: string | null;
+  consent: boolean;
+  consent_at: string | null;
+  answer_expertise: string;
+  answer_audience: string;
+  answer_transformation: string;
+  answer_vision: string[];
+  answer_shape: string;
+  answer_stage: string;
+  generated_offers: OfferBlueprint | null;
+  email_status: "queued" | "sent" | "failed";
+  synced_to_crm: boolean;
+  booked_call: boolean;
+  source: string | null;
 }
