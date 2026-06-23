@@ -518,7 +518,9 @@ function Results({
       <h2 className="heading mt-3 text-2xl leading-snug sm:text-3xl">
         {firstName ? `${firstName}, ` : ""}here&apos;s what we&apos;d build.
       </h2>
-      <p className="mt-4 text-lg leading-relaxed text-inkSoft">{blueprint.read}</p>
+      <p className="mt-4 text-lg leading-relaxed text-inkSoft">
+        {blueprint.readingYourBlueprint}
+      </p>
 
       <div className="mt-8 space-y-5">
         {blueprint.offers.map((o) => (
@@ -533,7 +535,7 @@ function Results({
         </p>
         <h3 className="mt-3 text-xl font-semibold sm:text-2xl">{resultsCopy.ctaHeadline}</h3>
         <p className="mt-2 text-[15px] leading-relaxed text-blueprintWash">
-          {resultsCopy.ctaSubhead}
+          {blueprint.nextStep || resultsCopy.ctaSubhead}
         </p>
         <a
           href={cal}

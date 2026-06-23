@@ -25,22 +25,29 @@ export interface LeadContact {
   consent: boolean;
 }
 
-/** A single generated offer (PRD Appendix A schema). */
+/**
+ * A single generated offer — enriched, Buyer's-Brief-grounded structure.
+ * Mirrors the person's own answers back so the offer feels seen, then points
+ * them to a concrete first move in 100-Day Build language.
+ */
 export interface Offer {
-  label: string; // "OFFER 01"
-  name: string;
-  format: string;
-  oneLiner: string;
-  whoFor: string;
-  transformation: string; // "from X to Y"
-  priceBand: string; // "$1.5K–$3K"
-  whyItFits: string;
+  label: string; // "OFFER 01" — kept for display ordering
+  name: string; // evocative, ownable
+  promise: string; // one line, the transformation in their words
+  whyThisFitsYou: string; // 2-3 sentences mirroring their actual answers
+  theShape: string; // the format + why it fits how they want to show up
+  priceBand: string; // a range + one line of value logic
+  marketTruth: string; // the desire it serves / objection it dissolves
+  yourFirstMoves: string[]; // exactly 3 concrete next steps (100-Day Build)
 }
 
 /** The full AI (or fallback) result. */
 export interface OfferBlueprint {
-  read: string;
+  /** Warm intro across all offers, reflecting their inputs with insight. */
+  readingYourBlueprint: string;
   offers: Offer[];
+  /** Invitation toward booking the build call. */
+  nextStep: string;
   /** Whether this came from the model or the rules-based fallback. */
   source: "ai" | "fallback";
 }

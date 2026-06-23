@@ -21,23 +21,32 @@ function renderEmailHtml(blueprint: OfferBlueprint, firstName: string): string {
   const line = "#DAD2C0";
 
   const offerCards = blueprint.offers
-    .map(
-      (o) => `
+    .map((o) => {
+      const moves = o.yourFirstMoves
+        .map(
+          (m, i) =>
+            `<tr><td style="padding:3px 0;width:18px;vertical-align:top;color:${blueDeep};font-family:monospace;font-size:12px;">${i + 1}</td><td style="padding:3px 0;font-size:13px;color:${ink};">${escapeHtml(m)}</td></tr>`,
+        )
+        .join("");
+      return `
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${card};border:1px solid ${line};border-radius:8px;margin:0 0 16px;">
         <tr><td style="padding:22px 24px;">
           <div style="font-family:monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:${blueDeep};">${escapeHtml(o.label)}</div>
           <div style="font-size:20px;font-weight:700;color:${ink};margin:6px 0 4px;">${escapeHtml(o.name)}</div>
-          <div style="font-size:14px;color:${ink};margin:0 0 14px;">${escapeHtml(o.oneLiner)}</div>
+          <div style="font-size:14px;font-weight:600;color:${blueDeep};margin:0 0 14px;">${escapeHtml(o.promise)}</div>
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="font-size:13px;color:${ink};">
-            <tr><td style="padding:4px 0;width:120px;color:${muted};">Format</td><td style="padding:4px 0;">${escapeHtml(o.format)}</td></tr>
-            <tr><td style="padding:4px 0;color:${muted};">Who it's for</td><td style="padding:4px 0;">${escapeHtml(o.whoFor)}</td></tr>
-            <tr><td style="padding:4px 0;color:${muted};">Transformation</td><td style="padding:4px 0;">${escapeHtml(o.transformation)}</td></tr>
-            <tr><td style="padding:4px 0;color:${muted};">Investment</td><td style="padding:4px 0;">${escapeHtml(o.priceBand)}</td></tr>
-            <tr><td style="padding:4px 0;color:${muted};vertical-align:top;">Why it fits</td><td style="padding:4px 0;">${escapeHtml(o.whyItFits)}</td></tr>
+            <tr><td style="padding:4px 0;width:120px;color:${muted};vertical-align:top;">The shape</td><td style="padding:4px 0;">${escapeHtml(o.theShape)}</td></tr>
+            <tr><td style="padding:4px 0;color:${muted};vertical-align:top;">Why this fits you</td><td style="padding:4px 0;">${escapeHtml(o.whyThisFitsYou)}</td></tr>
+            <tr><td style="padding:4px 0;color:${muted};vertical-align:top;">Market truth</td><td style="padding:4px 0;">${escapeHtml(o.marketTruth)}</td></tr>
+            <tr><td style="padding:4px 0;color:${muted};vertical-align:top;">Investment</td><td style="padding:4px 0;">${escapeHtml(o.priceBand)}</td></tr>
           </table>
+          <div style="margin-top:14px;padding:14px 16px;background:#eaf1fb;border-radius:6px;">
+            <div style="font-family:monospace;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:${blueDeep};margin-bottom:8px;">Your first moves</div>
+            <table role="presentation" width="100%" cellpadding="0" cellspacing="0">${moves}</table>
+          </div>
         </td></tr>
-      </table>`,
-    )
+      </table>`;
+    })
     .join("");
 
   return `<!DOCTYPE html>
@@ -52,20 +61,20 @@ function renderEmailHtml(blueprint: OfferBlueprint, firstName: string): string {
         </td></tr>
         <tr><td style="padding:0 4px 24px;">
           <h1 style="font-size:24px;font-weight:700;color:${ink};margin:0 0 12px;">${escapeHtml(firstName)}, here's your Offer Blueprint.</h1>
-          <p style="font-size:15px;line-height:1.6;color:${ink};margin:0;">${escapeHtml(blueprint.read)}</p>
+          <p style="font-size:15px;line-height:1.6;color:${ink};margin:0;">${escapeHtml(blueprint.readingYourBlueprint)}</p>
         </td></tr>
         <tr><td style="padding:0 4px;">${offerCards}</td></tr>
         <tr><td style="padding:12px 4px 8px;">
           <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:${blue};border-radius:8px;">
             <tr><td style="padding:24px;text-align:center;">
-              <div style="font-size:17px;font-weight:700;color:#ffffff;margin:0 0 6px;">Want to pressure-test this together?</div>
-              <div style="font-size:14px;color:#eaf1fb;margin:0 0 16px;">Book a working call — we'll map the path to building the strongest one.</div>
+              <div style="font-size:17px;font-weight:700;color:#ffffff;margin:0 0 6px;">Ready to build the one worth shipping first?</div>
+              <div style="font-size:14px;color:#eaf1fb;margin:0 0 16px;">${escapeHtml(blueprint.nextStep)}</div>
               <a href="${escapeHtml(env.calBookingUrl)}" style="display:inline-block;background:#ffffff;color:${blueDeep};font-size:14px;font-weight:700;text-decoration:none;padding:12px 26px;border-radius:6px;">Book a call with Expand Lab</a>
             </td></tr>
           </table>
         </td></tr>
         <tr><td style="padding:24px 4px 0;">
-          <p style="font-size:12px;line-height:1.6;color:${muted};margin:0;">You're receiving this because you built your Offer Blueprint at The Expand Lab. The Expand Lab — we architect offers, not hype.</p>
+          <p style="font-size:12px;line-height:1.6;color:${muted};margin:0;">You're receiving this because you built your Offer Blueprint at The Expand Lab. We architect offers, not hype.</p>
         </td></tr>
       </table>
     </td></tr>
@@ -75,26 +84,27 @@ function renderEmailHtml(blueprint: OfferBlueprint, firstName: string): string {
 
 function renderEmailText(blueprint: OfferBlueprint, firstName: string): string {
   const lines = [
-    `THE OFFER BLUEPRINT — The Expand Lab`,
+    `THE OFFER BLUEPRINT · The Expand Lab`,
     ``,
     `${firstName}, here's your Offer Blueprint.`,
     ``,
-    blueprint.read,
+    blueprint.readingYourBlueprint,
     ``,
   ];
   for (const o of blueprint.offers) {
     lines.push(
       `${o.label}: ${o.name}`,
-      `  ${o.oneLiner}`,
-      `  Format: ${o.format}`,
-      `  Who it's for: ${o.whoFor}`,
-      `  Transformation: ${o.transformation}`,
+      `  ${o.promise}`,
+      `  The shape: ${o.theShape}`,
+      `  Why this fits you: ${o.whyThisFitsYou}`,
+      `  Market truth: ${o.marketTruth}`,
       `  Investment: ${o.priceBand}`,
-      `  Why it fits: ${o.whyItFits}`,
+      `  Your first moves:`,
+      ...o.yourFirstMoves.map((m, i) => `    ${i + 1}. ${m}`),
       ``,
     );
   }
-  lines.push(`Want to pressure-test this together? Book a call: ${env.calBookingUrl}`);
+  lines.push(blueprint.nextStep, `Book a call: ${env.calBookingUrl}`);
   return lines.join("\n");
 }
 

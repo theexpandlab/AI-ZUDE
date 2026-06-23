@@ -226,8 +226,10 @@ function Detail({ r }: { r: SubmissionRow }) {
       </div>
       <div className="space-y-3">
         <p className="label">Generated offers</p>
-        {r.generated_offers?.read && (
-          <p className="text-sm italic leading-relaxed text-inkSoft">{r.generated_offers.read}</p>
+        {r.generated_offers?.readingYourBlueprint && (
+          <p className="text-sm italic leading-relaxed text-inkSoft">
+            {r.generated_offers.readingYourBlueprint}
+          </p>
         )}
         {(r.generated_offers?.offers ?? []).map((o) => (
           <div key={o.label} className="rounded-sheet border border-line bg-card p-4">
@@ -236,10 +238,8 @@ function Detail({ r }: { r: SubmissionRow }) {
               <span className="font-mono text-[11px] text-muted">{o.priceBand}</span>
             </div>
             <p className="mt-1 font-semibold">{o.name}</p>
-            <p className="text-sm text-inkSoft">{o.oneLiner}</p>
-            <p className="mt-2 text-xs text-muted">
-              {o.format} · {o.transformation}
-            </p>
+            <p className="text-sm font-medium text-blueprintDeep">{o.promise}</p>
+            <p className="mt-2 text-xs text-muted">{o.theShape}</p>
           </div>
         ))}
         {r.generated_offers?.source === "fallback" && (
