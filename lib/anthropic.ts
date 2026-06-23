@@ -1,24 +1,16 @@
 import Anthropic from "@anthropic-ai/sdk";
 import type { Offer, OfferBlueprint, QuizAnswers } from "./types";
 import { env, isConfigured } from "./env";
-import { OFFER_SYSTEM_PROMPT } from "./system-prompt";
+import { buildOfferSystemPrompt } from "./system-prompt";
 import { fallbackOffers } from "./fallback";
-import { visionLabel, shapeLabel, stageLabel } from "./quiz-content";
 
-const MAX_TOKENS = 1000;
+// Enriched output (8 fields x up to 3 offers + 2 top-level) needs more room
+// than the original lean schema, so the result isn't truncated into a fallback.
+const MAX_TOKENS = 2000;
 
-function buildUserMessage(answers: QuizAnswers, firstName: string): string {
-  return [
-    `First name: ${firstName}`,
-    `Expertise (what people keep coming to them for): ${answers.expertise}`,
-    `Audience (who they most want to help): ${answers.audience}`,
-    `Transformation (the after): ${answers.transformation}`,
-    `Vision: ${answers.vision.map(visionLabel).join(", ")}`,
-    `Shape (how they want to show up): ${shapeLabel(answers.shape)}`,
-    `Stage (where they're starting): ${stageLabel(answers.stage)}`,
-    "",
-    "Generate their Offer Blueprint as strict JSON per your instructions.",
-  ].join("\n");
+function buildUserMessage(firstName: string): string {
+  const name = firstName?.trim() || "the founder";
+  return `Their first name is ${name}. Generate their Offer Blueprint now and return only the JSON.`;
 }
 
 /** Pull a JSON object out of the model text, tolerating stray prose/fences. */
@@ -36,35 +28,57 @@ function extractJson(text: string): unknown {
   }
 }
 
-function isOffer(o: unknown): o is Offer {
-  if (!o || typeof o !== "object") return false;
-  const r = o as Record<string, unknown>;
-  return (
-    typeof r.name === "string" &&
-    typeof r.format === "string" &&
-    typeof r.oneLiner === "string" &&
-    typeof r.whoFor === "string" &&
-    typeof r.transformation === "string" &&
-    typeof r.priceBand === "string" &&
-    typeof r.whyItFits === "string"
-  );
+function asString(v: unknown): string {
+  return typeof v === "string" ? v.trim() : "";
 }
 
-/** Validate + normalize the parsed model JSON against the Appendix A schema. */
+/** Normalize one offer from the model's snake_case JSON into our Offer type. */
+function coerceOffer(o: unknown, index: number): Offer {
+  if (!o || typeof o !== "object") throw new Error(`Offer ${index} is not an object`);
+  const r = o as Record<string, unknown>;
+
+  const name = asString(r.name);
+  const promise = asString(r.promise);
+  const whyThisFitsYou = asString(r.why_this_fits_you);
+  const theShape = asString(r.the_shape);
+  const priceBand = asString(r.price_band);
+  const marketTruth = asString(r.market_truth);
+  const moves = Array.isArray(r.your_first_moves)
+    ? (r.your_first_moves as unknown[]).map(asString).filter(Boolean)
+    : [];
+
+  if (!name || !promise || !whyThisFitsYou || !theShape || !priceBand || !marketTruth) {
+    throw new Error(`Offer ${index} missing required fields`);
+  }
+  if (moves.length < 1) throw new Error(`Offer ${index} missing first moves`);
+
+  return {
+    label: asString(r.label) || `OFFER 0${index + 1}`,
+    name,
+    promise,
+    whyThisFitsYou,
+    theShape,
+    priceBand,
+    marketTruth,
+    yourFirstMoves: moves.slice(0, 3),
+  };
+}
+
+/** Validate + normalize the parsed model JSON into an OfferBlueprint. */
 function coerceBlueprint(parsed: unknown): OfferBlueprint {
   if (!parsed || typeof parsed !== "object") throw new Error("Result is not an object");
   const r = parsed as Record<string, unknown>;
-  if (typeof r.read !== "string" || r.read.trim().length === 0) {
-    throw new Error("Missing read");
-  }
-  if (!Array.isArray(r.offers) || r.offers.length < 2) {
-    throw new Error("Expected 2-3 offers");
-  }
-  const offers = r.offers.slice(0, 3).map((o, i) => {
-    if (!isOffer(o)) throw new Error(`Offer ${i} malformed`);
-    return { ...o, label: o.label || `OFFER 0${i + 1}` };
-  });
-  return { read: r.read, offers, source: "ai" };
+
+  const readingYourBlueprint = asString(r.reading_your_blueprint);
+  if (!readingYourBlueprint) throw new Error("Missing reading_your_blueprint");
+  if (!Array.isArray(r.offers) || r.offers.length < 2) throw new Error("Expected 2-3 offers");
+
+  const offers = r.offers.slice(0, 3).map((o, i) => coerceOffer(o, i));
+  const nextStep =
+    asString(r.next_step) ||
+    "When one of these makes you lean forward, book a build call and we will architect the one worth shipping first.";
+
+  return { readingYourBlueprint, offers, nextStep, source: "ai" };
 }
 
 export interface GenerationResult {
@@ -94,8 +108,8 @@ export async function generateBlueprint(
     const msg = await client.messages.create({
       model: env.anthropicModel,
       max_tokens: MAX_TOKENS,
-      system: OFFER_SYSTEM_PROMPT,
-      messages: [{ role: "user", content: buildUserMessage(answers, firstName) }],
+      system: buildOfferSystemPrompt(answers),
+      messages: [{ role: "user", content: buildUserMessage(firstName) }],
     });
 
     const text = msg.content
