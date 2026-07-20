@@ -30,7 +30,7 @@ import {
  * and set FOUNDER_PHOTO to its path — the placeholder frame swaps to a real
  * <img> automatically. Left null until the photo is provided.
  */
-const FOUNDER_PHOTO: string | null = null;
+const FOUNDER_PHOTO: string | null = "/hannah-andersen.jpg";
 
 /* ── Content data ───────────────────────────────────────────────────────── */
 
