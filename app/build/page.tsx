@@ -879,14 +879,13 @@ export default function BuildOnePager() {
                 fontStyle: "italic",
               }}
             >
-              “
-              <span style={{ color: "#7C89AE" }}>
-                [Founder note — Hannah’s own words go here. Placeholder until final copy is confirmed.]
-              </span>
-              ”
-            </p>
-            <p style={{ fontFamily: MONO, fontSize: 12, letterSpacing: "0.03em", color: "#7C89AE", margin: "20px 0 0" }}>
-              Placeholder — awaiting Hannah’s photo &amp; founder note.
+              “I’m Hannah, and I started Expand Lab because I wanted to build my own
+              dream business — so I know exactly what it takes to build yours. What
+              makes us different is that we take your business on as if it were our
+              own: obsessive about the details, the aesthetics, and above all, your
+              results. I want to help you make a real impact with your knowledge and
+              your gifts — and build income in a way that’s genuinely fun and easeful.
+              Let’s connect. I can’t wait to talk.”
             </p>
           </div>
         </div>
