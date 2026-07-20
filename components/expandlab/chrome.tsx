@@ -186,7 +186,7 @@ export function Starfield() {
           position: "absolute",
           inset: 0,
           backgroundImage:
-            "radial-gradient(1.6px 1.6px at 24px 40px,rgba(255,255,255,0.95),transparent),radial-gradient(1.4px 1.4px at 160px 120px,rgba(190,208,255,0.85),transparent),radial-gradient(1px 1px at 90px 200px,rgba(255,255,255,0.7),transparent),radial-gradient(1.2px 1.2px at 260px 60px,rgba(220,230,255,0.8),transparent),radial-gradient(1px 1px at 320px 240px,rgba(255,255,255,0.6),transparent),radial-gradient(1.5px 1.5px at 200px 300px,rgba(200,215,255,0.75),transparent)",
+            "radial-gradient(2.4px 2.4px at 24px 40px,rgba(255,255,255,0.97),transparent),radial-gradient(2.1px 2.1px at 160px 120px,rgba(190,208,255,0.9),transparent),radial-gradient(1.5px 1.5px at 90px 200px,rgba(255,255,255,0.75),transparent),radial-gradient(1.9px 1.9px at 260px 60px,rgba(220,230,255,0.85),transparent),radial-gradient(1.5px 1.5px at 320px 240px,rgba(255,255,255,0.65),transparent),radial-gradient(2.3px 2.3px at 200px 300px,rgba(200,215,255,0.8),transparent)",
           backgroundSize: "360px 360px",
           backgroundRepeat: "repeat",
         }}
@@ -197,7 +197,7 @@ export function Starfield() {
           position: "absolute",
           inset: 0,
           backgroundImage:
-            "radial-gradient(1px 1px at 60px 80px,rgba(255,255,255,0.55),transparent),radial-gradient(1.2px 1.2px at 180px 30px,rgba(150,180,255,0.6),transparent),radial-gradient(1px 1px at 300px 160px,rgba(255,255,255,0.45),transparent),radial-gradient(1.6px 1.6px at 120px 260px,rgba(230,238,255,0.7),transparent),radial-gradient(1px 1px at 380px 300px,rgba(255,255,255,0.4),transparent)",
+            "radial-gradient(1.5px 1.5px at 60px 80px,rgba(255,255,255,0.6),transparent),radial-gradient(1.9px 1.9px at 180px 30px,rgba(150,180,255,0.68),transparent),radial-gradient(1.5px 1.5px at 300px 160px,rgba(255,255,255,0.5),transparent),radial-gradient(2.4px 2.4px at 120px 260px,rgba(230,238,255,0.78),transparent),radial-gradient(1.5px 1.5px at 380px 300px,rgba(255,255,255,0.45),transparent)",
           backgroundSize: "480px 480px",
           backgroundRepeat: "repeat",
         }}
@@ -208,14 +208,15 @@ export function Starfield() {
           position: "absolute",
           inset: 0,
           backgroundImage:
-            "radial-gradient(2px 2px at 130px 90px,rgba(159,192,255,0.9),transparent),radial-gradient(1.8px 1.8px at 340px 210px,rgba(255,255,255,0.8),transparent),radial-gradient(1.5px 1.5px at 500px 340px,rgba(190,208,255,0.7),transparent),radial-gradient(2.2px 2.2px at 60px 380px,rgba(255,255,255,0.75),transparent)",
+            "radial-gradient(3px 3px at 130px 90px,rgba(159,192,255,0.95),transparent),radial-gradient(2.7px 2.7px at 340px 210px,rgba(255,255,255,0.85),transparent),radial-gradient(2.3px 2.3px at 500px 340px,rgba(190,208,255,0.78),transparent),radial-gradient(3.2px 3.2px at 60px 380px,rgba(255,255,255,0.8),transparent)",
           backgroundSize: "620px 620px",
           backgroundRepeat: "repeat",
         }}
       />
-      {/* Occasional shooting stars — a subtle "moment" of motion. */}
+      {/* Shooting stars — a "moment" of motion, staggered so one crosses every few seconds. */}
       <span className="el-shoot el-shoot-1" />
       <span className="el-shoot el-shoot-2" />
+      <span className="el-shoot el-shoot-3" />
     </div>
   );
 }
@@ -449,20 +450,21 @@ html{scroll-behavior:smooth;}
 /* Occasional shooting star: a thin glowing streak that crosses, then a long pause. */
 @keyframes elShoot{
   0%{transform:translate3d(0,0,0) rotate(27deg);opacity:0}
-  4%{opacity:0}
-  6%{opacity:1}
-  12%{opacity:1}
-  17%{transform:translate3d(520px,265px,0) rotate(27deg);opacity:0}
-  100%{transform:translate3d(520px,265px,0) rotate(27deg);opacity:0}
+  3%{opacity:0}
+  5%{opacity:1}
+  16%{opacity:1}
+  22%{transform:translate3d(560px,285px,0) rotate(27deg);opacity:0}
+  100%{transform:translate3d(560px,285px,0) rotate(27deg);opacity:0}
 }
 .el-shoot{
-  position:absolute;top:0;left:0;width:130px;height:2px;border-radius:2px;opacity:0;
+  position:absolute;top:0;left:0;width:160px;height:2.5px;border-radius:3px;opacity:0;
   transform:rotate(27deg);pointer-events:none;
-  background:linear-gradient(90deg,transparent,rgba(200,216,255,0.95));
-  filter:drop-shadow(0 0 6px rgba(159,192,255,0.85));
+  background:linear-gradient(90deg,transparent,rgba(214,226,255,1));
+  filter:drop-shadow(0 0 8px rgba(159,192,255,0.95));
 }
-.el-shoot-1{top:11%;left:5%;animation:elShoot 15s linear infinite;animation-delay:3.5s;}
-.el-shoot-2{top:27%;left:42%;width:96px;animation:elShoot 21s linear infinite;animation-delay:12s;}
+.el-shoot-1{top:10%;left:4%;animation:elShoot 8s linear infinite;animation-delay:1.5s;}
+.el-shoot-2{top:24%;left:40%;width:120px;animation:elShoot 11s linear infinite;animation-delay:4.5s;}
+.el-shoot-3{top:40%;left:12%;width:140px;animation:elShoot 9.5s linear infinite;animation-delay:7.5s;}
 
 @media (max-width:640px){
   .el-nav-collapse{display:none;}
