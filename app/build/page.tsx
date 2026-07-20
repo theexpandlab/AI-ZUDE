@@ -1,22 +1,29 @@
 "use client";
 
-import { useEffect } from "react";
+import {
+  bodyText,
+  Eyebrow,
+  GhostLink,
+  h2Style,
+  MONO,
+  PageShell,
+  PrimaryCTA,
+  ROUTES,
+  sectionPad,
+  SERIF,
+  SiteFooter,
+  SiteNav,
+  StarSparkle,
+  wrap,
+} from "@/components/expandlab/chrome";
 
 /**
- * The 100-Day Product Ecosystem Build — single long-scroll sales page.
+ * The 100-Day Product Ecosystem Build — the one-pager / conversion page.
  *
- * Rebuilt from the hifi design handoff ("blueprints among the stars"): a deep
- * navy cosmic canvas with a drifting starfield, drafting grids, an overlapping
- * Gantt, and mono technical annotations. One CTA everywhere → a 30-minute call.
- *
- * The prototype's support.js/image-slot runtime is deliberately NOT ported;
- * this is native semantic markup. The only client behavior is an
- * IntersectionObserver that reveals the Gantt phase rows on scroll, and pure
- * CSS starfield animation — both gated behind prefers-reduced-motion.
+ * Self-sufficient long-scroll page; the three deep pages (/method,
+ * /whats-included, /results) are the "read more" destinations linked from the
+ * nav and from read-more links under the matching sections here.
  */
-
-const CAL_URL = "https://cal.com/expandlab/funnel";
-const LOGO = "/expand-lab-logo.avif";
 
 /**
  * Founder photo. Drop the file into /public (e.g. public/hannah-andersen.jpg)
@@ -24,96 +31,6 @@ const LOGO = "/expand-lab-logo.avif";
  * <img> automatically. Left null until the photo is provided.
  */
 const FOUNDER_PHOTO: string | null = null;
-
-const MONO = "'IBM Plex Mono', monospace";
-const SERIF = "'Newsreader', Georgia, serif";
-
-/* ── Small building blocks ──────────────────────────────────────────────── */
-
-function StarSparkle({ size = 13, fill = "#5B84FF" }: { size?: number; fill?: string }) {
-  return (
-    <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true">
-      <path
-        d="M12 0 L13.6 10.4 L24 12 L13.6 13.6 L12 24 L10.4 13.6 L0 12 L10.4 10.4 Z"
-        fill={fill}
-      />
-    </svg>
-  );
-}
-
-function Eyebrow({
-  children,
-  color = "#8EA6FF",
-  starFill = "#5B84FF",
-  size = 12.5,
-  tracking = "0.2em",
-  starSize = 13,
-  mb = 22,
-}: {
-  children: React.ReactNode;
-  color?: string;
-  starFill?: string;
-  size?: number;
-  tracking?: string;
-  starSize?: number;
-  mb?: number;
-}) {
-  return (
-    <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: mb }}>
-      <StarSparkle size={starSize} fill={starFill} />
-      <span
-        style={{
-          fontFamily: MONO,
-          fontSize: size,
-          letterSpacing: tracking,
-          textTransform: "uppercase",
-          color,
-        }}
-      >
-        {children}
-      </span>
-    </div>
-  );
-}
-
-function PrimaryCTA({
-  children,
-  fontSize = 14,
-  padding = "18px 30px",
-  arrow = 16,
-  shadow = "0 0 0 1px rgba(91,132,255,0.5),0 14px 40px -12px rgba(59,107,255,0.85)",
-}: {
-  children: React.ReactNode;
-  fontSize?: number;
-  padding?: string;
-  arrow?: number;
-  shadow?: string;
-}) {
-  return (
-    <a
-      className="el-cta"
-      href={CAL_URL}
-      target="_blank"
-      rel="noopener"
-      style={{
-        background: "linear-gradient(180deg,#3B6BFF,#2E5AE0)",
-        color: "#EAF0FF",
-        fontFamily: MONO,
-        fontSize,
-        letterSpacing: "0.06em",
-        textTransform: "uppercase",
-        padding,
-        borderRadius: 6,
-        display: "inline-flex",
-        alignItems: "center",
-        gap: 10,
-        boxShadow: shadow,
-      }}
-    >
-      {children} <span style={{ fontSize: arrow }}>→</span>
-    </a>
-  );
-}
 
 /* ── Content data ───────────────────────────────────────────────────────── */
 
@@ -379,1266 +296,970 @@ const FIT_NO = [
   "You don’t want to be involved at all. I need your expertise and your sign-off at a few points. There’s no version of this where you’re not in it.",
 ];
 
-/* Repeated inline-style fragments */
-const bodyText = (max = "72ch"): React.CSSProperties => ({
-  fontFamily: SERIF,
-  fontSize: "clamp(16px,1.55vw,19px)",
-  lineHeight: 1.6,
-  color: "#B7C0DD",
-  margin: 0,
-  maxWidth: max,
-});
-
-const h2Style: React.CSSProperties = {
-  fontFamily: SERIF,
-  fontWeight: 400,
-  fontSize: "clamp(30px,4.8vw,58px)",
-  lineHeight: 1.06,
-  letterSpacing: "-0.015em",
-  color: "#F3F6FF",
-  textWrap: "balance",
-} as React.CSSProperties;
-
-const sectionPad = "clamp(76px,9vw,132px) 24px";
-const wrap: React.CSSProperties = { maxWidth: 1120, margin: "0 auto" };
-
 /* ── Page ───────────────────────────────────────────────────────────────── */
 
-export default function Page() {
-  useEffect(() => {
-    const els = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
-    if (!els.length) return;
-    const reduce =
-      window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce || !("IntersectionObserver" in window)) {
-      els.forEach((e) => e.classList.add("el-phase--in"));
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((en) => {
-          if (en.isIntersecting) {
-            const el = en.target as HTMLElement;
-            const d = parseInt(el.dataset.delay || "0", 10);
-            window.setTimeout(() => el.classList.add("el-phase--in"), d);
-            io.unobserve(el);
-          }
-        });
-      },
-      { threshold: 0.15, rootMargin: "0px 0px -8% 0px" },
-    );
-    els.forEach((e) => io.observe(e));
-    return () => io.disconnect();
-  }, []);
-
+export default function BuildOnePager() {
   return (
-    <div
-      style={{
-        position: "relative",
-        background:
-          "radial-gradient(1300px 780px at 50% -8%,rgba(59,107,255,0.26),transparent 60%),radial-gradient(900px 700px at 88% 12%,rgba(91,132,255,0.10),transparent 55%),#080F26",
-        overflowX: "hidden",
-        color: "#EAEEFB",
-        fontFamily: SERIF,
-      }}
-    >
-      <style>{PAGE_CSS}</style>
+    <PageShell>
+      <SiteNav />
 
-      {/* STARFIELD */}
-      <div aria-hidden="true" style={{ position: "fixed", inset: "-80px 0", zIndex: 0, pointerEvents: "none" }}>
+      {/* 1 · HERO */}
+      <section
+        id="top"
+        style={{
+          position: "relative",
+          padding: "clamp(84px,11vw,150px) 24px clamp(60px,8vw,104px)",
+          backgroundImage:
+            "linear-gradient(rgba(124,150,232,0.09) 1px,transparent 1px),linear-gradient(90deg,rgba(124,150,232,0.09) 1px,transparent 1px)",
+          backgroundSize: "38px 38px",
+          backgroundPosition: "center top",
+        }}
+      >
         <div
-          className="el-star-a"
           style={{
-            position: "absolute",
-            inset: 0,
-            backgroundImage:
-              "radial-gradient(1.6px 1.6px at 24px 40px,rgba(255,255,255,0.95),transparent),radial-gradient(1.4px 1.4px at 160px 120px,rgba(190,208,255,0.85),transparent),radial-gradient(1px 1px at 90px 200px,rgba(255,255,255,0.7),transparent),radial-gradient(1.2px 1.2px at 260px 60px,rgba(220,230,255,0.8),transparent),radial-gradient(1px 1px at 320px 240px,rgba(255,255,255,0.6),transparent),radial-gradient(1.5px 1.5px at 200px 300px,rgba(200,215,255,0.75),transparent)",
-            backgroundSize: "360px 360px",
-            backgroundRepeat: "repeat",
-          }}
-        />
-        <div
-          className="el-star-b"
-          style={{
-            position: "absolute",
-            inset: 0,
-            backgroundImage:
-              "radial-gradient(1px 1px at 60px 80px,rgba(255,255,255,0.55),transparent),radial-gradient(1.2px 1.2px at 180px 30px,rgba(150,180,255,0.6),transparent),radial-gradient(1px 1px at 300px 160px,rgba(255,255,255,0.45),transparent),radial-gradient(1.6px 1.6px at 120px 260px,rgba(230,238,255,0.7),transparent),radial-gradient(1px 1px at 380px 300px,rgba(255,255,255,0.4),transparent)",
-            backgroundSize: "480px 480px",
-            backgroundRepeat: "repeat",
-          }}
-        />
-        <div
-          className="el-star-c"
-          style={{
-            position: "absolute",
-            inset: 0,
-            backgroundImage:
-              "radial-gradient(2px 2px at 130px 90px,rgba(159,192,255,0.9),transparent),radial-gradient(1.8px 1.8px at 340px 210px,rgba(255,255,255,0.8),transparent),radial-gradient(1.5px 1.5px at 500px 340px,rgba(190,208,255,0.7),transparent),radial-gradient(2.2px 2.2px at 60px 380px,rgba(255,255,255,0.75),transparent)",
-            backgroundSize: "620px 620px",
-            backgroundRepeat: "repeat",
-          }}
-        />
-      </div>
-
-      <div style={{ position: "relative", zIndex: 1 }}>
-        {/* NAV */}
-        <header
-          style={{
-            position: "sticky",
-            top: 0,
-            zIndex: 50,
-            background: "rgba(8,15,38,0.72)",
-            backdropFilter: "blur(14px)",
-            WebkitBackdropFilter: "blur(14px)",
-            borderBottom: "1px solid rgba(124,150,232,0.16)",
+            ...wrap,
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "stretch",
+            gap: "clamp(28px,4vw,56px)",
           }}
         >
-          <div
-            style={{
-              maxWidth: 1200,
-              margin: "0 auto",
-              padding: "16px 24px",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              gap: 20,
-            }}
-          >
-            <a href="#top" style={{ display: "flex", alignItems: "center" }} aria-label="Expand Lab — top">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={LOGO} alt="Expand Lab" style={{ height: 26, width: "auto", display: "block" }} />
-            </a>
-            <nav
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 26,
-                fontFamily: MONO,
-                fontSize: 12.5,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-              }}
-            >
-              <a className="el-navlink el-nav-collapse" href="#framework" style={{ color: "#AEB8D6" }}>
-                The Method
-              </a>
-              <a className="el-navlink el-nav-collapse" href="#included" style={{ color: "#AEB8D6" }}>
-                Included
-              </a>
-              <a className="el-navlink el-nav-collapse" href="#results" style={{ color: "#AEB8D6" }}>
-                Results
-              </a>
-              <a
-                className="el-cta"
-                href={CAL_URL}
-                target="_blank"
-                rel="noopener"
-                style={{
-                  background: "linear-gradient(180deg,#3B6BFF,#2E5AE0)",
-                  color: "#EAF0FF",
-                  padding: "11px 18px",
-                  borderRadius: 5,
-                  letterSpacing: "0.06em",
-                  boxShadow: "0 0 0 1px rgba(91,132,255,0.45),0 10px 26px -10px rgba(59,107,255,0.8)",
-                }}
-              >
-                Book a call
-              </a>
-            </nav>
-          </div>
-        </header>
-
-        {/* 1 · HERO */}
-        <section
-          id="top"
-          style={{
-            position: "relative",
-            padding: "clamp(84px,11vw,150px) 24px clamp(60px,8vw,104px)",
-            backgroundImage:
-              "linear-gradient(rgba(124,150,232,0.09) 1px,transparent 1px),linear-gradient(90deg,rgba(124,150,232,0.09) 1px,transparent 1px)",
-            backgroundSize: "38px 38px",
-            backgroundPosition: "center top",
-          }}
-        >
-          <div
-            style={{
-              ...wrap,
-              display: "flex",
-              flexWrap: "wrap",
-              alignItems: "stretch",
-              gap: "clamp(28px,4vw,56px)",
-            }}
-          >
-            <div style={{ flex: "1 1 480px", minWidth: 0 }}>
-              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 30 }}>
-                <StarSparkle size={14} />
-                <span
-                  style={{
-                    fontFamily: MONO,
-                    fontSize: 13,
-                    letterSpacing: "0.22em",
-                    textTransform: "uppercase",
-                    color: "#8EA6FF",
-                  }}
-                >
-                  The 100-Day Build
-                </span>
-              </div>
-              <h1
-                style={{
-                  fontFamily: SERIF,
-                  fontWeight: 400,
-                  fontSize: "clamp(40px,6.8vw,90px)",
-                  lineHeight: 1.01,
-                  letterSpacing: "-0.022em",
-                  margin: 0,
-                  maxWidth: "16ch",
-                  textWrap: "balance",
-                  color: "#F3F6FF",
-                  textShadow: "0 0 60px rgba(59,107,255,0.28)",
-                } as React.CSSProperties}
-              >
-                You already know the thing. You just don’t have a product built around it.
-              </h1>
-              <p
-                style={{
-                  fontFamily: SERIF,
-                  fontSize: "clamp(18px,2vw,24px)",
-                  lineHeight: 1.58,
-                  color: "#AEB8D6",
-                  maxWidth: "60ch",
-                  margin: "34px 0 0",
-                }}
-              >
-                We build the whole thing for you — the offer, the pricing, the course or program
-                itself, the funnel, the tech, and the launch. A hundred days. You show up, give
-                feedback, and record your content. We do the rest.
-              </p>
-              <div
-                style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  alignItems: "center",
-                  gap: 18,
-                  marginTop: 44,
-                }}
-              >
-                <PrimaryCTA>Book a 30-minute strategy call</PrimaryCTA>
-                <a
-                  className="el-portlink"
-                  href="#results"
-                  style={{
-                    fontFamily: MONO,
-                    fontSize: 14,
-                    letterSpacing: "0.04em",
-                    textTransform: "uppercase",
-                    color: "#EAEEFB",
-                    borderBottom: "1px solid #5B84FF",
-                    paddingBottom: 3,
-                  }}
-                >
-                  See the portfolio
-                </a>
-              </div>
-              <p
+          <div style={{ flex: "1 1 480px", minWidth: 0 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 30 }}>
+              <StarSparkle size={14} />
+              <span
                 style={{
                   fontFamily: MONO,
-                  fontSize: 12.5,
-                  lineHeight: 1.7,
-                  letterSpacing: "0.02em",
-                  color: "#7C89AE",
-                  margin: "24px 0 0",
-                  maxWidth: "56ch",
+                  fontSize: 13,
+                  letterSpacing: "0.22em",
+                  textTransform: "uppercase",
+                  color: "#8EA6FF",
                 }}
               >
-                Free. Thirty minutes. I’ll tell you if this isn’t a fit — I do that more often than
-                you’d think.
-              </p>
+                The 100-Day Build
+              </span>
             </div>
-
-            <aside
+            <h1
               style={{
-                flex: "0 1 300px",
-                minWidth: 250,
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-                gap: 16,
-              }}
+                fontFamily: SERIF,
+                fontWeight: 400,
+                fontSize: "clamp(40px,6.8vw,90px)",
+                lineHeight: 1.01,
+                letterSpacing: "-0.022em",
+                margin: 0,
+                maxWidth: "16ch",
+                textWrap: "balance",
+                color: "#F3F6FF",
+                textShadow: "0 0 60px rgba(59,107,255,0.28)",
+              } as React.CSSProperties}
             >
-              {[
-                { label: "Most recent win", figure: "$150K launch", sub: "in 6 months of working together" },
-                {
-                  label: "Recent win",
-                  figure: "3× ROI",
-                  sub: "first group program, launched in the first 4 months",
-                },
-              ].map((card) => (
-                <div
-                  key={card.label}
-                  style={{
-                    background: "linear-gradient(160deg,rgba(59,107,255,0.14),rgba(11,20,48,0.8))",
-                    border: "1px solid rgba(124,150,232,0.4)",
-                    borderRadius: 10,
-                    padding: "22px 22px",
-                    boxShadow: "0 0 44px -16px rgba(59,107,255,0.7)",
-                    backdropFilter: "blur(6px)",
-                    WebkitBackdropFilter: "blur(6px)",
-                  }}
-                >
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
-                    <span
-                      style={{
-                        width: 7,
-                        height: 7,
-                        borderRadius: "50%",
-                        background: "#5B84FF",
-                        boxShadow: "0 0 10px 1px rgba(91,132,255,0.9)",
-                      }}
-                    />
-                    <span
-                      style={{
-                        fontFamily: MONO,
-                        fontSize: 10.5,
-                        letterSpacing: "0.16em",
-                        textTransform: "uppercase",
-                        color: "#9DB0FF",
-                      }}
-                    >
-                      {card.label}
-                    </span>
-                  </div>
-                  <div
-                    style={{
-                      fontFamily: SERIF,
-                      fontSize: 30,
-                      lineHeight: 1.03,
-                      letterSpacing: "-0.01em",
-                      color: "#F3F6FF",
-                    }}
-                  >
-                    {card.figure}
-                  </div>
-                  <div
-                    style={{
-                      fontFamily: MONO,
-                      fontSize: 11.5,
-                      lineHeight: 1.5,
-                      letterSpacing: "0.02em",
-                      color: "#AEB8D6",
-                      marginTop: 8,
-                    }}
-                  >
-                    {card.sub}
-                  </div>
-                </div>
-              ))}
-            </aside>
-          </div>
-        </section>
-
-        {/* 2 · STAT BAR */}
-        <section
-          style={{
-            borderTop: "1px solid rgba(124,150,232,0.22)",
-            borderBottom: "1px solid rgba(124,150,232,0.22)",
-            background: "rgba(10,18,44,0.55)",
-            backdropFilter: "blur(4px)",
-            WebkitBackdropFilter: "blur(4px)",
-          }}
-        >
-          <div
-            style={{
-              maxWidth: 1200,
-              margin: "0 auto",
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))",
-            }}
-          >
-            {STAT_CELLS.map((cell, i) => (
-              <div
-                key={cell.label}
-                style={{
-                  padding: "clamp(32px,4vw,50px) 28px",
-                  borderRight:
-                    i < STAT_CELLS.length - 1 ? "1px solid rgba(124,150,232,0.14)" : undefined,
-                }}
-              >
-                <div
-                  style={{
-                    fontFamily: SERIF,
-                    fontSize: "clamp(36px,4.2vw,56px)",
-                    lineHeight: 1,
-                    letterSpacing: "-0.02em",
-                    color: cell.blue ? "#7FA0FF" : "#F3F6FF",
-                    textShadow: cell.blue ? "0 0 34px rgba(59,107,255,0.5)" : undefined,
-                  }}
-                >
-                  {cell.figure}
-                </div>
-                <div
-                  style={{
-                    fontFamily: MONO,
-                    fontSize: 12,
-                    letterSpacing: "0.12em",
-                    textTransform: "uppercase",
-                    color: "#8B97BC",
-                    marginTop: 14,
-                  }}
-                >
-                  {cell.label}
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* 3 · WHY EXPERTS STAY STUCK */}
-        <section style={{ padding: sectionPad }}>
-          <div style={wrap}>
-            <Eyebrow>Why experts stay stuck</Eyebrow>
-            <h2 style={{ ...h2Style, margin: "0 0 clamp(40px,5vw,64px)", maxWidth: "20ch" }}>
-              The expertise isn’t the problem. It never was.
-            </h2>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))",
-                gap: 1,
-                background: "rgba(124,150,232,0.16)",
-                border: "1px solid rgba(124,150,232,0.16)",
-                borderRadius: 8,
-                overflow: "hidden",
-              }}
-            >
-              {STUCK.map((c) => (
-                <div key={c.n} style={{ background: "rgba(12,20,46,0.72)", padding: "clamp(28px,3.4vw,44px)" }}>
-                  <div style={{ fontFamily: MONO, fontSize: 13, color: "#5B84FF", marginBottom: 16 }}>{c.n}</div>
-                  <p style={{ ...bodyText("none"), fontSize: "clamp(17px,1.6vw,20px)" }}>
-                    <strong style={{ fontWeight: 600, color: "#F3F6FF" }}>{c.lead}</strong>
-                    {c.body}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* 4 · THE FRAMEWORK / GANTT */}
-        <section
-          id="framework"
-          style={{
-            padding: sectionPad,
-            borderTop: "1px solid rgba(124,150,232,0.16)",
-            borderBottom: "1px solid rgba(124,150,232,0.16)",
-            background:
-              "linear-gradient(180deg,rgba(9,16,40,0.4),rgba(11,20,48,0.66)),linear-gradient(rgba(124,150,232,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(124,150,232,0.07) 1px,transparent 1px)",
-            backgroundSize: "auto,38px 38px,38px 38px",
-          }}
-        >
-          <div style={wrap}>
-            <Eyebrow>The Product Ecosystem Method</Eyebrow>
-            <h2 style={{ ...h2Style, margin: "0 0 14px", maxWidth: "22ch" }}>
-              Five phases. A hundred days. Here’s what actually happens.
-            </h2>
+              You already know the thing. You just don’t have a product built around it.
+            </h1>
             <p
               style={{
-                fontFamily: MONO,
-                fontSize: 12,
-                letterSpacing: "0.08em",
-                color: "#7C89AE",
-                margin: "0 0 clamp(36px,4vw,52px)",
+                fontFamily: SERIF,
+                fontSize: "clamp(18px,2vw,24px)",
+                lineHeight: 1.58,
+                color: "#AEB8D6",
+                maxWidth: "60ch",
+                margin: "34px 0 0",
               }}
             >
-              Phases overlap on purpose — this is the real schedule, not five tidy boxes.
+              We build the whole thing for you — the offer, the pricing, the course or program
+              itself, the funnel, the tech, and the launch. A hundred days. You show up, give
+              feedback, and record your content. We do the rest.
             </p>
-
-            {/* axis */}
-            <div style={{ position: "relative", height: 26, marginBottom: 4 }}>
-              {AXIS_TICKS.map((t) => (
-                <div key={t.label} style={{ position: "absolute", left: t.left, right: t.right, top: 0 }}>
-                  <span style={{ fontFamily: MONO, fontSize: 11, color: "#7C89AE" }}>{t.label}</span>
-                </div>
-              ))}
-            </div>
-            <div style={{ position: "relative", height: 1, background: "rgba(124,150,232,0.35)", marginBottom: 2 }} />
-            <div style={{ position: "relative", height: 10, marginBottom: 24 }}>
-              {AXIS_TICKS.map((t) => (
-                <span
-                  key={t.label}
-                  style={{
-                    position: "absolute",
-                    left: t.left,
-                    right: t.right,
-                    top: 0,
-                    width: 1,
-                    height: 6,
-                    background: "rgba(124,150,232,0.4)",
-                  }}
-                />
-              ))}
-            </div>
-
-            <div style={{ display: "flex", flexDirection: "column", gap: "clamp(28px,3.2vw,40px)" }}>
-              {PHASES.map((p) => (
-                <div key={p.n} className="el-phase" data-reveal data-delay={p.delay}>
-                  <div
-                    style={{
-                      display: "flex",
-                      flexWrap: "wrap",
-                      alignItems: "baseline",
-                      gap: 12,
-                      marginBottom: 12,
-                    }}
-                  >
-                    <span style={{ fontFamily: MONO, fontSize: 12, letterSpacing: "0.1em", color: p.labelColor }}>
-                      {p.n}
-                    </span>
-                    <span style={{ fontFamily: SERIF, fontSize: "clamp(21px,2.4vw,29px)", color: "#F3F6FF" }}>
-                      {p.name}
-                    </span>
-                    <span style={{ fontFamily: MONO, fontSize: 12, color: "#7C89AE" }}>{p.days}</span>
-                  </div>
-                  <div
-                    style={{
-                      position: "relative",
-                      height: 36,
-                      border: "1px solid rgba(124,150,232,0.16)",
-                      borderRadius: 4,
-                      background: "rgba(255,255,255,0.03)",
-                      marginBottom: 14,
-                    }}
-                  >
-                    <div
-                      style={{
-                        position: "absolute",
-                        top: 4,
-                        bottom: 4,
-                        left: p.left,
-                        width: p.width,
-                        right: p.right,
-                        background: p.gradient,
-                        borderRadius: 3,
-                        minWidth: p.minWidth,
-                        boxShadow: p.glow,
-                      }}
-                    />
-                  </div>
-                  <p style={bodyText("72ch")}>{p.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* 5 · WHAT'S INCLUDED */}
-        <section id="included" style={{ padding: sectionPad }}>
-          <div style={wrap}>
-            <Eyebrow>What’s included</Eyebrow>
-            <h2 style={{ ...h2Style, margin: "0 0 clamp(40px,5vw,64px)", maxWidth: "20ch" }}>
-              Everything. That’s kind of the point.
-            </h2>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))",
-                gap: "clamp(28px,3vw,52px) clamp(32px,4vw,64px)",
-              }}
-            >
-              {INCLUDED.map((item) => (
-                <div key={item.label} style={{ borderTop: "1px solid rgba(124,150,232,0.35)", paddingTop: 20 }}>
-                  <div
-                    style={{
-                      fontFamily: MONO,
-                      fontSize: 12,
-                      letterSpacing: "0.1em",
-                      color: "#7FA0FF",
-                      marginBottom: 12,
-                    }}
-                  >
-                    {item.label}
-                  </div>
-                  <p style={bodyText("none")}>{item.body}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* 6 · HOW IT WORKS */}
-        <section
-          style={{
-            padding: sectionPad,
-            borderTop: "1px solid rgba(124,150,232,0.16)",
-            borderBottom: "1px solid rgba(124,150,232,0.16)",
-            background: "rgba(6,11,30,0.72)",
-          }}
-        >
-          <div style={wrap}>
-            <Eyebrow>How it works</Eyebrow>
-            <h2 style={{ ...h2Style, margin: "0 0 clamp(40px,5vw,64px)" }}>Seven steps, start to live.</h2>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              {STEPS.map((s, i) => (
-                <div
-                  key={s.n}
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "auto 1fr",
-                    gap: "clamp(18px,3vw,44px)",
-                    padding: "24px 0",
-                    borderTop: "1px solid rgba(124,150,232,0.18)",
-                    borderBottom:
-                      i === STEPS.length - 1 ? "1px solid rgba(124,150,232,0.18)" : undefined,
-                  }}
-                >
-                  <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                    <span style={{ fontFamily: MONO, fontSize: "clamp(20px,2.4vw,28px)", color: "#7FA0FF" }}>
-                      {s.n}
-                    </span>
-                    <span
-                      style={{
-                        fontFamily: MONO,
-                        fontSize: 10.5,
-                        letterSpacing: "0.12em",
-                        textTransform: "uppercase",
-                        color: STAGE_STYLE[s.stage].color,
-                        border: `1px solid ${STAGE_STYLE[s.stage].border}`,
-                        borderRadius: 3,
-                        padding: "3px 7px",
-                        width: "max-content",
-                      }}
-                    >
-                      {s.stage}
-                    </span>
-                  </div>
-                  <div>
-                    <h3
-                      style={{
-                        fontFamily: SERIF,
-                        fontWeight: 500,
-                        fontSize: "clamp(20px,2.2vw,26px)",
-                        margin: "0 0 6px",
-                        color: "#F3F6FF",
-                      }}
-                    >
-                      {s.title}
-                    </h3>
-                    <p
-                      style={{
-                        fontFamily: SERIF,
-                        fontSize: "clamp(16px,1.5vw,19px)",
-                        lineHeight: 1.55,
-                        color: "#AEB8D6",
-                        margin: 0,
-                        maxWidth: "66ch",
-                      }}
-                    >
-                      {s.body}
-                    </p>
-                  </div>
-                </div>
-              ))}
+            <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 18, marginTop: 44 }}>
+              <PrimaryCTA>Book a 30-minute strategy call</PrimaryCTA>
+              <a
+                className="el-ghostlink"
+                href="#results"
+                style={{
+                  fontFamily: MONO,
+                  fontSize: 14,
+                  letterSpacing: "0.04em",
+                  textTransform: "uppercase",
+                  color: "#EAEEFB",
+                  borderBottom: "1px solid #5B84FF",
+                  paddingBottom: 3,
+                }}
+              >
+                See the portfolio
+              </a>
             </div>
             <p
               style={{
                 fontFamily: MONO,
                 fontSize: 12.5,
                 lineHeight: 1.7,
-                letterSpacing: "0.03em",
-                color: "#8EA6FF",
-                margin: "28px 0 0",
-                maxWidth: "70ch",
+                letterSpacing: "0.02em",
+                color: "#7C89AE",
+                margin: "24px 0 0",
+                maxWidth: "56ch",
               }}
             >
-              Throughout: weekly calls, a dedicated project manager, and 48-hour turnaround on
-              anything you send us.
+              Free. Thirty minutes. I’ll tell you if this isn’t a fit — I do that more often than
+              you’d think.
             </p>
           </div>
-        </section>
 
-        {/* FOUNDER */}
-        <section style={{ padding: "clamp(68px,8vw,116px) 24px", borderBottom: "1px solid rgba(124,150,232,0.16)" }}>
-          <div
+          <aside
             style={{
-              ...wrap,
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))",
-              gap: "clamp(32px,5vw,64px)",
-              alignItems: "center",
+              flex: "0 1 300px",
+              minWidth: 250,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              gap: 16,
             }}
           >
-            <div style={{ maxWidth: 340, width: "100%", justifySelf: "start" }}>
-              {/* Real photo drops in via FOUNDER_PHOTO; placeholder frame until then. */}
+            {[
+              { label: "Most recent win", figure: "$150K launch", sub: "in 6 months of working together" },
+              {
+                label: "Recent win",
+                figure: "3× ROI",
+                sub: "first group program, launched in the first 4 months",
+              },
+            ].map((card) => (
               <div
+                key={card.label}
                 style={{
-                  position: "relative",
-                  width: "100%",
-                  aspectRatio: "4 / 5",
+                  background: "linear-gradient(160deg,rgba(59,107,255,0.14),rgba(11,20,48,0.8))",
                   border: "1px solid rgba(124,150,232,0.4)",
-                  borderRadius: 6,
-                  boxShadow: "0 0 50px -12px rgba(59,107,255,0.55)",
-                  overflow: "hidden",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  background: "linear-gradient(160deg,rgba(59,107,255,0.10),rgba(11,20,48,0.85))",
+                  borderRadius: 10,
+                  padding: "22px 22px",
+                  boxShadow: "0 0 44px -16px rgba(59,107,255,0.7)",
+                  backdropFilter: "blur(6px)",
+                  WebkitBackdropFilter: "blur(6px)",
                 }}
               >
-                {FOUNDER_PHOTO ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={FOUNDER_PHOTO}
-                    alt="Hannah Andersen, founder of Expand Lab"
-                    style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+                <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+                  <span
+                    style={{
+                      width: 7,
+                      height: 7,
+                      borderRadius: "50%",
+                      background: "#5B84FF",
+                      boxShadow: "0 0 10px 1px rgba(91,132,255,0.9)",
+                    }}
                   />
-                ) : (
                   <span
                     style={{
                       fontFamily: MONO,
-                      fontSize: 11,
-                      letterSpacing: "0.1em",
+                      fontSize: 10.5,
+                      letterSpacing: "0.16em",
                       textTransform: "uppercase",
-                      color: "#7C89AE",
-                      textAlign: "center",
-                      padding: 16,
-                      lineHeight: 1.6,
+                      color: "#9DB0FF",
                     }}
                   >
-                    Founder photo
-                    <br />
-                    Hannah Andersen
+                    {card.label}
                   </span>
-                )}
+                </div>
+                <div
+                  style={{
+                    fontFamily: SERIF,
+                    fontSize: 30,
+                    lineHeight: 1.03,
+                    letterSpacing: "-0.01em",
+                    color: "#F3F6FF",
+                  }}
+                >
+                  {card.figure}
+                </div>
+                <div
+                  style={{
+                    fontFamily: MONO,
+                    fontSize: 11.5,
+                    lineHeight: 1.5,
+                    letterSpacing: "0.02em",
+                    color: "#AEB8D6",
+                    marginTop: 8,
+                  }}
+                >
+                  {card.sub}
+                </div>
+              </div>
+            ))}
+          </aside>
+        </div>
+      </section>
+
+      {/* 2 · STAT BAR */}
+      <section
+        style={{
+          borderTop: "1px solid rgba(124,150,232,0.22)",
+          borderBottom: "1px solid rgba(124,150,232,0.22)",
+          background: "rgba(10,18,44,0.55)",
+          backdropFilter: "blur(4px)",
+          WebkitBackdropFilter: "blur(4px)",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: 1200,
+            margin: "0 auto",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit,minmax(220px,1fr))",
+          }}
+        >
+          {STAT_CELLS.map((cell, i) => (
+            <div
+              key={cell.label}
+              style={{
+                padding: "clamp(32px,4vw,50px) 28px",
+                borderRight: i < STAT_CELLS.length - 1 ? "1px solid rgba(124,150,232,0.14)" : undefined,
+              }}
+            >
+              <div
+                style={{
+                  fontFamily: SERIF,
+                  fontSize: "clamp(36px,4.2vw,56px)",
+                  lineHeight: 1,
+                  letterSpacing: "-0.02em",
+                  color: cell.blue ? "#7FA0FF" : "#F3F6FF",
+                  textShadow: cell.blue ? "0 0 34px rgba(59,107,255,0.5)" : undefined,
+                }}
+              >
+                {cell.figure}
               </div>
               <div
                 style={{
                   fontFamily: MONO,
-                  fontSize: 11,
+                  fontSize: 12,
                   letterSpacing: "0.12em",
                   textTransform: "uppercase",
                   color: "#8B97BC",
-                  marginTop: 12,
+                  marginTop: 14,
                 }}
               >
-                Hannah Andersen · Founder
+                {cell.label}
               </div>
             </div>
-            <div>
-              <Eyebrow>Who you’d be working with</Eyebrow>
-              <p
-                style={{
-                  fontFamily: SERIF,
-                  fontSize: "clamp(19px,2.1vw,27px)",
-                  lineHeight: 1.5,
-                  color: "#F3F6FF",
-                  margin: 0,
-                  maxWidth: "44ch",
-                  fontStyle: "italic",
-                }}
-              >
-                “
-                <span style={{ color: "#7C89AE" }}>
-                  [Founder note — Hannah’s own words go here. Placeholder until final copy is
-                  confirmed.]
-                </span>
-                ”
-              </p>
-              <p style={{ fontFamily: MONO, fontSize: 12, letterSpacing: "0.03em", color: "#7C89AE", margin: "20px 0 0" }}>
-                Placeholder — awaiting Hannah’s photo &amp; founder note.
-              </p>
-            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* 3 · WHY EXPERTS STAY STUCK */}
+      <section style={{ padding: sectionPad }}>
+        <div style={wrap}>
+          <Eyebrow>Why experts stay stuck</Eyebrow>
+          <h2 style={{ ...h2Style, margin: "0 0 clamp(40px,5vw,64px)", maxWidth: "20ch" }}>
+            The expertise isn’t the problem. It never was.
+          </h2>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))",
+              gap: 1,
+              background: "rgba(124,150,232,0.16)",
+              border: "1px solid rgba(124,150,232,0.16)",
+              borderRadius: 8,
+              overflow: "hidden",
+            }}
+          >
+            {STUCK.map((c) => (
+              <div key={c.n} style={{ background: "rgba(12,20,46,0.72)", padding: "clamp(28px,3.4vw,44px)" }}>
+                <div style={{ fontFamily: MONO, fontSize: 13, color: "#5B84FF", marginBottom: 16 }}>{c.n}</div>
+                <p style={{ ...bodyText("none"), fontSize: "clamp(17px,1.6vw,20px)" }}>
+                  <strong style={{ fontWeight: 600, color: "#F3F6FF" }}>{c.lead}</strong>
+                  {c.body}
+                </p>
+              </div>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* 7 · RESULTS */}
-        <section id="results" style={{ padding: sectionPad }}>
-          <div style={wrap}>
-            <Eyebrow>Results</Eyebrow>
-            <h2 style={{ ...h2Style, margin: "0 0 clamp(40px,5vw,64px)", maxWidth: "18ch" }}>
-              What we’ve actually built.
-            </h2>
+      {/* 4 · THE FRAMEWORK / GANTT */}
+      <section
+        id="framework"
+        style={{
+          padding: sectionPad,
+          borderTop: "1px solid rgba(124,150,232,0.16)",
+          borderBottom: "1px solid rgba(124,150,232,0.16)",
+          background:
+            "linear-gradient(180deg,rgba(9,16,40,0.4),rgba(11,20,48,0.66)),linear-gradient(rgba(124,150,232,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(124,150,232,0.07) 1px,transparent 1px)",
+          backgroundSize: "auto,38px 38px,38px 38px",
+        }}
+      >
+        <div style={wrap}>
+          <Eyebrow>The Product Ecosystem Method</Eyebrow>
+          <h2 style={{ ...h2Style, margin: "0 0 14px", maxWidth: "22ch" }}>
+            Five phases. A hundred days. Here’s what actually happens.
+          </h2>
+          <p
+            style={{
+              fontFamily: MONO,
+              fontSize: 12,
+              letterSpacing: "0.08em",
+              color: "#7C89AE",
+              margin: "0 0 clamp(36px,4vw,52px)",
+            }}
+          >
+            Phases overlap on purpose — this is the real schedule, not five tidy boxes.
+          </p>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "clamp(40px,5vw,64px)" }}>
-              {RESULTS.map((r) => (
+          {/* axis */}
+          <div style={{ position: "relative", height: 26, marginBottom: 4 }}>
+            {AXIS_TICKS.map((t) => (
+              <div key={t.label} style={{ position: "absolute", left: t.left, right: t.right, top: 0 }}>
+                <span style={{ fontFamily: MONO, fontSize: 11, color: "#7C89AE" }}>{t.label}</span>
+              </div>
+            ))}
+          </div>
+          <div style={{ position: "relative", height: 1, background: "rgba(124,150,232,0.35)", marginBottom: 2 }} />
+          <div style={{ position: "relative", height: 10, marginBottom: 24 }}>
+            {AXIS_TICKS.map((t) => (
+              <span
+                key={t.label}
+                style={{
+                  position: "absolute",
+                  left: t.left,
+                  right: t.right,
+                  top: 0,
+                  width: 1,
+                  height: 6,
+                  background: "rgba(124,150,232,0.4)",
+                }}
+              />
+            ))}
+          </div>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "clamp(28px,3.2vw,40px)" }}>
+            {PHASES.map((p) => (
+              <div key={p.n} className="el-phase" data-reveal data-delay={p.delay}>
+                <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", gap: 12, marginBottom: 12 }}>
+                  <span style={{ fontFamily: MONO, fontSize: 12, letterSpacing: "0.1em", color: p.labelColor }}>
+                    {p.n}
+                  </span>
+                  <span style={{ fontFamily: SERIF, fontSize: "clamp(21px,2.4vw,29px)", color: "#F3F6FF" }}>
+                    {p.name}
+                  </span>
+                  <span style={{ fontFamily: MONO, fontSize: 12, color: "#7C89AE" }}>{p.days}</span>
+                </div>
                 <div
-                  key={r.metric}
                   style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
-                    gap: "clamp(20px,3vw,52px)",
-                    borderTop: "1px solid rgba(124,150,232,0.35)",
-                    paddingTop: "clamp(28px,3vw,40px)",
+                    position: "relative",
+                    height: 36,
+                    border: "1px solid rgba(124,150,232,0.16)",
+                    borderRadius: 4,
+                    background: "rgba(255,255,255,0.03)",
+                    marginBottom: 14,
                   }}
                 >
-                  <div>
-                    <div
-                      style={{
-                        fontFamily: SERIF,
-                        fontSize: r.metricSize,
-                        lineHeight: 1.06,
-                        letterSpacing: "-0.02em",
-                        color: "#7FA0FF",
-                        textShadow: "0 0 30px rgba(59,107,255,0.45)",
-                      }}
-                    >
-                      {r.metric}
-                    </div>
-                    <div
-                      style={{
-                        fontFamily: MONO,
-                        fontSize: 12,
-                        letterSpacing: "0.08em",
-                        textTransform: "uppercase",
-                        color: "#8B97BC",
-                        marginTop: 12,
-                      }}
-                    >
-                      {r.descriptor}
-                    </div>
-                  </div>
-                  <div>
-                    <p style={{ ...bodyText("none"), fontSize: "clamp(16px,1.6vw,19px)" }}>{r.body}</p>
-                    {r.quote && (
-                      <p
-                        style={{
-                          fontFamily: SERIF,
-                          fontStyle: "italic",
-                          fontSize: "clamp(18px,1.8vw,22px)",
-                          lineHeight: 1.5,
-                          color: "#EAEEFB",
-                          margin: "20px 0 0",
-                          paddingLeft: 18,
-                          borderLeft: "2px solid #5B84FF",
-                        }}
-                      >
-                        “{r.quote}”
-                        {r.quoteTag && (
-                          <span
-                            style={{
-                              fontStyle: "normal",
-                              fontFamily: MONO,
-                              fontSize: 12,
-                              color: "#7C89AE",
-                            }}
-                          >
-                            {" "}
-                            {r.quoteTag}
-                          </span>
-                        )}
-                      </p>
-                    )}
-                  </div>
+                  <div
+                    style={{
+                      position: "absolute",
+                      top: 4,
+                      bottom: 4,
+                      left: p.left,
+                      width: p.width,
+                      right: p.right,
+                      background: p.gradient,
+                      borderRadius: 3,
+                      minWidth: p.minWidth,
+                      boxShadow: p.glow,
+                    }}
+                  />
                 </div>
-              ))}
-            </div>
+                <p style={bodyText("72ch")}>{p.desc}</p>
+              </div>
+            ))}
+          </div>
 
-            {/* video slots */}
-            <div style={{ marginTop: "clamp(56px,7vw,88px)" }}>
+          <GhostLink href={ROUTES.method}>Read the full method, phase by phase</GhostLink>
+        </div>
+      </section>
+
+      {/* 5 · WHAT'S INCLUDED */}
+      <section id="included" style={{ padding: sectionPad }}>
+        <div style={wrap}>
+          <Eyebrow>What’s included</Eyebrow>
+          <h2 style={{ ...h2Style, margin: "0 0 clamp(40px,5vw,64px)", maxWidth: "20ch" }}>
+            Everything. That’s kind of the point.
+          </h2>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))",
+              gap: "clamp(28px,3vw,52px) clamp(32px,4vw,64px)",
+            }}
+          >
+            {INCLUDED.map((item) => (
+              <div key={item.label} style={{ borderTop: "1px solid rgba(124,150,232,0.35)", paddingTop: 20 }}>
+                <div
+                  style={{
+                    fontFamily: MONO,
+                    fontSize: 12,
+                    letterSpacing: "0.1em",
+                    color: "#7FA0FF",
+                    marginBottom: 12,
+                  }}
+                >
+                  {item.label}
+                </div>
+                <p style={bodyText("none")}>{item.body}</p>
+              </div>
+            ))}
+          </div>
+
+          <GhostLink href={ROUTES.included}>See everything included, in detail</GhostLink>
+        </div>
+      </section>
+
+      {/* 6 · HOW IT WORKS */}
+      <section
+        style={{
+          padding: sectionPad,
+          borderTop: "1px solid rgba(124,150,232,0.16)",
+          borderBottom: "1px solid rgba(124,150,232,0.16)",
+          background: "rgba(6,11,30,0.72)",
+        }}
+      >
+        <div style={wrap}>
+          <Eyebrow>How it works</Eyebrow>
+          <h2 style={{ ...h2Style, margin: "0 0 clamp(40px,5vw,64px)" }}>Seven steps, start to live.</h2>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            {STEPS.map((s, i) => (
               <div
+                key={s.n}
                 style={{
-                  display: "flex",
-                  flexWrap: "wrap",
-                  alignItems: "baseline",
-                  justifyContent: "space-between",
-                  gap: 12,
-                  marginBottom: 24,
+                  display: "grid",
+                  gridTemplateColumns: "auto 1fr",
+                  gap: "clamp(18px,3vw,44px)",
+                  padding: "24px 0",
+                  borderTop: "1px solid rgba(124,150,232,0.18)",
+                  borderBottom: i === STEPS.length - 1 ? "1px solid rgba(124,150,232,0.18)" : undefined,
                 }}
               >
-                <h3 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: "clamp(22px,2.6vw,32px)", margin: 0, color: "#F3F6FF" }}>
-                  In their own words
-                </h3>
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  <span style={{ fontFamily: MONO, fontSize: "clamp(20px,2.4vw,28px)", color: "#7FA0FF" }}>{s.n}</span>
+                  <span
+                    style={{
+                      fontFamily: MONO,
+                      fontSize: 10.5,
+                      letterSpacing: "0.12em",
+                      textTransform: "uppercase",
+                      color: STAGE_STYLE[s.stage].color,
+                      border: `1px solid ${STAGE_STYLE[s.stage].border}`,
+                      borderRadius: 3,
+                      padding: "3px 7px",
+                      width: "max-content",
+                    }}
+                  >
+                    {s.stage}
+                  </span>
+                </div>
+                <div>
+                  <h3
+                    style={{
+                      fontFamily: SERIF,
+                      fontWeight: 500,
+                      fontSize: "clamp(20px,2.2vw,26px)",
+                      margin: "0 0 6px",
+                      color: "#F3F6FF",
+                    }}
+                  >
+                    {s.title}
+                  </h3>
+                  <p
+                    style={{
+                      fontFamily: SERIF,
+                      fontSize: "clamp(16px,1.5vw,19px)",
+                      lineHeight: 1.55,
+                      color: "#AEB8D6",
+                      margin: 0,
+                      maxWidth: "66ch",
+                    }}
+                  >
+                    {s.body}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+          <p
+            style={{
+              fontFamily: MONO,
+              fontSize: 12.5,
+              lineHeight: 1.7,
+              letterSpacing: "0.03em",
+              color: "#8EA6FF",
+              margin: "28px 0 0",
+              maxWidth: "70ch",
+            }}
+          >
+            Throughout: weekly calls, a dedicated project manager, and 48-hour turnaround on anything
+            you send us.
+          </p>
+        </div>
+      </section>
+
+      {/* FOUNDER */}
+      <section style={{ padding: "clamp(68px,8vw,116px) 24px", borderBottom: "1px solid rgba(124,150,232,0.16)" }}>
+        <div
+          style={{
+            ...wrap,
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit,minmax(260px,1fr))",
+            gap: "clamp(32px,5vw,64px)",
+            alignItems: "center",
+          }}
+        >
+          <div style={{ maxWidth: 340, width: "100%", justifySelf: "start" }}>
+            <div
+              style={{
+                position: "relative",
+                width: "100%",
+                aspectRatio: "4 / 5",
+                border: "1px solid rgba(124,150,232,0.4)",
+                borderRadius: 6,
+                boxShadow: "0 0 50px -12px rgba(59,107,255,0.55)",
+                overflow: "hidden",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: "linear-gradient(160deg,rgba(59,107,255,0.10),rgba(11,20,48,0.85))",
+              }}
+            >
+              {FOUNDER_PHOTO ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={FOUNDER_PHOTO}
+                  alt="Hannah Andersen, founder of Expand Lab"
+                  style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+                />
+              ) : (
                 <span
                   style={{
                     fontFamily: MONO,
-                    fontSize: 11.5,
+                    fontSize: 11,
                     letterSpacing: "0.1em",
                     textTransform: "uppercase",
                     color: "#7C89AE",
+                    textAlign: "center",
+                    padding: 16,
+                    lineHeight: 1.6,
                   }}
                 >
-                  Video testimonials · coming soon
+                  Founder photo
+                  <br />
+                  Hannah Andersen
                 </span>
-              </div>
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))",
-                  gap: 16,
-                }}
-              >
-                {[1, 2, 3, 4, 5].map((n) => (
-                  <div
-                    key={n}
-                    style={{
-                      position: "relative",
-                      aspectRatio: "9 / 12",
-                      border: "1px dashed rgba(124,150,232,0.4)",
-                      borderRadius: 6,
-                      background: "rgba(59,107,255,0.06)",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      gap: 12,
-                      textAlign: "center",
-                      padding: 16,
-                    }}
-                  >
-                    <span
-                      style={{
-                        width: 46,
-                        height: 46,
-                        borderRadius: "50%",
-                        border: "1.5px solid #5B84FF",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        color: "#7FA0FF",
-                        fontSize: 16,
-                        boxShadow: "0 0 20px -4px rgba(59,107,255,0.6)",
-                      }}
-                    >
-                      ▶
-                    </span>
-                    <span style={{ fontFamily: MONO, fontSize: 10.5, letterSpacing: "0.06em", color: "#8B97BC", lineHeight: 1.5 }}>
-                      40-sec video
-                      <br />
-                      testimonial {String(n).padStart(2, "0")}
-                    </span>
-                  </div>
-                ))}
-              </div>
+              )}
             </div>
-          </div>
-        </section>
-
-        {/* 8 · RIGHT FIT */}
-        <section
-          style={{
-            padding: sectionPad,
-            borderTop: "1px solid rgba(124,150,232,0.16)",
-            borderBottom: "1px solid rgba(124,150,232,0.16)",
-            background: "rgba(6,11,30,0.72)",
-          }}
-        >
-          <div style={wrap}>
-            <Eyebrow>Right fit</Eyebrow>
-            <h2 style={{ ...h2Style, margin: "0 0 clamp(40px,5vw,64px)", maxWidth: "22ch" }}>
-              This works for a specific kind of person.
-            </h2>
             <div
               style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))",
-                gap: 1,
-                background: "rgba(124,150,232,0.16)",
-                border: "1px solid rgba(124,150,232,0.16)",
-                borderRadius: 8,
-                overflow: "hidden",
+                fontFamily: MONO,
+                fontSize: 11,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "#8B97BC",
+                marginTop: 12,
               }}
             >
-              <div style={{ background: "rgba(12,20,46,0.72)", padding: "clamp(28px,3.4vw,44px)" }}>
-                <div
-                  style={{
-                    fontFamily: MONO,
-                    fontSize: 13,
-                    letterSpacing: "0.06em",
-                    textTransform: "uppercase",
-                    color: "#7FA0FF",
-                    marginBottom: 24,
-                  }}
-                >
-                  This is for you if
-                </div>
-                <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 18 }}>
-                  {FIT_YES.map((item, i) => (
-                    <li key={i} style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 14, alignItems: "start" }}>
-                      <span
-                        style={{
-                          width: 11,
-                          height: 11,
-                          background: "#3B6BFF",
-                          marginTop: 9,
-                          flexShrink: 0,
-                          boxShadow: "0 0 12px -1px rgba(59,107,255,0.9)",
-                        }}
-                      />
-                      <span style={{ fontFamily: SERIF, fontSize: "clamp(16px,1.55vw,19px)", lineHeight: 1.55, color: "#B7C0DD" }}>
-                        {item}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div style={{ background: "rgba(12,20,46,0.72)", padding: "clamp(28px,3.4vw,44px)" }}>
-                <div
-                  style={{
-                    fontFamily: MONO,
-                    fontSize: 13,
-                    letterSpacing: "0.06em",
-                    textTransform: "uppercase",
-                    color: "#E8A87C",
-                    marginBottom: 24,
-                  }}
-                >
-                  This probably isn’t for you if
-                </div>
-                <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 18 }}>
-                  {FIT_NO.map((item, i) => (
-                    <li key={i} style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 14, alignItems: "start" }}>
-                      <span style={{ width: 11, height: 11, border: "1.5px solid #E8A87C", marginTop: 9, flexShrink: 0 }} />
-                      <span style={{ fontFamily: SERIF, fontSize: "clamp(16px,1.55vw,19px)", lineHeight: 1.55, color: "#B7C0DD" }}>
-                        {item}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              Hannah Andersen · Founder
             </div>
           </div>
-        </section>
-
-        {/* 9 · GUARANTEE */}
-        <section style={{ padding: "clamp(76px,9vw,124px) 24px" }}>
-          <div
-            style={{
-              maxWidth: 1000,
-              margin: "0 auto",
-              background: "linear-gradient(160deg,rgba(59,107,255,0.16),rgba(11,20,48,0.85))",
-              border: "1px solid rgba(124,150,232,0.4)",
-              borderRadius: 10,
-              padding: "clamp(40px,6vw,80px)",
-              position: "relative",
-              overflow: "hidden",
-              boxShadow: "0 0 70px -20px rgba(59,107,255,0.6)",
-            }}
-          >
-            <div
-              aria-hidden="true"
+          <div>
+            <Eyebrow>Who you’d be working with</Eyebrow>
+            <p
               style={{
-                position: "absolute",
-                inset: 0,
-                backgroundImage:
-                  "linear-gradient(rgba(124,150,232,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(124,150,232,0.07) 1px,transparent 1px)",
-                backgroundSize: "32px 32px",
-                pointerEvents: "none",
+                fontFamily: SERIF,
+                fontSize: "clamp(19px,2.1vw,27px)",
+                lineHeight: 1.5,
+                color: "#F3F6FF",
+                margin: 0,
+                maxWidth: "44ch",
+                fontStyle: "italic",
               }}
-            />
-            <div style={{ position: "relative" }}>
-              <Eyebrow color="#9DB0FF" starFill="#7FA0FF">
-                The guarantee
-              </Eyebrow>
-              <h2
+            >
+              “
+              <span style={{ color: "#7C89AE" }}>
+                [Founder note — Hannah’s own words go here. Placeholder until final copy is confirmed.]
+              </span>
+              ”
+            </p>
+            <p style={{ fontFamily: MONO, fontSize: 12, letterSpacing: "0.03em", color: "#7C89AE", margin: "20px 0 0" }}>
+              Placeholder — awaiting Hannah’s photo &amp; founder note.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 7 · RESULTS */}
+      <section id="results" style={{ padding: sectionPad }}>
+        <div style={wrap}>
+          <Eyebrow>Results</Eyebrow>
+          <h2 style={{ ...h2Style, margin: "0 0 clamp(40px,5vw,64px)", maxWidth: "18ch" }}>
+            What we’ve actually built.
+          </h2>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "clamp(40px,5vw,64px)" }}>
+            {RESULTS.map((r) => (
+              <div
+                key={r.metric}
                 style={{
-                  fontFamily: SERIF,
-                  fontWeight: 400,
-                  fontSize: "clamp(28px,4.2vw,52px)",
-                  lineHeight: 1.08,
-                  letterSpacing: "-0.015em",
-                  margin: 0,
-                  maxWidth: "22ch",
-                  textWrap: "balance",
-                  color: "#F3F6FF",
-                } as React.CSSProperties}
-              >
-                Everything ships by day 100. Or we keep working — free — until it does.
-              </h2>
-              <p
-                style={{
-                  fontFamily: SERIF,
-                  fontSize: "clamp(17px,1.7vw,21px)",
-                  lineHeight: 1.6,
-                  color: "#B7C0DD",
-                  margin: "26px 0 0",
-                  maxWidth: "60ch",
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))",
+                  gap: "clamp(20px,3vw,52px)",
+                  borderTop: "1px solid rgba(124,150,232,0.35)",
+                  paddingTop: "clamp(28px,3vw,40px)",
                 }}
               >
-                Every deliverable specified in your proposal is live by day 100, or we keep building
-                at no additional cost until it’s done. The scope is in writing before we start, so
-                there’s no guessing what “finished” means.
-              </p>
-              <p style={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: "0.06em", color: "#7C89AE", margin: "24px 0 0" }}>
-                Recommended wording — pending Hannah’s final sign-off.
-              </p>
+                <div>
+                  <div
+                    style={{
+                      fontFamily: SERIF,
+                      fontSize: r.metricSize,
+                      lineHeight: 1.06,
+                      letterSpacing: "-0.02em",
+                      color: "#7FA0FF",
+                      textShadow: "0 0 30px rgba(59,107,255,0.45)",
+                    }}
+                  >
+                    {r.metric}
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: MONO,
+                      fontSize: 12,
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase",
+                      color: "#8B97BC",
+                      marginTop: 12,
+                    }}
+                  >
+                    {r.descriptor}
+                  </div>
+                </div>
+                <div>
+                  <p style={{ ...bodyText("none"), fontSize: "clamp(16px,1.6vw,19px)" }}>{r.body}</p>
+                  {r.quote && (
+                    <p
+                      style={{
+                        fontFamily: SERIF,
+                        fontStyle: "italic",
+                        fontSize: "clamp(18px,1.8vw,22px)",
+                        lineHeight: 1.5,
+                        color: "#EAEEFB",
+                        margin: "20px 0 0",
+                        paddingLeft: 18,
+                        borderLeft: "2px solid #5B84FF",
+                      }}
+                    >
+                      “{r.quote}”
+                      {r.quoteTag && (
+                        <span style={{ fontStyle: "normal", fontFamily: MONO, fontSize: 12, color: "#7C89AE" }}>
+                          {" "}
+                          {r.quoteTag}
+                        </span>
+                      )}
+                    </p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* video slots */}
+          <div style={{ marginTop: "clamp(56px,7vw,88px)" }}>
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                alignItems: "baseline",
+                justifyContent: "space-between",
+                gap: 12,
+                marginBottom: 24,
+              }}
+            >
+              <h3 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: "clamp(22px,2.6vw,32px)", margin: 0, color: "#F3F6FF" }}>
+                In their own words
+              </h3>
+              <span
+                style={{
+                  fontFamily: MONO,
+                  fontSize: 11.5,
+                  letterSpacing: "0.1em",
+                  textTransform: "uppercase",
+                  color: "#7C89AE",
+                }}
+              >
+                Video testimonials · coming soon
+              </span>
+            </div>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 16 }}>
+              {[1, 2, 3, 4, 5].map((n) => (
+                <div
+                  key={n}
+                  style={{
+                    position: "relative",
+                    aspectRatio: "9 / 12",
+                    border: "1px dashed rgba(124,150,232,0.4)",
+                    borderRadius: 6,
+                    background: "rgba(59,107,255,0.06)",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: 12,
+                    textAlign: "center",
+                    padding: 16,
+                  }}
+                >
+                  <span
+                    style={{
+                      width: 46,
+                      height: 46,
+                      borderRadius: "50%",
+                      border: "1.5px solid #5B84FF",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "#7FA0FF",
+                      fontSize: 16,
+                      boxShadow: "0 0 20px -4px rgba(59,107,255,0.6)",
+                    }}
+                  >
+                    ▶
+                  </span>
+                  <span style={{ fontFamily: MONO, fontSize: 10.5, letterSpacing: "0.06em", color: "#8B97BC", lineHeight: 1.5 }}>
+                    40-sec video
+                    <br />
+                    testimonial {String(n).padStart(2, "0")}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
-        </section>
 
-        {/* 10 · CLOSE */}
-        <section
+          <GhostLink href={ROUTES.results} center mt="clamp(40px,5vw,64px)">
+            See all case studies
+          </GhostLink>
+        </div>
+      </section>
+
+      {/* 8 · RIGHT FIT */}
+      <section
+        style={{
+          padding: sectionPad,
+          borderTop: "1px solid rgba(124,150,232,0.16)",
+          borderBottom: "1px solid rgba(124,150,232,0.16)",
+          background: "rgba(6,11,30,0.72)",
+        }}
+      >
+        <div style={wrap}>
+          <Eyebrow>Right fit</Eyebrow>
+          <h2 style={{ ...h2Style, margin: "0 0 clamp(40px,5vw,64px)", maxWidth: "22ch" }}>
+            This works for a specific kind of person.
+          </h2>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit,minmax(300px,1fr))",
+              gap: 1,
+              background: "rgba(124,150,232,0.16)",
+              border: "1px solid rgba(124,150,232,0.16)",
+              borderRadius: 8,
+              overflow: "hidden",
+            }}
+          >
+            <div style={{ background: "rgba(12,20,46,0.72)", padding: "clamp(28px,3.4vw,44px)" }}>
+              <div
+                style={{
+                  fontFamily: MONO,
+                  fontSize: 13,
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  color: "#7FA0FF",
+                  marginBottom: 24,
+                }}
+              >
+                This is for you if
+              </div>
+              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 18 }}>
+                {FIT_YES.map((item, i) => (
+                  <li key={i} style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 14, alignItems: "start" }}>
+                    <span
+                      style={{
+                        width: 11,
+                        height: 11,
+                        background: "#3B6BFF",
+                        marginTop: 9,
+                        flexShrink: 0,
+                        boxShadow: "0 0 12px -1px rgba(59,107,255,0.9)",
+                      }}
+                    />
+                    <span style={{ fontFamily: SERIF, fontSize: "clamp(16px,1.55vw,19px)", lineHeight: 1.55, color: "#B7C0DD" }}>
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div style={{ background: "rgba(12,20,46,0.72)", padding: "clamp(28px,3.4vw,44px)" }}>
+              <div
+                style={{
+                  fontFamily: MONO,
+                  fontSize: 13,
+                  letterSpacing: "0.06em",
+                  textTransform: "uppercase",
+                  color: "#E8A87C",
+                  marginBottom: 24,
+                }}
+              >
+                This probably isn’t for you if
+              </div>
+              <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 18 }}>
+                {FIT_NO.map((item, i) => (
+                  <li key={i} style={{ display: "grid", gridTemplateColumns: "auto 1fr", gap: 14, alignItems: "start" }}>
+                    <span style={{ width: 11, height: 11, border: "1.5px solid #E8A87C", marginTop: 9, flexShrink: 0 }} />
+                    <span style={{ fontFamily: SERIF, fontSize: "clamp(16px,1.55vw,19px)", lineHeight: 1.55, color: "#B7C0DD" }}>
+                      {item}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 9 · GUARANTEE */}
+      <section style={{ padding: "clamp(76px,9vw,124px) 24px" }}>
+        <div
           style={{
-            padding: "clamp(92px,11vw,168px) 24px",
-            textAlign: "center",
+            maxWidth: 1000,
+            margin: "0 auto",
+            background: "linear-gradient(160deg,rgba(59,107,255,0.16),rgba(11,20,48,0.85))",
+            border: "1px solid rgba(124,150,232,0.4)",
+            borderRadius: 10,
+            padding: "clamp(40px,6vw,80px)",
             position: "relative",
-            backgroundImage:
-              "radial-gradient(900px 520px at 50% 40%,rgba(59,107,255,0.16),transparent 62%),linear-gradient(rgba(124,150,232,0.08) 1px,transparent 1px),linear-gradient(90deg,rgba(124,150,232,0.08) 1px,transparent 1px)",
-            backgroundSize: "auto,38px 38px,38px 38px",
+            overflow: "hidden",
+            boxShadow: "0 0 70px -20px rgba(59,107,255,0.6)",
           }}
         >
-          <div style={{ maxWidth: 900, margin: "0 auto" }}>
+          <div
+            aria-hidden="true"
+            style={{
+              position: "absolute",
+              inset: 0,
+              backgroundImage:
+                "linear-gradient(rgba(124,150,232,0.07) 1px,transparent 1px),linear-gradient(90deg,rgba(124,150,232,0.07) 1px,transparent 1px)",
+              backgroundSize: "32px 32px",
+              pointerEvents: "none",
+            }}
+          />
+          <div style={{ position: "relative" }}>
+            <Eyebrow color="#9DB0FF" starFill="#7FA0FF">
+              The guarantee
+            </Eyebrow>
             <h2
               style={{
                 fontFamily: SERIF,
                 fontWeight: 400,
-                fontSize: "clamp(36px,5.8vw,74px)",
-                lineHeight: 1.02,
-                letterSpacing: "-0.022em",
+                fontSize: "clamp(28px,4.2vw,52px)",
+                lineHeight: 1.08,
+                letterSpacing: "-0.015em",
                 margin: 0,
+                maxWidth: "22ch",
                 textWrap: "balance",
                 color: "#F3F6FF",
-                textShadow: "0 0 60px rgba(59,107,255,0.35)",
               } as React.CSSProperties}
             >
-              Your expertise is worth more than your calendar.
+              Everything ships by day 100. Or we keep working — free — until it does.
             </h2>
             <p
               style={{
                 fontFamily: SERIF,
-                fontSize: "clamp(18px,1.9vw,22px)",
-                lineHeight: 1.58,
-                color: "#AEB8D6",
-                margin: "28px auto 0",
-                maxWidth: "58ch",
+                fontSize: "clamp(17px,1.7vw,21px)",
+                lineHeight: 1.6,
+                color: "#B7C0DD",
+                margin: "26px 0 0",
+                maxWidth: "60ch",
               }}
             >
-              Book a call and we’ll map out what your build would actually be — what we’d make, how
-              long it takes, what it costs, and what it’s worth once it exists. And honestly, if I
-              don’t think it’s a fit, I’ll tell you on the call. I want to make money. But I want to
-              make <em>you</em> money, and that only works if the thing is right.
+              Every deliverable specified in your proposal is live by day 100, or we keep building at
+              no additional cost until it’s done. The scope is in writing before we start, so there’s
+              no guessing what “finished” means.
             </p>
-            <div style={{ marginTop: 44 }}>
-              <PrimaryCTA
-                fontSize={15}
-                padding="20px 38px"
-                arrow={17}
-                shadow="0 0 0 1px rgba(91,132,255,0.5),0 18px 50px -14px rgba(59,107,255,0.9)"
-              >
-                Book a 30-minute strategy call
-              </PrimaryCTA>
-            </div>
-            <p
-              style={{
-                fontFamily: MONO,
-                fontSize: 12.5,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                color: "#7C89AE",
-                margin: "22px 0 0",
-              }}
-            >
-              Free · 30 minutes · No pitch
+            <p style={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: "0.06em", color: "#7C89AE", margin: "24px 0 0" }}>
+              Recommended wording — pending Hannah’s final sign-off.
             </p>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* FOOTER / TRUST STRIP */}
-        <footer
-          style={{
-            background: "#04081A",
-            color: "#AEB8D6",
-            padding: "clamp(40px,5vw,64px) 24px",
-            borderTop: "1px solid rgba(124,150,232,0.16)",
-          }}
-        >
-          <div style={wrap}>
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                gap: "16px 40px",
-                justifyContent: "center",
-                textAlign: "center",
-                fontFamily: MONO,
-                fontSize: 12,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                color: "#8EA6FF",
-                paddingBottom: 32,
-                borderBottom: "1px solid rgba(124,150,232,0.18)",
-              }}
+      {/* 10 · CLOSE */}
+      <section
+        style={{
+          padding: "clamp(92px,11vw,168px) 24px",
+          textAlign: "center",
+          position: "relative",
+          backgroundImage:
+            "radial-gradient(900px 520px at 50% 40%,rgba(59,107,255,0.16),transparent 62%),linear-gradient(rgba(124,150,232,0.08) 1px,transparent 1px),linear-gradient(90deg,rgba(124,150,232,0.08) 1px,transparent 1px)",
+          backgroundSize: "auto,38px 38px,38px 38px",
+        }}
+      >
+        <div style={{ maxWidth: 900, margin: "0 auto" }}>
+          <h2
+            style={{
+              fontFamily: SERIF,
+              fontWeight: 400,
+              fontSize: "clamp(36px,5.8vw,74px)",
+              lineHeight: 1.02,
+              letterSpacing: "-0.022em",
+              margin: 0,
+              textWrap: "balance",
+              color: "#F3F6FF",
+              textShadow: "0 0 60px rgba(59,107,255,0.35)",
+            } as React.CSSProperties}
+          >
+            Your expertise is worth more than your calendar.
+          </h2>
+          <p
+            style={{
+              fontFamily: SERIF,
+              fontSize: "clamp(18px,1.9vw,22px)",
+              lineHeight: 1.58,
+              color: "#AEB8D6",
+              margin: "28px auto 0",
+              maxWidth: "58ch",
+            }}
+          >
+            Book a call and we’ll map out what your build would actually be — what we’d make, how long
+            it takes, what it costs, and what it’s worth once it exists. And honestly, if I don’t
+            think it’s a fit, I’ll tell you on the call. I want to make money. But I want to make{" "}
+            <em>you</em> money, and that only works if the thing is right.
+          </p>
+          <div style={{ marginTop: 44 }}>
+            <PrimaryCTA
+              fontSize={15}
+              padding="20px 38px"
+              arrow={17}
+              shadow="0 0 0 1px rgba(91,132,255,0.5),0 18px 50px -14px rgba(59,107,255,0.9)"
             >
-              <span>$1.5M+ generated for clients</span>
-              <span>80+ experts built for</span>
-              <span>100-day delivery</span>
-              <span>Kajabi, Skool &amp; GoHighLevel</span>
-            </div>
-            <div
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: 16,
-                paddingTop: 28,
-              }}
-            >
-              <a href="#top" style={{ display: "flex", alignItems: "center" }} aria-label="Expand Lab — top">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={LOGO} alt="Expand Lab" style={{ height: 24, width: "auto", display: "block" }} />
-              </a>
-              <span style={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: "0.04em", color: "#7C89AE" }}>
-                theexpandlab.com · © 2026 Expand Lab
-              </span>
-              <a
-                className="el-portlink"
-                href={CAL_URL}
-                target="_blank"
-                rel="noopener"
-                style={{
-                  fontFamily: MONO,
-                  fontSize: 12,
-                  letterSpacing: "0.06em",
-                  textTransform: "uppercase",
-                  color: "#F3F6FF",
-                  borderBottom: "1px solid #5B84FF",
-                  paddingBottom: 2,
-                }}
-              >
-                Book a call →
-              </a>
-            </div>
+              Book a 30-minute strategy call
+            </PrimaryCTA>
           </div>
-        </footer>
-      </div>
-    </div>
+          <p
+            style={{
+              fontFamily: MONO,
+              fontSize: 12.5,
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              color: "#7C89AE",
+              margin: "22px 0 0",
+            }}
+          >
+            Free · 30 minutes · No pitch
+          </p>
+        </div>
+      </section>
+
+      <SiteFooter />
+    </PageShell>
   );
 }
-
-/* ── Scoped CSS: theme override, starfield motion, hovers, reveal ───────── */
-
-const PAGE_CSS = `
-/* This dark route overrides the global warm-paper body theme while mounted. */
-body{background:#080F26 !important;background-image:none !important;color:#EAEEFB;-webkit-font-smoothing:antialiased;}
-html{scroll-behavior:smooth;}
-::selection{background:#3B6BFF;color:#EAF0FF;}
-
-.el-cta:hover{color:#fff;}
-.el-navlink{transition:color .18s ease;}
-.el-navlink:hover{color:#B9CBFF;}
-.el-portlink{transition:color .18s ease,border-color .18s ease;}
-.el-portlink:hover{color:#B9CBFF;border-color:#B9CBFF;}
-
-.el-phase{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease;}
-.el-phase.el-phase--in{opacity:1;transform:none;}
-
-@keyframes elTwinkleA{0%,100%{opacity:.55}50%{opacity:1}}
-@keyframes elTwinkleB{0%,100%{opacity:.9}50%{opacity:.4}}
-@keyframes elTwinkleC{0%,100%{opacity:.7}50%{opacity:.3}}
-@keyframes elDriftA{from{background-position:0 0}to{background-position:-360px 360px}}
-@keyframes elDriftB{from{background-position:0 0}to{background-position:480px 480px}}
-@keyframes elDriftC{from{background-position:0 0}to{background-position:-260px 620px}}
-.el-star-a{animation:elTwinkleA 6s ease-in-out infinite,elDriftA 140s linear infinite;}
-.el-star-b{animation:elTwinkleB 9s ease-in-out infinite,elDriftB 200s linear infinite;}
-.el-star-c{animation:elTwinkleC 7.5s ease-in-out infinite,elDriftC 90s linear infinite;}
-
-@media (max-width:640px){
-  .el-nav-collapse{display:none;}
-}
-
-@media (prefers-reduced-motion: reduce){
-  html{scroll-behavior:auto;}
-  .el-star-a,.el-star-b,.el-star-c{animation:none !important;}
-  .el-phase{opacity:1 !important;transform:none !important;transition:none !important;}
-}
-`;
