@@ -308,7 +308,7 @@ export default function BuildOnePager() {
         id="top"
         style={{
           position: "relative",
-          padding: "clamp(84px,11vw,150px) 24px clamp(60px,8vw,104px)",
+          padding: "clamp(40px,4.5vw,72px) 24px clamp(56px,7vw,96px)",
           backgroundImage:
             "linear-gradient(rgba(124,150,232,0.09) 1px,transparent 1px),linear-gradient(90deg,rgba(124,150,232,0.09) 1px,transparent 1px)",
           backgroundSize: "38px 38px",
@@ -343,8 +343,8 @@ export default function BuildOnePager() {
               style={{
                 fontFamily: SERIF,
                 fontWeight: 400,
-                fontSize: "clamp(40px,6.8vw,90px)",
-                lineHeight: 1.01,
+                fontSize: "clamp(38px,5.6vw,76px)",
+                lineHeight: 1.03,
                 letterSpacing: "-0.022em",
                 margin: 0,
                 maxWidth: "16ch",
