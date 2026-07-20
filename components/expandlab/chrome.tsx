@@ -175,6 +175,80 @@ export function GhostLink({
   );
 }
 
+/* ── Client quotes ──────────────────────────────────────────────────────────
+ * Real lines from client calls, lightly cleaned. Attributed by descriptor only
+ * (no names) pending written client sign-off; add names once approved.
+ */
+export type Testimonial = { theme: string; quote: string; who: string };
+
+export const TESTIMONIALS: Testimonial[] = [
+  {
+    theme: "Exceeding expectations",
+    quote: "You're honestly exceeding them.",
+    who: "Expand Lab client, asked if we were meeting his expectations",
+  },
+  {
+    theme: "A true partner",
+    quote:
+      "You're a huge unlock for this. It's so helpful to have somebody who understands it more than I do.",
+    who: "Expand Lab client",
+  },
+  {
+    theme: "Your clients feel it too",
+    quote:
+      "We got more compliments this year on our systems and making sure people felt set up for success than we ever have before.",
+    who: "Youth mentorship organization",
+  },
+  {
+    theme: "Momentum",
+    quote: "I feel like night and day from three weeks ago to where I am now.",
+    who: "Expand Lab client",
+  },
+  {
+    theme: "The craft",
+    quote: "Everything you put out there is just very high level.",
+    who: "Expand Lab client",
+  },
+  {
+    theme: "The work is felt",
+    quote:
+      "Your fingerprint was imprinted all over summer camp. You were in the room with us — with these girls and these families. Our deepest gratitude.",
+    who: "Youth mentorship organization",
+  },
+];
+
+export function QuoteWall({ items }: { items: Testimonial[] }) {
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))", gap: "clamp(16px,2vw,20px)" }}>
+      {items.map((t, i) => (
+        <blockquote
+          key={i}
+          className="el-phase"
+          data-reveal
+          style={{
+            margin: 0,
+            border: "1px solid rgba(124,150,232,0.2)",
+            borderRadius: 14,
+            background: "rgba(11,20,48,0.55)",
+            padding: "clamp(24px,3vw,34px)",
+            display: "flex",
+            flexDirection: "column",
+            gap: 16,
+          }}
+        >
+          <div style={{ fontFamily: MONO, fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "#7FA0FF" }}>
+            {t.theme}
+          </div>
+          <p style={{ fontFamily: SERIF, fontStyle: "italic", fontSize: "clamp(18px,1.8vw,23px)", lineHeight: 1.45, color: "#F3F6FF", margin: 0, flex: 1 }}>
+            “{t.quote}”
+          </p>
+          <div style={{ fontFamily: MONO, fontSize: 12, letterSpacing: "0.06em", color: "#8B97BC" }}>— {t.who}</div>
+        </blockquote>
+      ))}
+    </div>
+  );
+}
+
 /* ── Starfield ──────────────────────────────────────────────────────────── */
 
 export function Starfield() {
