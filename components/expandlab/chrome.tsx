@@ -213,6 +213,9 @@ export function Starfield() {
           backgroundRepeat: "repeat",
         }}
       />
+      {/* Occasional shooting stars — a subtle "moment" of motion. */}
+      <span className="el-shoot el-shoot-1" />
+      <span className="el-shoot el-shoot-2" />
     </div>
   );
 }
@@ -432,15 +435,34 @@ html{scroll-behavior:smooth;}
 .el-phase{opacity:0;transform:translateY(16px);transition:opacity .7s ease,transform .7s ease;}
 .el-phase.el-phase--in{opacity:1;transform:none;}
 
-@keyframes elTwinkleA{0%,100%{opacity:.55}50%{opacity:1}}
-@keyframes elTwinkleB{0%,100%{opacity:.9}50%{opacity:.4}}
-@keyframes elTwinkleC{0%,100%{opacity:.7}50%{opacity:.3}}
+@keyframes elTwinkleA{0%,100%{opacity:.45}50%{opacity:1}}
+@keyframes elTwinkleB{0%,100%{opacity:.95}50%{opacity:.35}}
+@keyframes elTwinkleC{0%,100%{opacity:.75}50%{opacity:.28}}
 @keyframes elDriftA{from{background-position:0 0}to{background-position:-360px 360px}}
 @keyframes elDriftB{from{background-position:0 0}to{background-position:480px 480px}}
 @keyframes elDriftC{from{background-position:0 0}to{background-position:-260px 620px}}
-.el-star-a{animation:elTwinkleA 6s ease-in-out infinite,elDriftA 140s linear infinite;}
-.el-star-b{animation:elTwinkleB 9s ease-in-out infinite,elDriftB 200s linear infinite;}
-.el-star-c{animation:elTwinkleC 7.5s ease-in-out infinite,elDriftC 90s linear infinite;}
+/* Drift is ~2× faster than before so the parallax motion is actually noticeable. */
+.el-star-a{animation:elTwinkleA 5s ease-in-out infinite,elDriftA 70s linear infinite;}
+.el-star-b{animation:elTwinkleB 7s ease-in-out infinite,elDriftB 100s linear infinite;}
+.el-star-c{animation:elTwinkleC 6s ease-in-out infinite,elDriftC 46s linear infinite;}
+
+/* Occasional shooting star: a thin glowing streak that crosses, then a long pause. */
+@keyframes elShoot{
+  0%{transform:translate3d(0,0,0) rotate(27deg);opacity:0}
+  4%{opacity:0}
+  6%{opacity:1}
+  12%{opacity:1}
+  17%{transform:translate3d(520px,265px,0) rotate(27deg);opacity:0}
+  100%{transform:translate3d(520px,265px,0) rotate(27deg);opacity:0}
+}
+.el-shoot{
+  position:absolute;top:0;left:0;width:130px;height:2px;border-radius:2px;opacity:0;
+  transform:rotate(27deg);pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(200,216,255,0.95));
+  filter:drop-shadow(0 0 6px rgba(159,192,255,0.85));
+}
+.el-shoot-1{top:11%;left:5%;animation:elShoot 15s linear infinite;animation-delay:3.5s;}
+.el-shoot-2{top:27%;left:42%;width:96px;animation:elShoot 21s linear infinite;animation-delay:12s;}
 
 @media (max-width:640px){
   .el-nav-collapse{display:none;}
@@ -449,6 +471,7 @@ html{scroll-behavior:smooth;}
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto;}
   .el-star-a,.el-star-b,.el-star-c{animation:none !important;}
+  .el-shoot{animation:none !important;opacity:0 !important;}
   .el-phase{opacity:1 !important;transform:none !important;transition:none !important;}
 }
 `;
