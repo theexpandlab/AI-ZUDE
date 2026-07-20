@@ -409,7 +409,7 @@ export default function BuildOnePager() {
               minWidth: 250,
               display: "flex",
               flexDirection: "column",
-              justifyContent: "space-between",
+              justifyContent: "flex-start",
               gap: 16,
             }}
           >
