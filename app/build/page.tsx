@@ -420,6 +420,11 @@ export default function BuildOnePager() {
                 figure: "3× ROI",
                 sub: "first group program, launched in the first 4 months",
               },
+              {
+                label: "Recent win",
+                figure: "$30K → $86K",
+                sub: "same offer, six months apart · personal development coach",
+              },
             ].map((card) => (
               <div
                 key={card.label}
