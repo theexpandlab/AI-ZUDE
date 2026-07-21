@@ -1,0 +1,54 @@
+{
+  "meta": { "api_version": "v21.0" },
+  "account": {
+    "ad_account_id": "act_REPLACE_ME",
+    "page_id": "REPLACE_ME",
+    "instagram_actor_id": "REPLACE_ME"
+  },
+  "campaign": {
+    "name": "Offer Blueprint — Cold Traffic — 2026-07",
+    "objective": "OUTCOME_TRAFFIC",
+    "special_ad_categories": []
+  },
+  "ad_set": {
+    "name": "US · 28-55 · Coaches/Consultants · LPV",
+    "daily_budget": 2000,
+    "billing_event": "IMPRESSIONS",
+    "optimization_goal": "LANDING_PAGE_VIEWS",
+    "bid_strategy": "LOWEST_COST_WITHOUT_CAP",
+    "destination_url": "https://build.theexpandlab.com/?utm_source=meta&utm_medium=paid_social&utm_campaign=offer_blueprint&utm_content=coldtraffic",
+    "targeting": {
+      "geo_locations": { "countries": ["US"] },
+      "age_min": 28,
+      "age_max": 55,
+      "genders": [],
+      "publisher_platforms": ["facebook", "instagram"],
+      "flexible_spec": [
+        {
+          "interests": [
+            { "id": "6003130044117", "name": "Small business (example — verify id)" },
+            { "id": "6003397425735", "name": "Online advertising (example — verify id)" }
+          ]
+        }
+      ]
+    }
+  },
+  "creatives": [
+    {
+      "name": "Hidden Offer — hook A",
+      "primary_text": "You know that thing people keep coming to you for? There's a productized offer hiding inside it — you just haven't named it yet.\n\nAnswer 5 short questions and get a personalized Offer Blueprint: 2–3 concrete offer concepts built from your actual expertise, audience, and the transformation you create. Free, takes 3 minutes.",
+      "headline": "Find the offer hiding in your expertise",
+      "description": "Get your free Offer Blueprint from The Expand Lab",
+      "image_url": "https://REPLACE_ME/your-hosted-creative-1200x1200.jpg",
+      "call_to_action": "GET_OFFER"
+    },
+    {
+      "name": "Stuck on what to sell — hook B",
+      "primary_text": "\"I want to build something — I'm just not sure what to sell.\"\n\nIf that's you, the Offer Blueprint was made for this exact moment. Five questions in, you'll have 2–3 personalized offer concepts with formats, who they're for, and a price band. Architect, not hype.",
+      "headline": "Not sure what to sell? Start here.",
+      "description": "A 3-minute build from The Expand Lab",
+      "image_url": "https://REPLACE_ME/your-hosted-creative-1080x1350.jpg",
+      "call_to_action": "LEARN_MORE"
+    }
+  ]
+}
