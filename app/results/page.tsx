@@ -6,10 +6,12 @@ import {
   MONO,
   PageShell,
   PrimaryCTA,
+  QuoteWall,
   ROUTES,
   SERIF,
   SiteFooter,
   SiteNav,
+  TESTIMONIALS,
   wrap,
 } from "@/components/expandlab/chrome";
 
@@ -375,71 +377,13 @@ export default function ResultsPage() {
         </div>
       </section>
 
-      {/* VIDEO TESTIMONIALS */}
+      {/* CLIENT QUOTES */}
       <section style={{ padding: "clamp(56px,7vw,100px) 24px" }}>
         <div style={wrap}>
-          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "baseline", justifyContent: "space-between", gap: 12, marginBottom: 10 }}>
-            <h2 style={{ ...h2Style, fontSize: "clamp(26px,3.6vw,44px)", lineHeight: 1.08, margin: 0 }}>In their own words.</h2>
-            <span style={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: "0.1em", textTransform: "uppercase", color: "#F2C39C" }}>
-              Coming soon · in production
-            </span>
-          </div>
-          <p
-            style={{
-              fontFamily: SERIF,
-              fontSize: "clamp(16px,1.6vw,19px)",
-              lineHeight: 1.55,
-              color: "#AEB8D6",
-              maxWidth: "60ch",
-              margin: "0 0 clamp(28px,3vw,40px)",
-            }}
-          >
-            Video testimonials from these clients are being recorded now. The layout’s ready — they
-            drop straight in.
-          </p>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 16 }}>
-            {[1, 2, 3, 4, 5].map((n) => (
-              <div
-                key={n}
-                style={{
-                  position: "relative",
-                  aspectRatio: "9 / 12",
-                  border: "1px dashed rgba(124,150,232,0.4)",
-                  borderRadius: 8,
-                  background: "rgba(59,107,255,0.06)",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 12,
-                  textAlign: "center",
-                  padding: 16,
-                }}
-              >
-                <span
-                  style={{
-                    width: 48,
-                    height: 48,
-                    borderRadius: "50%",
-                    border: "1.5px solid #5B84FF",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "#7FA0FF",
-                    fontSize: 16,
-                    boxShadow: "0 0 20px -4px rgba(59,107,255,0.6)",
-                  }}
-                >
-                  ▶
-                </span>
-                <span style={{ fontFamily: MONO, fontSize: 10.5, letterSpacing: "0.06em", color: "#8B97BC", lineHeight: 1.5 }}>
-                  40-sec video
-                  <br />
-                  testimonial {String(n).padStart(2, "0")}
-                </span>
-              </div>
-            ))}
-          </div>
+          <h2 style={{ ...h2Style, fontSize: "clamp(26px,3.6vw,44px)", lineHeight: 1.08, margin: "0 0 clamp(28px,3vw,40px)" }}>
+            In their own words.
+          </h2>
+          <QuoteWall items={TESTIMONIALS} />
         </div>
       </section>
 
