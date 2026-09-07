@@ -32,12 +32,6 @@ const FOUNDER_PHOTO = "/hannah-andersen.jpg";
 
 const TEAM: { name: string; role: string; body: string; avatar: AvatarVariant }[] = [
   {
-    name: "Edielynne",
-    role: "Social media management",
-    body: "Manages social media, turning your expertise into content that reaches and grows your audience.",
-    avatar: "edielynne",
-  },
-  {
     name: "Jhon",
     role: "Designer & editor",
     body: "Designs and edits everything to the caliber of your work, not a platform template.",
@@ -48,6 +42,12 @@ const TEAM: { name: string; role: string; body: string; avatar: AvatarVariant }[
     role: "Marketing tech",
     body: "Builds and wires the funnels, automations and integrations so the whole system runs.",
     avatar: "lisa",
+  },
+  {
+    name: "Edielynne",
+    role: "Social media management",
+    body: "Manages social media, turning your expertise into content that reaches and grows your audience.",
+    avatar: "edielynne",
   },
   {
     name: "A curated contractor bench",
