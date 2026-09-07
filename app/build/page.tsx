@@ -3,6 +3,7 @@
 import {
   bodyText,
   Eyebrow,
+  FaqSection,
   GhostLink,
   h2Style,
   MONO,
@@ -18,6 +19,8 @@ import {
   TESTIMONIALS,
   wrap,
 } from "@/components/expandlab/chrome";
+import { FACTS } from "@/content/facts";
+import { HOME_FAQ } from "@/content/site-faq";
 
 /**
  * The 100-Day Product Ecosystem Build — the one-pager / conversion page.
@@ -371,11 +374,25 @@ export default function BuildOnePager() {
               itself, the funnel, the tech, and the launch. A hundred days. You show up, give
               feedback, and record your content. We do the rest.
             </p>
+            <p
+              style={{
+                fontFamily: SERIF,
+                fontSize: "clamp(15px,1.5vw,17px)",
+                lineHeight: 1.55,
+                color: "#8EA6FF",
+                maxWidth: "62ch",
+                margin: "20px 0 0",
+              }}
+            >
+              The Expand Lab is a done-for-you online course creation agency in {FACTS.city}. We design,
+              build and launch online courses, cohorts and memberships on Kajabi, Skool or GoHighLevel in
+              100 days.
+            </p>
             <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 18, marginTop: 44 }}>
               <PrimaryCTA>Book a 30-minute strategy call</PrimaryCTA>
               <a
                 className="el-ghostlink"
-                href="#results"
+                href={ROUTES.results}
                 style={{
                   fontFamily: MONO,
                   fontSize: 14,
@@ -639,9 +656,9 @@ export default function BuildOnePager() {
                   <span style={{ fontFamily: MONO, fontSize: 12, letterSpacing: "0.1em", color: p.labelColor }}>
                     {p.n}
                   </span>
-                  <span style={{ fontFamily: SERIF, fontSize: "clamp(21px,2.4vw,29px)", color: "#F3F6FF" }}>
+                  <h3 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: "clamp(21px,2.4vw,29px)", color: "#F3F6FF", margin: 0 }}>
                     {p.name}
-                  </span>
+                  </h3>
                   <span style={{ fontFamily: MONO, fontSize: 12, color: "#7C89AE" }}>{p.days}</span>
                 </div>
                 <div
@@ -694,23 +711,63 @@ export default function BuildOnePager() {
           >
             {INCLUDED.map((item) => (
               <div key={item.label} style={{ borderTop: "1px solid rgba(124,150,232,0.35)", paddingTop: 20 }}>
-                <div
+                <h3
                   style={{
                     fontFamily: MONO,
+                    fontWeight: 400,
                     fontSize: 12,
                     letterSpacing: "0.1em",
                     color: "#7FA0FF",
-                    marginBottom: 12,
+                    margin: "0 0 12px",
                   }}
                 >
                   {item.label}
-                </div>
+                </h3>
                 <p style={bodyText("none")}>{item.body}</p>
               </div>
             ))}
           </div>
 
           <GhostLink href={ROUTES.included}>See everything included, in detail</GhostLink>
+
+          {/* Platform + pricing links (AI Search plan §2.8) */}
+          <div
+            style={{
+              marginTop: "clamp(40px,5vw,64px)",
+              paddingTop: "clamp(28px,3vw,40px)",
+              borderTop: "1px solid rgba(124,150,232,0.16)",
+              display: "flex",
+              flexWrap: "wrap",
+              alignItems: "center",
+              gap: "12px 22px",
+            }}
+          >
+            <span style={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: "0.14em", textTransform: "uppercase", color: "#7C89AE" }}>
+              Built on
+            </span>
+            {[
+              { href: ROUTES.kajabi, label: "Kajabi" },
+              { href: ROUTES.skool, label: "Skool" },
+              { href: ROUTES.gohighlevel, label: "GoHighLevel" },
+            ].map((l) => (
+              <a
+                key={l.href}
+                className="el-navlink"
+                href={l.href}
+                style={{ fontFamily: MONO, fontSize: 13, letterSpacing: "0.04em", color: "#B9CBFF", borderBottom: "1px solid rgba(124,150,232,0.4)", paddingBottom: 2 }}
+              >
+                {l.label}
+              </a>
+            ))}
+            <span aria-hidden="true" style={{ color: "#3a4770" }}>·</span>
+            <a
+              className="el-navlink"
+              href={ROUTES.pricing}
+              style={{ fontFamily: MONO, fontSize: 13, letterSpacing: "0.04em", color: "#B9CBFF", borderBottom: "1px solid rgba(124,150,232,0.4)", paddingBottom: 2 }}
+            >
+              See pricing
+            </a>
+          </div>
         </div>
       </section>
 
@@ -855,18 +912,19 @@ export default function BuildOnePager() {
                 </span>
               )}
             </div>
-            <div
+            <h3
               style={{
                 fontFamily: MONO,
+                fontWeight: 400,
                 fontSize: 11,
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
                 color: "#8B97BC",
-                marginTop: 12,
+                margin: "12px 0 0",
               }}
             >
               Hannah Andersen · Founder
-            </div>
+            </h3>
           </div>
           <div>
             <Eyebrow>Who you’d be working with</Eyebrow>
@@ -914,18 +972,20 @@ export default function BuildOnePager() {
                 }}
               >
                 <div>
-                  <div
+                  <h3
                     style={{
                       fontFamily: SERIF,
+                      fontWeight: 400,
                       fontSize: r.metricSize,
                       lineHeight: 1.06,
                       letterSpacing: "-0.02em",
                       color: "#7FA0FF",
                       textShadow: "0 0 30px rgba(59,107,255,0.45)",
+                      margin: 0,
                     }}
                   >
                     {r.metric}
-                  </div>
+                  </h3>
                   <div
                     style={{
                       fontFamily: MONO,
@@ -1135,12 +1195,12 @@ export default function BuildOnePager() {
               no additional cost until it’s done. The scope is in writing before we start, so there’s
               no guessing what “finished” means.
             </p>
-            <p style={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: "0.06em", color: "#7C89AE", margin: "24px 0 0" }}>
-              Recommended wording — pending Hannah’s final sign-off.
-            </p>
           </div>
         </div>
       </section>
+
+      {/* FAQ (homepage subset — full list at /faq) */}
+      <FaqSection heading="Questions people ask" eyebrow="FAQ" items={HOME_FAQ} />
 
       {/* 10 · CLOSE */}
       <section

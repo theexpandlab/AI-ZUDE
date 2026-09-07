@@ -2,6 +2,8 @@
 
 import { useEffect } from "react";
 
+import { FACTS } from "@/content/facts";
+
 /**
  * Shared chrome + design tokens for the Expand Lab "100-Day Build" site.
  *
@@ -19,12 +21,23 @@ export const LOGO = "/expand-lab-logo.avif";
 export const MONO = "'IBM Plex Mono', monospace";
 export const SERIF = "'Newsreader', Georgia, serif";
 
-/* Routes (real Next paths — also reachable on the sales subdomain). */
+/* Routes (real Next paths — also reachable on the sales subdomain).
+ * "home" is "/": on the sales host "/" renders this sales page (via a
+ * host-scoped rewrite) and "/build" 308-redirects here, so "/" is the single
+ * canonical home URL (AI Search plan §1.2). */
 export const ROUTES = {
-  home: "/build",
+  home: "/",
   method: "/method",
   included: "/whats-included",
   results: "/results",
+  pricing: "/pricing",
+  faq: "/faq",
+  kajabi: "/kajabi",
+  skool: "/skool",
+  gohighlevel: "/gohighlevel",
+  compareAgencyFreelancer: "/compare/course-agency-vs-freelancer",
+  compareDfyDiy: "/compare/done-for-you-vs-diy-course-platform",
+  comparePlatforms: "/compare/kajabi-vs-skool-vs-gohighlevel",
 };
 
 /* ── Reused style fragments ─────────────────────────────────────────────── */
@@ -172,6 +185,82 @@ export function GhostLink({
         {children} <span>→</span>
       </a>
     </div>
+  );
+}
+
+/** Small mono "Last updated {date}" line — a freshness signal AI engines
+ * prefer (AI Search plan §2.9). */
+export function LastUpdated({ date }: { date: string }) {
+  return (
+    <p
+      style={{
+        fontFamily: MONO,
+        fontSize: 11.5,
+        letterSpacing: "0.1em",
+        textTransform: "uppercase",
+        color: "#7C89AE",
+        margin: 0,
+      }}
+    >
+      Last updated {date}
+    </p>
+  );
+}
+
+/** Shared FAQ section: a heading plus question/answer rows with the questions as
+ * <h3>s. Pair with faqPage(items) JSON-LD in the layout so the structured data
+ * matches this copy verbatim. */
+export function FaqSection({
+  heading,
+  eyebrow,
+  items,
+}: {
+  heading: string;
+  eyebrow?: string;
+  items: { q: string; a: string }[];
+}) {
+  return (
+    <section
+      style={{
+        padding: "clamp(64px,8vw,110px) 24px",
+        borderTop: "1px solid rgba(124,150,232,0.16)",
+        background: "rgba(6,11,30,0.72)",
+      }}
+    >
+      <div style={{ maxWidth: 900, margin: "0 auto" }}>
+        {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+        <h2 style={{ ...h2Style, fontSize: "clamp(28px,4.2vw,50px)", margin: "0 0 clamp(32px,4vw,52px)" }}>
+          {heading}
+        </h2>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          {items.map((f, i) => (
+            <div
+              key={i}
+              style={{
+                padding: "24px 0",
+                borderTop: "1px solid rgba(124,150,232,0.18)",
+                borderBottom: i === items.length - 1 ? "1px solid rgba(124,150,232,0.18)" : undefined,
+              }}
+            >
+              <h3
+                style={{
+                  fontFamily: SERIF,
+                  fontWeight: 500,
+                  fontSize: "clamp(19px,2vw,24px)",
+                  margin: "0 0 8px",
+                  color: "#F3F6FF",
+                }}
+              >
+                {f.q}
+              </h3>
+              <p style={{ fontFamily: SERIF, fontSize: "clamp(16px,1.5vw,19px)", lineHeight: 1.55, color: "#AEB8D6", margin: 0 }}>
+                {f.a}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -342,8 +431,14 @@ export function SiteNav() {
           <a className="el-navlink el-nav-collapse" href={ROUTES.included} style={{ color: "#AEB8D6" }}>
             Included
           </a>
+          <a className="el-navlink el-nav-collapse" href={ROUTES.pricing} style={{ color: "#AEB8D6" }}>
+            Pricing
+          </a>
           <a className="el-navlink el-nav-collapse" href={ROUTES.results} style={{ color: "#AEB8D6" }}>
             Results
+          </a>
+          <a className="el-navlink el-nav-collapse" href={ROUTES.faq} style={{ color: "#AEB8D6" }}>
+            FAQ
           </a>
           <a
             className="el-cta"
@@ -415,26 +510,79 @@ export function SiteFooter() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={LOGO} alt="Expand Lab" style={{ height: 24, width: "auto", display: "block" }} />
           </a>
-          <span style={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: "0.04em", color: "#7C89AE" }}>
-            theexpandlab.com · © 2026 Expand Lab
-          </span>
-          <a
-            className="el-ghostlink"
-            href={CAL_URL}
-            target="_blank"
-            rel="noopener"
-            style={{
-              fontFamily: MONO,
-              fontSize: 12,
-              letterSpacing: "0.06em",
-              textTransform: "uppercase",
-              color: "#F3F6FF",
-              borderBottom: "1px solid #5B84FF",
-              paddingBottom: 2,
-            }}
-          >
-            Book a call →
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 6 }}>
+            <a
+              className="el-ghostlink"
+              href={CAL_URL}
+              target="_blank"
+              rel="noopener"
+              style={{
+                fontFamily: MONO,
+                fontSize: 12,
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+                color: "#F3F6FF",
+                borderBottom: "1px solid #5B84FF",
+                paddingBottom: 2,
+              }}
+            >
+              Book a call →
+            </a>
+            <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: "0.04em", color: "#7C89AE" }}>
+              Or email{" "}
+              <a href={`mailto:${FACTS.email}`} style={{ color: "#8EA6FF" }}>
+                {FACTS.email}
+              </a>
+            </span>
+            <a
+              className="el-ghostlink"
+              href={FACTS.instagram}
+              target="_blank"
+              rel="noopener"
+              style={{ fontFamily: MONO, fontSize: 11, letterSpacing: "0.04em", color: "#8EA6FF" }}
+            >
+              Instagram {FACTS.instagramHandle} →
+            </a>
+          </div>
+        </div>
+
+        {/* Entity line — name, category, location, contact, and the link back to
+         * the root domain (required so the two hosts describe one business and
+         * are connected). AI Search plan §1.6. */}
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "6px 10px",
+            textAlign: "center",
+            marginTop: 28,
+            paddingTop: 24,
+            borderTop: "1px solid rgba(124,150,232,0.12)",
+            fontFamily: MONO,
+            fontSize: 11.5,
+            letterSpacing: "0.03em",
+            color: "#7C89AE",
+          }}
+        >
+          <span style={{ color: "#AEB8D6" }}>{FACTS.name}</span>
+          <span aria-hidden="true">·</span>
+          <span>{FACTS.category}</span>
+          <span aria-hidden="true">·</span>
+          <span>{FACTS.city}</span>
+          <span aria-hidden="true">·</span>
+          <a href={`mailto:${FACTS.email}`} style={{ color: "#8EA6FF" }}>
+            {FACTS.email}
           </a>
+          <span aria-hidden="true">·</span>
+          <a href={FACTS.mainSite} style={{ color: "#8EA6FF" }}>
+            {FACTS.mainSiteLabel}
+          </a>
+          <span aria-hidden="true">·</span>
+          <span>© {new Date().getFullYear()} Expand Lab</span>
+          <span aria-hidden="true">·</span>
+          <span>Last updated {FACTS.updated}</span>
         </div>
       </div>
     </footer>
