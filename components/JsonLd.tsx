@@ -49,7 +49,6 @@ export const SITE_GRAPH: Record<string, unknown> = {
       description: `A ${FACTS.categoryPlain} (${FACTS.category}) that designs, builds and launches online courses, cohorts and memberships for coaches, authors and experts through the ${FACTS.offer}.`,
       foundingDate: String(FACTS.founded),
       founder: { "@id": HANNAH_ID },
-      email: FACTS.email,
       address: {
         "@type": "PostalAddress",
         addressLocality: FACTS.addressLocality,

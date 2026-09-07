@@ -136,7 +136,7 @@ export default function FaqPage() {
             </PrimaryCTA>
           </div>
           <p style={{ fontFamily: MONO, fontSize: 12.5, letterSpacing: "0.08em", textTransform: "uppercase", color: "#7C89AE", margin: "20px 0 0" }}>
-            Or email {FACTS.email}
+            Free · 30 minutes · No pitch
           </p>
           <div style={{ display: "flex", flexWrap: "wrap", justifyContent: "center", gap: 16, marginTop: 44 }}>
             {[

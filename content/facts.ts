@@ -38,7 +38,6 @@ export const FACTS = {
   addressLocality: "Austin",
   addressRegion: "TX",
   addressCountry: "US",
-  email: "hannah@theexpandlab.com",
 
   /** Platforms we build on. */
   platforms: ["Kajabi", "Skool", "GoHighLevel"],
