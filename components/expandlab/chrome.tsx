@@ -2,6 +2,8 @@
 
 import { useEffect } from "react";
 
+import { FACTS } from "@/content/facts";
+
 /**
  * Shared chrome + design tokens for the Expand Lab "100-Day Build" site.
  *
@@ -19,9 +21,12 @@ export const LOGO = "/expand-lab-logo.avif";
 export const MONO = "'IBM Plex Mono', monospace";
 export const SERIF = "'Newsreader', Georgia, serif";
 
-/* Routes (real Next paths — also reachable on the sales subdomain). */
+/* Routes (real Next paths — also reachable on the sales subdomain).
+ * "home" is "/": on the sales host "/" renders this sales page (via a
+ * host-scoped rewrite) and "/build" 308-redirects here, so "/" is the single
+ * canonical home URL (AI Search plan §1.2). */
 export const ROUTES = {
-  home: "/build",
+  home: "/",
   method: "/method",
   included: "/whats-included",
   results: "/results",
@@ -415,26 +420,77 @@ export function SiteFooter() {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={LOGO} alt="Expand Lab" style={{ height: 24, width: "auto", display: "block" }} />
           </a>
-          <span style={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: "0.04em", color: "#7C89AE" }}>
-            theexpandlab.com · © 2026 Expand Lab
-          </span>
-          <a
-            className="el-ghostlink"
-            href={CAL_URL}
-            target="_blank"
-            rel="noopener"
-            style={{
-              fontFamily: MONO,
-              fontSize: 12,
-              letterSpacing: "0.06em",
-              textTransform: "uppercase",
-              color: "#F3F6FF",
-              borderBottom: "1px solid #5B84FF",
-              paddingBottom: 2,
-            }}
-          >
-            Book a call →
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: 6 }}>
+            <a
+              className="el-ghostlink"
+              href={CAL_URL}
+              target="_blank"
+              rel="noopener"
+              style={{
+                fontFamily: MONO,
+                fontSize: 12,
+                letterSpacing: "0.06em",
+                textTransform: "uppercase",
+                color: "#F3F6FF",
+                borderBottom: "1px solid #5B84FF",
+                paddingBottom: 2,
+              }}
+            >
+              Book a call →
+            </a>
+            <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: "0.04em", color: "#7C89AE" }}>
+              Or email{" "}
+              <a href={`mailto:${FACTS.email}`} style={{ color: "#8EA6FF" }}>
+                {FACTS.email}
+              </a>
+            </span>
+            <a
+              className="el-ghostlink"
+              href={FACTS.instagram}
+              target="_blank"
+              rel="noopener"
+              style={{ fontFamily: MONO, fontSize: 11, letterSpacing: "0.04em", color: "#8EA6FF" }}
+            >
+              Instagram {FACTS.instagramHandle} →
+            </a>
+          </div>
+        </div>
+
+        {/* Entity line — name, category, location, contact, and the link back to
+         * the root domain (required so the two hosts describe one business and
+         * are connected). AI Search plan §1.6. */}
+        <div
+          style={{
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "6px 10px",
+            textAlign: "center",
+            marginTop: 28,
+            paddingTop: 24,
+            borderTop: "1px solid rgba(124,150,232,0.12)",
+            fontFamily: MONO,
+            fontSize: 11.5,
+            letterSpacing: "0.03em",
+            color: "#7C89AE",
+          }}
+        >
+          <span style={{ color: "#AEB8D6" }}>{FACTS.name}</span>
+          <span aria-hidden="true">·</span>
+          <span>{FACTS.category}</span>
+          <span aria-hidden="true">·</span>
+          <span>{FACTS.city}</span>
+          <span aria-hidden="true">·</span>
+          <a href={`mailto:${FACTS.email}`} style={{ color: "#8EA6FF" }}>
+            {FACTS.email}
           </a>
+          <span aria-hidden="true">·</span>
+          <a href={FACTS.mainSite} style={{ color: "#8EA6FF" }}>
+            {FACTS.mainSiteLabel}
+          </a>
+          <span aria-hidden="true">·</span>
+          <span>© {new Date().getFullYear()} Expand Lab</span>
         </div>
       </div>
     </footer>

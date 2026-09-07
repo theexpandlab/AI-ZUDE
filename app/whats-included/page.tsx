@@ -284,9 +284,6 @@ export default function WhatsIncludedPage() {
                 </li>
               ))}
             </ul>
-            <p style={{ fontFamily: MONO, fontSize: 11, letterSpacing: "0.04em", color: "#7C89AE", margin: "22px 0 0" }}>
-              Out-of-scope list is a draft — pending Hannah’s confirmation.
-            </p>
           </div>
 
           <div
@@ -326,9 +323,9 @@ export default function WhatsIncludedPage() {
               ))}
             </ul>
             <div style={{ marginTop: 24, paddingTop: 20, borderTop: "1px solid rgba(124,150,232,0.24)" }}>
-              <span style={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: "0.04em", color: "#7C89AE" }}>
-                Guarantee — pending decision. Recommended: everything specified in your proposal ships
-                by day 100, or we keep working at no additional cost until it does.
+              <span style={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: "0.04em", color: "#9DB0FF" }}>
+                Guarantee: everything specified in your proposal ships by day 100, or we keep working
+                at no additional cost until it does.
               </span>
             </div>
           </div>

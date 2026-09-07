@@ -375,7 +375,7 @@ export default function BuildOnePager() {
               <PrimaryCTA>Book a 30-minute strategy call</PrimaryCTA>
               <a
                 className="el-ghostlink"
-                href="#results"
+                href={ROUTES.results}
                 style={{
                   fontFamily: MONO,
                   fontSize: 14,
@@ -639,9 +639,9 @@ export default function BuildOnePager() {
                   <span style={{ fontFamily: MONO, fontSize: 12, letterSpacing: "0.1em", color: p.labelColor }}>
                     {p.n}
                   </span>
-                  <span style={{ fontFamily: SERIF, fontSize: "clamp(21px,2.4vw,29px)", color: "#F3F6FF" }}>
+                  <h3 style={{ fontFamily: SERIF, fontWeight: 400, fontSize: "clamp(21px,2.4vw,29px)", color: "#F3F6FF", margin: 0 }}>
                     {p.name}
-                  </span>
+                  </h3>
                   <span style={{ fontFamily: MONO, fontSize: 12, color: "#7C89AE" }}>{p.days}</span>
                 </div>
                 <div
@@ -694,17 +694,18 @@ export default function BuildOnePager() {
           >
             {INCLUDED.map((item) => (
               <div key={item.label} style={{ borderTop: "1px solid rgba(124,150,232,0.35)", paddingTop: 20 }}>
-                <div
+                <h3
                   style={{
                     fontFamily: MONO,
+                    fontWeight: 400,
                     fontSize: 12,
                     letterSpacing: "0.1em",
                     color: "#7FA0FF",
-                    marginBottom: 12,
+                    margin: "0 0 12px",
                   }}
                 >
                   {item.label}
-                </div>
+                </h3>
                 <p style={bodyText("none")}>{item.body}</p>
               </div>
             ))}
@@ -855,18 +856,19 @@ export default function BuildOnePager() {
                 </span>
               )}
             </div>
-            <div
+            <h3
               style={{
                 fontFamily: MONO,
+                fontWeight: 400,
                 fontSize: 11,
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
                 color: "#8B97BC",
-                marginTop: 12,
+                margin: "12px 0 0",
               }}
             >
               Hannah Andersen · Founder
-            </div>
+            </h3>
           </div>
           <div>
             <Eyebrow>Who you’d be working with</Eyebrow>
@@ -914,18 +916,20 @@ export default function BuildOnePager() {
                 }}
               >
                 <div>
-                  <div
+                  <h3
                     style={{
                       fontFamily: SERIF,
+                      fontWeight: 400,
                       fontSize: r.metricSize,
                       lineHeight: 1.06,
                       letterSpacing: "-0.02em",
                       color: "#7FA0FF",
                       textShadow: "0 0 30px rgba(59,107,255,0.45)",
+                      margin: 0,
                     }}
                   >
                     {r.metric}
-                  </div>
+                  </h3>
                   <div
                     style={{
                       fontFamily: MONO,
@@ -1134,9 +1138,6 @@ export default function BuildOnePager() {
               Every deliverable specified in your proposal is live by day 100, or we keep building at
               no additional cost until it’s done. The scope is in writing before we start, so there’s
               no guessing what “finished” means.
-            </p>
-            <p style={{ fontFamily: MONO, fontSize: 11.5, letterSpacing: "0.06em", color: "#7C89AE", margin: "24px 0 0" }}>
-              Recommended wording — pending Hannah’s final sign-off.
             </p>
           </div>
         </div>
