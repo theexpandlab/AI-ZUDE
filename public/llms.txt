@@ -5,7 +5,10 @@
 - [Home](https://build.theexpandlab.com/): what the 100-Day Build is, who it is for, and results
 - [The Method](https://build.theexpandlab.com/method): the five phases (Discovery, Architecture, Build, Launch, Optimize) with day ranges and deliverables
 - [What's Included](https://build.theexpandlab.com/whats-included): the six components and what is out of scope, plus the investment
+- [Pricing](https://build.theexpandlab.com/pricing): $7,000 to $9,500 project-based, payment terms, what moves the price, and how it compares
 - [Results](https://build.theexpandlab.com/results): anonymized case studies with revenue figures
+- [FAQ](https://build.theexpandlab.com/faq): cost, timeline, platforms, ownership, fit, and what happens after launch
+- [Kajabi](https://build.theexpandlab.com/kajabi): done-for-you Kajabi course, funnel and launch builds
 
 ## Facts
 - Category: done-for-you online course creation agency / Full Course Launch Agency

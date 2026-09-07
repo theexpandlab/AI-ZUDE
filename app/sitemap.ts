@@ -4,11 +4,11 @@ import { FACTS } from "@/content/facts";
 const base = FACTS.buildSite;
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  // Only routes that exist at deploy time. Extend as Phase 2 pages ship
-  // (/pricing, /faq, /kajabi, /skool, /gohighlevel, /about, /compare/*,
+  // Only routes that exist at deploy time. Extend as remaining Phase 2 pages
+  // ship (/skool, /gohighlevel, /about, /compare/*,
   // /best-course-creation-agencies). "/build" is intentionally absent — it
   // 308-redirects to "/".
-  const routes = ["", "/method", "/whats-included", "/results"];
+  const routes = ["", "/method", "/whats-included", "/pricing", "/results", "/faq", "/kajabi"];
   const lastModified = new Date();
   return routes.map((r) => ({
     url: `${base}${r}`,

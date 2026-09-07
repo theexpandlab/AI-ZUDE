@@ -30,6 +30,9 @@ export const ROUTES = {
   method: "/method",
   included: "/whats-included",
   results: "/results",
+  pricing: "/pricing",
+  faq: "/faq",
+  kajabi: "/kajabi",
 };
 
 /* ── Reused style fragments ─────────────────────────────────────────────── */
@@ -177,6 +180,82 @@ export function GhostLink({
         {children} <span>→</span>
       </a>
     </div>
+  );
+}
+
+/** Small mono "Last updated {date}" line — a freshness signal AI engines
+ * prefer (AI Search plan §2.9). */
+export function LastUpdated({ date }: { date: string }) {
+  return (
+    <p
+      style={{
+        fontFamily: MONO,
+        fontSize: 11.5,
+        letterSpacing: "0.1em",
+        textTransform: "uppercase",
+        color: "#7C89AE",
+        margin: 0,
+      }}
+    >
+      Last updated {date}
+    </p>
+  );
+}
+
+/** Shared FAQ section: a heading plus question/answer rows with the questions as
+ * <h3>s. Pair with faqPage(items) JSON-LD in the layout so the structured data
+ * matches this copy verbatim. */
+export function FaqSection({
+  heading,
+  eyebrow,
+  items,
+}: {
+  heading: string;
+  eyebrow?: string;
+  items: { q: string; a: string }[];
+}) {
+  return (
+    <section
+      style={{
+        padding: "clamp(64px,8vw,110px) 24px",
+        borderTop: "1px solid rgba(124,150,232,0.16)",
+        background: "rgba(6,11,30,0.72)",
+      }}
+    >
+      <div style={{ maxWidth: 900, margin: "0 auto" }}>
+        {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+        <h2 style={{ ...h2Style, fontSize: "clamp(28px,4.2vw,50px)", margin: "0 0 clamp(32px,4vw,52px)" }}>
+          {heading}
+        </h2>
+        <div style={{ display: "flex", flexDirection: "column" }}>
+          {items.map((f, i) => (
+            <div
+              key={i}
+              style={{
+                padding: "24px 0",
+                borderTop: "1px solid rgba(124,150,232,0.18)",
+                borderBottom: i === items.length - 1 ? "1px solid rgba(124,150,232,0.18)" : undefined,
+              }}
+            >
+              <h3
+                style={{
+                  fontFamily: SERIF,
+                  fontWeight: 500,
+                  fontSize: "clamp(19px,2vw,24px)",
+                  margin: "0 0 8px",
+                  color: "#F3F6FF",
+                }}
+              >
+                {f.q}
+              </h3>
+              <p style={{ fontFamily: SERIF, fontSize: "clamp(16px,1.5vw,19px)", lineHeight: 1.55, color: "#AEB8D6", margin: 0 }}>
+                {f.a}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -347,8 +426,14 @@ export function SiteNav() {
           <a className="el-navlink el-nav-collapse" href={ROUTES.included} style={{ color: "#AEB8D6" }}>
             Included
           </a>
+          <a className="el-navlink el-nav-collapse" href={ROUTES.pricing} style={{ color: "#AEB8D6" }}>
+            Pricing
+          </a>
           <a className="el-navlink el-nav-collapse" href={ROUTES.results} style={{ color: "#AEB8D6" }}>
             Results
+          </a>
+          <a className="el-navlink el-nav-collapse" href={ROUTES.faq} style={{ color: "#AEB8D6" }}>
+            FAQ
           </a>
           <a
             className="el-cta"

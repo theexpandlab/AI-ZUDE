@@ -51,6 +51,9 @@ export const FACTS = {
   /** Social. */
   instagram: "https://www.instagram.com/theexpandlab",
   instagramHandle: "@theexpandlab",
+
+  /** Freshness: bump when pages get a substantive refresh (AI Search plan §2.9). */
+  updated: "September 2026",
 } as const;
 
 export type Facts = typeof FACTS;
