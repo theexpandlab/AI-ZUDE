@@ -528,12 +528,6 @@ export function SiteFooter() {
             >
               Book a call →
             </a>
-            <span style={{ fontFamily: MONO, fontSize: 11, letterSpacing: "0.04em", color: "#7C89AE" }}>
-              Or email{" "}
-              <a href={`mailto:${FACTS.email}`} style={{ color: "#8EA6FF" }}>
-                {FACTS.email}
-              </a>
-            </span>
             <a
               className="el-ghostlink"
               href={FACTS.instagram}
@@ -571,10 +565,6 @@ export function SiteFooter() {
           <span>{FACTS.category}</span>
           <span aria-hidden="true">·</span>
           <span>{FACTS.city}</span>
-          <span aria-hidden="true">·</span>
-          <a href={`mailto:${FACTS.email}`} style={{ color: "#8EA6FF" }}>
-            {FACTS.email}
-          </a>
           <span aria-hidden="true">·</span>
           <a href={FACTS.mainSite} style={{ color: "#8EA6FF" }}>
             {FACTS.mainSiteLabel}
