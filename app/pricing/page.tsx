@@ -304,6 +304,10 @@ export default function PricingPage() {
             <a href={ROUTES.compareDfyDiy} style={{ color: "#8EA6FF", borderBottom: "1px solid rgba(124,150,232,0.5)" }}>
               done-for-you vs DIY
             </a>
+            , and our roundup of the{" "}
+            <a href={ROUTES.bestAgencies} style={{ color: "#8EA6FF", borderBottom: "1px solid rgba(124,150,232,0.5)" }}>
+              best course creation agencies
+            </a>
             .
           </p>
         </div>

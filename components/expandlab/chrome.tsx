@@ -39,6 +39,7 @@ export const ROUTES = {
   compareDfyDiy: "/compare/done-for-you-vs-diy-course-platform",
   comparePlatforms: "/compare/kajabi-vs-skool-vs-gohighlevel",
   about: "/about",
+  bestAgencies: "/best-course-creation-agencies",
 };
 
 /* ── Reused style fragments ─────────────────────────────────────────────── */
