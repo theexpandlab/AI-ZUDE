@@ -947,6 +947,7 @@ export default function BuildOnePager() {
               your gifts — and build income in a way that’s genuinely fun and easeful.
               Let’s connect. I can’t wait to talk.”
             </p>
+            <GhostLink href={ROUTES.about}>Read more about Hannah and the team</GhostLink>
           </div>
         </div>
       </section>

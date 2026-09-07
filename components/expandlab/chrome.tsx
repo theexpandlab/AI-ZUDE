@@ -38,6 +38,7 @@ export const ROUTES = {
   compareAgencyFreelancer: "/compare/course-agency-vs-freelancer",
   compareDfyDiy: "/compare/done-for-you-vs-diy-course-platform",
   comparePlatforms: "/compare/kajabi-vs-skool-vs-gohighlevel",
+  about: "/about",
 };
 
 /* ── Reused style fragments ─────────────────────────────────────────────── */
@@ -439,6 +440,9 @@ export function SiteNav() {
           </a>
           <a className="el-navlink el-nav-collapse" href={ROUTES.faq} style={{ color: "#AEB8D6" }}>
             FAQ
+          </a>
+          <a className="el-navlink el-nav-collapse" href={ROUTES.about} style={{ color: "#AEB8D6" }}>
+            About
           </a>
           <a
             className="el-cta"
