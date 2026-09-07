@@ -33,6 +33,8 @@ export const ROUTES = {
   pricing: "/pricing",
   faq: "/faq",
   kajabi: "/kajabi",
+  skool: "/skool",
+  gohighlevel: "/gohighlevel",
 };
 
 /* ── Reused style fragments ─────────────────────────────────────────────── */
