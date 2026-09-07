@@ -5,8 +5,8 @@ const base = FACTS.buildSite;
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Only routes that exist at deploy time. Extend as remaining Phase 2 pages
-  // ship (/about, /compare/*, /best-course-creation-agencies). "/build" is
-  // intentionally absent — it 308-redirects to "/".
+  // ship (/about, /best-course-creation-agencies). "/build" is intentionally
+  // absent — it 308-redirects to "/".
   const routes = [
     "",
     "/method",
@@ -17,6 +17,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/kajabi",
     "/skool",
     "/gohighlevel",
+    "/compare/course-agency-vs-freelancer",
+    "/compare/done-for-you-vs-diy-course-platform",
+    "/compare/kajabi-vs-skool-vs-gohighlevel",
   ];
   const lastModified = new Date();
   return routes.map((r) => ({

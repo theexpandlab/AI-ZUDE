@@ -70,3 +70,9 @@ export const SITE_FAQ: { q: string; a: string }[] = [
     a: "We run strategy first and build the whole ecosystem, not just a course. Every build starts with Discovery and Architecture led by the founder, so the offer, pricing and funnel are designed to sell before anything gets built. We stay platform-agnostic, and client names stay private while the numbers stay real.",
   },
 ];
+
+/**
+ * Six high-intent questions surfaced on the homepage (AI Search plan §2.8),
+ * drawn from SITE_FAQ so the copy and the homepage FAQPage schema stay in sync.
+ */
+export const HOME_FAQ: { q: string; a: string }[] = [0, 1, 2, 3, 5, 10].map((i) => SITE_FAQ[i]);

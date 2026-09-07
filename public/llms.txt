@@ -11,6 +11,9 @@
 - [Kajabi](https://build.theexpandlab.com/kajabi): done-for-you Kajabi course, funnel and launch builds
 - [Skool](https://build.theexpandlab.com/skool): done-for-you community-led course builds on Skool
 - [GoHighLevel](https://build.theexpandlab.com/gohighlevel): done-for-you course and membership builds inside GoHighLevel
+- [Course agency vs freelancer](https://build.theexpandlab.com/compare/course-agency-vs-freelancer): how they compare and how to choose
+- [Done-for-you vs DIY](https://build.theexpandlab.com/compare/done-for-you-vs-diy-course-platform): paying a team vs building it yourself
+- [Kajabi vs Skool vs GoHighLevel](https://build.theexpandlab.com/compare/kajabi-vs-skool-vs-gohighlevel): platform comparison for courses
 
 ## Facts
 - Category: done-for-you online course creation agency / Full Course Launch Agency

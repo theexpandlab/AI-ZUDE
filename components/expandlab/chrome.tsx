@@ -35,6 +35,9 @@ export const ROUTES = {
   kajabi: "/kajabi",
   skool: "/skool",
   gohighlevel: "/gohighlevel",
+  compareAgencyFreelancer: "/compare/course-agency-vs-freelancer",
+  compareDfyDiy: "/compare/done-for-you-vs-diy-course-platform",
+  comparePlatforms: "/compare/kajabi-vs-skool-vs-gohighlevel",
 };
 
 /* ── Reused style fragments ─────────────────────────────────────────────── */
@@ -578,6 +581,8 @@ export function SiteFooter() {
           </a>
           <span aria-hidden="true">·</span>
           <span>© {new Date().getFullYear()} Expand Lab</span>
+          <span aria-hidden="true">·</span>
+          <span>Last updated {FACTS.updated}</span>
         </div>
       </div>
     </footer>

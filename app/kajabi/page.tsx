@@ -200,6 +200,13 @@ export default function KajabiPage() {
             inside a CRM with heavy automation and client management. We pick based on your
             architecture, not habit.
           </p>
+          <p style={{ ...bodyText("68ch"), marginTop: 18 }}>
+            See the full{" "}
+            <a href={ROUTES.comparePlatforms} style={{ color: "#8EA6FF", borderBottom: "1px solid rgba(124,150,232,0.5)" }}>
+              Kajabi vs Skool vs GoHighLevel
+            </a>{" "}
+            comparison.
+          </p>
         </div>
       </section>
 

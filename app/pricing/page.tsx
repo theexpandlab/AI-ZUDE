@@ -295,6 +295,17 @@ export default function PricingPage() {
             The 100-Day Build sits in between: the full build, done for you, by a team that runs
             strategy first so the thing actually sells once it exists.
           </p>
+          <p style={{ ...bodyText("68ch"), marginTop: 18 }}>
+            More detail:{" "}
+            <a href={ROUTES.compareAgencyFreelancer} style={{ color: "#8EA6FF", borderBottom: "1px solid rgba(124,150,232,0.5)" }}>
+              course agency vs freelancer
+            </a>{" "}
+            and{" "}
+            <a href={ROUTES.compareDfyDiy} style={{ color: "#8EA6FF", borderBottom: "1px solid rgba(124,150,232,0.5)" }}>
+              done-for-you vs DIY
+            </a>
+            .
+          </p>
         </div>
       </section>
 
