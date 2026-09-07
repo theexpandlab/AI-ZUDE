@@ -18,6 +18,8 @@ export const metadata: Metadata = {
     images: ["/og-default.png"],
   },
   twitter: { card: "summary_large_image" },
+  // Google Search Console ownership verification for build.theexpandlab.com.
+  verification: { google: "6rEWD0B4wpzUNA-eNkgVRJo1zKYATN0p3-uA463iXfU" },
   // No robots directive at the root: every real page/layout declares its own
   // index/follow, so the default (inherited by the 404, which also returns a
   // 404 status) carries no conflicting directive.
