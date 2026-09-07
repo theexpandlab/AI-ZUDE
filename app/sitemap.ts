@@ -21,6 +21,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/compare/course-agency-vs-freelancer",
     "/compare/done-for-you-vs-diy-course-platform",
     "/compare/kajabi-vs-skool-vs-gohighlevel",
+    "/best-course-creation-agencies",
   ];
   const lastModified = new Date();
   return routes.map((r) => ({
