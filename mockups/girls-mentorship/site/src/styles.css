@@ -47,7 +47,10 @@ ul{margin:0}
 /* Type helpers */
 .eyebrow{font-family:var(--f-display);font-weight:600;text-transform:uppercase;letter-spacing:.08em;font-size:.95rem;color:var(--accent)}
 .band.dark .eyebrow,.band.blue .eyebrow,.band.accent .eyebrow{color:var(--lime)}
-.hl{background:linear-gradient(transparent 12%,var(--lime) 12%,var(--lime) 88%,transparent 88%);padding:0 .18em;box-decoration-break:clone;-webkit-box-decoration-break:clone;color:var(--ink)}
+/* Highlighter band: drawn only through the middle of the line (not the full inline box),
+   so on tightly set headings it never paints over the line above or below. */
+.hl{--hl:var(--lime);background:linear-gradient(transparent 21%,var(--hl) 21%,var(--hl) 81%,transparent 81%);padding:0 .14em;box-decoration-break:clone;-webkit-box-decoration-break:clone;color:var(--ink)}
+.hl.pink{--hl:var(--pink)}
 .hand{font-family:var(--f-hand);font-weight:400;letter-spacing:0}
 .lede{font-size:var(--step-1);line-height:1.5;color:var(--muted);max-width:60ch}
 .band.dark .lede,.band.blue .lede,.band.accent .lede{color:var(--on-dark)}
