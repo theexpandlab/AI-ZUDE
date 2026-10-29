@@ -115,7 +115,7 @@ def header(meta, href):
 <div class="banner"><div class="wrap"><a href="{href(broute)}">{btext} &rarr;</a></div></div>
 <header class="site-head">
   <div class="wrap">
-    <a class="logo" href="{href('/')}" aria-label="Girls Mentorship home"><b>Girls Mentorship</b><span>Scottsdale · Since 2020</span></a>
+    <a class="logo" href="{href('/')}"><img src="img/logo.png" alt="Girls Mentorship home" width="480" height="231"></a>
     <nav aria-label="Main"><ul class="menu">{''.join(items)}</ul></nav>
     <div class="head-actions">
       <a class="donate" href="{href('/GMF')}">Donate</a>
@@ -125,7 +125,7 @@ def header(meta, href):
   </div>
 </header>
 <div class="mnav" id="mnav" hidden role="dialog" aria-modal="true" aria-label="Menu">
-  <div class="wrap mnav-top"><a class="logo" href="{href('/')}"><b>Girls Mentorship</b><span>Scottsdale · Since 2020</span></a>
+  <div class="wrap mnav-top"><a class="logo" href="{href('/')}"><img src="img/logo.png" alt="Girls Mentorship home" width="480" height="231"></a>
     <button class="burger" style="display:inline-flex" id="mclose" aria-label="Close menu"><svg aria-hidden="true"><use href="#i-x"/></svg></button></div>
   <div class="mnav-body wrap">{mob}
     <div class="mnav-foot"><a class="btn btn-primary" href="{href('/find-her-program')}">Find Her Program</a><a class="btn-link" href="{href('/GMF')}">Donate to the Foundation</a></div>
@@ -139,6 +139,7 @@ def footer(href):
     return f"""<footer class="site-foot">
   <div class="wrap foot-grid">
     <div class="join">
+      <img class="foot-logo" src="img/logo-light.png" alt="Girls Mentorship" width="480" height="231">
       <h3>Join the Mentor Minute</h3>
       <p>Parenting tips, trend reports and first access to camp. For parents of girls 10 to 18.</p>
       <form data-preview-form><label class="sr" for="foot-email" style="position:absolute;left:-9999px">Email</label><input id="foot-email" type="email" placeholder="Your email" required><button class="btn btn-lime sm" type="submit">Join</button></form>

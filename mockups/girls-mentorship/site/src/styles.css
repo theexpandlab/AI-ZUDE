@@ -97,9 +97,9 @@ ul{margin:0}
 .banner a:hover{text-decoration:underline}
 .site-head{position:sticky;top:env(safe-area-inset-top,0px);z-index:70;background:rgba(255,255,255,.95);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
 .site-head .wrap{display:flex;align-items:center;gap:18px;min-height:72px}
-.logo{display:flex;flex-direction:column;text-decoration:none;line-height:.92;font-family:var(--f-display);font-weight:700;text-transform:uppercase;color:var(--ink);letter-spacing:.02em;margin-right:auto;flex:none}
-.logo b{font-size:1.25rem;font-weight:700}
-.logo span{font-size:.7rem;letter-spacing:.2em;color:var(--blue)}
+.logo{display:block;margin-right:auto;flex:none;text-decoration:none}
+.logo img{height:60px;width:auto}
+.foot-logo{height:64px;width:auto;margin-bottom:22px}
 .menu{display:flex;align-items:center;gap:2px}
 .menu > li{list-style:none;position:relative}
 .menu{padding:0;margin:0}
@@ -128,8 +128,7 @@ ul{margin:0}
   .site-head .wrap{gap:10px}
   .head-actions{gap:8px}
   .head-actions .btn{padding:.6em .8em;font-size:.76rem;box-shadow:2px 2px 0 var(--ink)}
-  .logo b{font-size:1rem;max-width:6.5em;white-space:normal}
-  .logo span{display:none}
+  .logo img{height:42px}
   .burger{width:42px;height:42px}
 }
 
