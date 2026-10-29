@@ -1,0 +1,140 @@
+<!--meta route="/about" title="Our Story · Girls Mentorship" desc="Meet Jill and Mary, the duo behind Girls Mentorship in Scottsdale, AZ, mentoring girls to thrive as bold leaders, confident friends and connected community members since 2020." section="about"-->
+<style>
+[hidden]{display:none!important}
+.ab-hero h1{font-size:clamp(2.8rem,1.8rem + 5vw,5.8rem);line-height:.95}
+.ab-hero .photo .frame{aspect-ratio:456/616;max-width:420px;margin-left:auto}
+.mission{font-family:var(--f-display);font-weight:600;font-size:var(--step-3);line-height:1.05;max-width:22ch;text-wrap:balance}
+.mission .hl{padding:0 .1em}
+.story{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(32px,6vw,90px);align-items:start}
+.story .stick{position:sticky;top:130px;display:grid;gap:16px}
+.story .stick .pic{border-radius:24px;overflow:hidden;border:2px solid var(--ink);box-shadow:8px 8px 0 var(--pink);aspect-ratio:528/704}
+.story .stick .pic img{width:100%;height:100%;object-fit:cover}
+.story .prose p{font-size:1.08rem}
+.story .pull{font-family:var(--f-display);font-weight:600;font-size:var(--step-2);line-height:1.1;color:var(--ink);border-left:6px solid var(--lime);padding-left:18px;margin-block:26px}
+@media (max-width:860px){.story{grid-template-columns:1fr}.story .stick{position:static;max-width:420px}}
+.believe{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,90px);align-items:center}
+.believe .pic{border-radius:28px;overflow:hidden;border:2px solid var(--ink);box-shadow:10px 10px 0 var(--lime);aspect-ratio:504/768;max-width:400px;justify-self:end}
+.believe .pic img{width:100%;height:100%;object-fit:cover}
+.believe .words{font-size:var(--step-1);line-height:1.5;color:var(--on-dark)}
+.believe .words b{color:var(--lime)}
+@media (max-width:860px){.believe{grid-template-columns:1fr}.believe .pic{justify-self:start}}
+.found{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;border:2px solid var(--ink);border-radius:26px;background:var(--pink-soft);padding:clamp(22px,4vw,40px);box-shadow:8px 8px 0 var(--ink)}
+.found h3{font-size:var(--step-2)}
+.found p{margin-top:10px;max-width:60ch}
+@media (max-width:760px){.found{grid-template-columns:1fr}}
+.wide{border-radius:28px;overflow:hidden;border:2px solid var(--ink);aspect-ratio:1100/1052;max-height:620px;width:100%}
+.wide img{width:100%;height:100%;object-fit:cover;object-position:center 30%}
+</style>
+
+<!-- HERO -->
+<section class="hero ab-hero">
+  <svg viewBox="0 0 100 100" class="doodle d-star hide-sm" style="left:2%;top:36px;width:58px;transform:rotate(-12deg)" aria-hidden="true"><use href="#sq-star"/></svg>
+  <svg class="doodle d-pink hide-sm" style="right:3%;bottom:28px;width:150px" viewBox="0 0 140 140" aria-hidden="true"><use href="#sq-curl"/></svg>
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">Our story</p>
+      <h1>Hey, we're <span class="hl">Jill &amp; Mary.</span></h1>
+      <p class="lede">We're the duo behind Girls Mentorship. We teach girls the life skills that build confidence, empathy and leadership, in a fun and supportive environment, because we remember needing them ourselves.</p>
+      <div class="btn-row">
+        <a class="btn btn-primary" href="@/find-her-program">Find Her Program <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn-link" href="#story">Read how it started</a>
+      </div>
+    </div>
+    <div class="photo">
+      <div class="frame"><img src="img/founders.jpg" alt="Jill and Mary in matching pink outfits in front of the Pursue More camp sign" width="456" height="616"></div>
+      <p class="tag">Building the place<br>we wish we'd had.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section class="band blue clip">
+  <svg class="doodle d-lime hide-sm" style="right:-10px;top:40px;width:180px" viewBox="0 0 140 140" aria-hidden="true"><use href="#sq-curl"/></svg>
+  <div class="wrap">
+    <p class="eyebrow">Our mission</p>
+    <p class="mission" style="margin-top:14px">Mentoring girls to thrive as <span class="hl">bold leaders</span>, confident friends, &amp; connected community members.</p>
+    <div class="stats" style="margin-top:clamp(40px,5vw,64px);border-color:rgba(255,255,255,.35)">
+      <div class="stat"><b>2020</b><span style="color:var(--on-dark)">the year we started</span></div>
+      <div class="stat"><b>3,000+</b><span style="color:var(--on-dark)">girls mentored</span></div>
+      <div class="stat"><b>100+</b><span style="color:var(--on-dark)">schools and youth organizations</span></div>
+      <div class="stat"><b>4</b><span style="color:var(--on-dark)">summers sold out in a row</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="band" id="story">
+  <div class="wrap story">
+    <div class="stick">
+      <div class="pic"><img src="img/founders-flowers.jpg" alt="A camper holding a bouquet of flowers next to a Girls Mentorship mentor" width="528" height="704"></div>
+    </div>
+    <div>
+      <p class="eyebrow">How it started</p>
+      <h2 class="h-l">August 2020, and one question.</h2>
+      <div class="prose measure" style="margin-top:20px">
+        <p>Back in August 2020, we had a moment of reflection: what would our younger selves have achieved if they'd had the personal growth tools we have now?</p>
+        <p>Everywhere we looked, we saw young girls grappling with confidence issues, battling negative self-talk, wrestling with poor self-image, and navigating the tricky waters of anxiety and depression. It struck a chord. Weren't we in those same shoes just 20 years ago?</p>
+        <p class="pull">Even with the passage of time, girls were still missing the vital skills to rise above these challenges.</p>
+        <p>That moment led to a decision. We wanted to be the beacon of change, and extend a helping hand to the young girls who mirrored our past selves. Our mission? To build their social-emotional learning skills and guide them toward the brightest, most confident versions of themselves.</p>
+        <p><b>And what an incredible journey it's been, and continues to be.</b> Today that looks like Pursue More Summer Camp, One-Days, the Power Up Club in schools, the Peer Leader program, 1:1 Power Coaching, and the POWER Method we train other women to teach.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BELIEF -->
+<section class="band dark">
+  <div class="wrap believe">
+    <div>
+      <p class="eyebrow">Empowering your girl, wherever she's at</p>
+      <h2 class="h-l" style="margin-bottom:22px">What we believe.</h2>
+      <p class="words">At the heart of everything we do is a commitment to empowering youth with the skills they need to thrive. Whether it's <b>confidence</b>, <b>resilience</b> or <b>leadership</b>, our programs are designed for meaningful growth.</p>
+      <p class="words" style="margin-top:16px">We believe in the power of connection: building relationships that support not just girls, but the families, educators and mentors who guide them. Wherever she is on her journey, we offer flexible, tailored support to meet her unique needs.</p>
+    </div>
+    <div class="pic"><img src="img/chair.jpg" alt="A girl throwing her arms wide in a pink armchair in front of the Girls Mentorship logo" width="504" height="768"></div>
+  </div>
+</section>
+
+<!-- POWER -->
+<section class="band peri">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">The POWER Framework</p>
+      <h2>Five pillars behind every program.</h2>
+      <p class="lede">Confidence isn't left to chance. We build it through repetition, guidance and experience.</p>
+    </div>
+    <div class="power">
+      <div class="pillar"><span class="L">P</span><h3>Perspective</h3><p>Slow down her thinking, challenge unhelpful stories, and see situations clearly.</p></div>
+      <div class="pillar"><span class="L">O</span><h3>Ownership</h3><p>Take responsibility for how she responds, communicates and shows up.</p></div>
+      <div class="pillar"><span class="L">W</span><h3>Worthiness</h3><p>An internal sense of "I'm enough" that doesn't depend on likes or comparison.</p></div>
+      <div class="pillar"><span class="L">E</span><h3>Empowerment</h3><p>Speak up, set boundaries, and act even when it's uncomfortable.</p></div>
+      <div class="pillar"><span class="L">R</span><h3>Reassurance</h3><p>Regulate emotions, recover from mistakes, and keep trusting herself.</p></div>
+    </div>
+    <p style="margin-top:26px;font-weight:700"><a class="btn-link" href="@/power-framework">Go deeper on the POWER Framework <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+  </div>
+</section>
+
+<!-- WIDE PHOTO + FOUNDATION -->
+<section class="band">
+  <div class="wrap" style="display:grid;gap:clamp(40px,6vw,64px)">
+    <div class="wide"><img src="img/crowd.jpg" alt="A big group of campers making heart shapes with their hands" width="1100" height="1052"></div>
+    <div class="found">
+      <div>
+        <span class="chip ink">Girls Mentorship Foundation · 501(c)(3)</span>
+        <h3 style="margin-top:12px">Every girl deserves a seat.</h3>
+        <p>Our foundation lets families and businesses sponsor a girl at camp, or sponsor a whole school so every girl in a Power Up Club grade attends free.</p>
+      </div>
+      <a class="btn btn-white" href="@/GMF">Give or sponsor</a>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section class="band blue clip final">
+  <svg class="doodle d-lime hide-sm" style="left:4%;top:40px;width:170px" viewBox="0 0 220 120" aria-hidden="true"><use href="#sq-loop"/></svg>
+  <div class="wrap">
+    <h2>Let's find the right fit for her.</h2>
+    <p class="lede">Six quick questions about where she is right now, and we'll point you to the program built for it.</p>
+    <div class="btn-row"><a class="btn btn-lime" href="@/find-her-program">Find Her Program <svg aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="btn btn-white" href="@/contact">Contact us</a></div>
+  </div>
+</section>

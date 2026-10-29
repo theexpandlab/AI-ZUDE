@@ -1,0 +1,138 @@
+<!--meta route="/resources" title="Parent Resources · Girls Mentorship" desc="Free guides, articles and the Mentor Minute newsletter for parents of girls 10 to 18: friendships, confidence, boundaries, group chats and more." section="resources"-->
+<style>
+[hidden]{display:none!important}
+.rs-hero{padding-block:clamp(40px,6vw,80px) clamp(40px,5vw,64px)}
+.rs-hero h1{font-size:var(--step-4);font-weight:700;max-width:14ch}
+.rs-hero .lede{margin-top:20px}
+.guides{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.guide{border:2px solid var(--ink);border-radius:28px;overflow:hidden;display:grid;grid-template-rows:auto 1fr;box-shadow:8px 8px 0 var(--ink);background:#fff}
+.guide .cover{padding:clamp(22px,4vw,36px);display:grid;gap:10px;position:relative;overflow:hidden;min-height:220px;align-content:end}
+.guide.a .cover{background:var(--blue);color:#fff}
+.guide.b .cover{background:var(--pink)}
+.guide .cover h3{font-size:var(--step-3);line-height:.95;position:relative;z-index:1}
+.guide .cover .chip{position:relative;z-index:1;justify-self:start}
+.guide .cover .doodle{right:-10px;top:-10px;width:150px;opacity:.9}
+.guide .in{padding:clamp(22px,4vw,32px);display:grid;gap:14px;align-content:start}
+.guide .in > p{color:var(--muted);font-size:1.05rem}
+.guide .ticks li svg{color:var(--blue)}
+.guide .btn{justify-self:start}
+@media (max-width:860px){.guides{grid-template-columns:1fr}}
+.arts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.art{border:2px dashed var(--ink);border-radius:22px;padding:22px;display:grid;gap:10px;align-content:start;background:#fff}
+.art .top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.art .st{font-size:.8rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+.art h3{font-size:1.45rem}
+.art p{color:var(--muted)}
+.art .pair{font-weight:700;font-size:.92rem;border-top:2px dashed var(--line);padding-top:10px;margin-top:4px}
+@media (max-width:900px){.arts{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.arts{grid-template-columns:1fr}}
+.mm{display:grid;grid-template-columns:1.1fr .9fr;gap:clamp(30px,6vw,80px);align-items:center}
+.mm h2{font-size:var(--step-3)}
+.mm .lede{color:var(--on-dark)}
+.mm .form-card{box-shadow:8px 8px 0 var(--lime)}
+.done{display:grid;gap:10px}
+.done h3{font-size:var(--step-2)}
+@media (max-width:860px){.mm{grid-template-columns:1fr}}
+</style>
+
+<!-- HERO -->
+<section class="rs-hero clip" style="position:relative">
+  <svg viewBox="0 0 100 100" class="doodle d-star hide-sm" style="right:8%;top:50px;width:62px;transform:rotate(14deg)" aria-hidden="true"><use href="#sq-star"/></svg>
+  <svg class="doodle d-pink hide-sm" style="right:3%;bottom:10px;width:160px" viewBox="0 0 220 120" aria-hidden="true"><use href="#sq-loop"/></svg>
+  <div class="wrap">
+    <p class="eyebrow">Parent resources</p>
+    <h1>Real words for <span class="hl">real moments.</span></h1>
+    <p class="lede">From decoding tween slang to tackling tough conversations, here's what we've learned from six years and 3,000+ girls, made for the parents in the middle of it.</p>
+  </div>
+</section>
+
+<!-- GUIDES -->
+<section class="band tight" style="padding-top:0">
+  <div class="wrap">
+    <div class="guides">
+      <article class="guide a">
+        <div class="cover">
+          <svg class="doodle d-lime" viewBox="0 0 140 140" aria-hidden="true"><use href="#sq-curl"/></svg>
+          <span class="chip">Free guide</span>
+          <h3>The Gray Area Guide</h3>
+        </div>
+        <div class="in">
+          <p>For the moments that aren't clearly okay or clearly not okay, and she isn't sure what to do.</p>
+          <ul class="ticks">
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg>Red flags to notice</li>
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg>Boundaries she can set</li>
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg>What to say, word for word</li>
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg>Practice scenarios to try together</li>
+          </ul>
+          <a class="btn btn-primary" href="@/gray-area-guide">Get the guide <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+      </article>
+      <article class="guide b">
+        <div class="cover">
+          <svg class="doodle d-lime" viewBox="0 0 160 80" aria-hidden="true"><use href="#sq-zig"/></svg>
+          <span class="chip">Free guide</span>
+          <h3>The Friendship Guide</h3>
+        </div>
+        <div class="in">
+          <p>Exact words for friendship drama: when she's left out, when the group chat turns, when a friend keeps crossing a line.</p>
+          <ul class="ticks">
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg>Scripts she can actually use</li>
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg>How to talk it through with her</li>
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg>Built on our POWER framework</li>
+          </ul>
+          <a class="btn btn-accent" style="--accent:#E2369F" href="@/friendshipguide">Get the guide <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ARTICLES -->
+<section class="band peri">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Articles</p>
+      <h2>What we're writing next.</h2>
+      <p class="lede">Our first six articles are on the way. Each one pairs with a free guide, so you leave with something to use tonight.</p>
+    </div>
+    <div class="arts">
+      <article class="art"><div class="top"><span class="chip">Friendships</span><span class="st">Planned</span></div><h3>When the friend group shifts</h3><p>How to help her figure out what's actually happening, and what she wants to do next.</p><p class="pair">Pairs with the Friendship Guide</p></article>
+      <article class="art"><div class="top"><span class="chip pink">Confidence</span><span class="st">Planned</span></div><h3>Confidence is built, not born</h3><p>Why reps matter more than pep talks, and small ways to give her practice at home.</p><p class="pair">Pairs with the Gray Area Guide</p></article>
+      <article class="art"><div class="top"><span class="chip sky">Boundaries</span><span class="st">Planned</span></div><h3>"Please ask first": boundaries for tweens</h3><p>Helping her say what she needs with a calm voice and a clear line.</p><p class="pair">Pairs with the Gray Area Guide</p></article>
+      <article class="art"><div class="top"><span class="chip">Group chats</span><span class="st">Planned</span></div><h3>Decoding the group chat</h3><p>What to watch for, and what to say when a joke goes too far.</p><p class="pair">Pairs with the Friendship Guide</p></article>
+      <article class="art"><div class="top"><span class="chip pink">Comparison</span><span class="st">Planned</span></div><h3>When comparison creeps in</h3><p>Bringing her focus back to her own worth, not the highlight reel.</p><p class="pair">Pairs with the Gray Area Guide</p></article>
+      <article class="art"><div class="top"><span class="chip sky">Speaking up</span><span class="st">Planned</span></div><h3>Speak up, or let it go?</h3><p>A simple way to decide if a moment needs a conversation, a boundary, or a little perspective.</p><p class="pair">Pairs with the Friendship Guide</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- MENTOR MINUTE -->
+<section class="band dark clip" id="mentor-minute">
+  <svg class="doodle d-pink hide-sm" style="left:2%;bottom:30px;width:150px" viewBox="0 0 140 140" aria-hidden="true"><use href="#sq-curl"/></svg>
+  <div class="wrap mm">
+    <div>
+      <p class="eyebrow">The Mentor Minute</p>
+      <h2>Stay in the know (and get a few laughs, too!)</h2>
+      <p class="lede" style="margin-top:18px">Your go-to guide for the latest trends, parenting tips, and tools to support the youth in your life. From decoding tween slang to tackling tough conversations, we've got you covered. Bonus: we're funny, and that always helps when dealing with teens and tweens.</p>
+      <div class="pills" style="margin-top:22px"><span>Trend reports</span><span>Parenting tips</span><span>First access to camp</span></div>
+    </div>
+    <div class="form-card">
+      <div data-form-wrap>
+        <h3>Join the Mentor Minute</h3>
+        <p>For parents of girls 10 to 18.</p>
+        <form class="form" data-preview-form data-swap="mm-done">
+          <label for="mm-name">Your first name<input id="mm-name" type="text" autocomplete="given-name" required></label>
+          <label for="mm-email">Email<input id="mm-email" type="email" autocomplete="email" required></label>
+          <label for="mm-age">Your daughter's age<select id="mm-age"><option value="">Choose</option><option>Under 10</option><option>10–13</option><option>14–18</option></select></label>
+          <button class="btn btn-primary" type="submit">Sign me up!</button>
+          <p class="preview-note">Preview only: this form doesn't send anything yet.</p>
+        </form>
+      </div>
+      <div id="mm-done" class="done" hidden tabindex="-1"><span class="chip">Woo-hoo!</span><h3>Can't wait to give you the inside scoop!</h3><a class="btn-link" href="@/gray-area-guide">Grab the Gray Area Guide while you're here <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+    </div>
+  </div>
+</section>
+
+<section class="band tight">
+  <div class="wrap"><div class="next"><span class="k">Want her to practice?</span><p>Guides help at home. Our programs give her reps with girls her age.</p><a class="btn btn-white" href="@/find-her-program">Find Her Program</a></div></div>
+</section>

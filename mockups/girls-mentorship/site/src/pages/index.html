@@ -1,0 +1,302 @@
+<!--meta route="/" title="Girls Mentorship" desc="Confidence camps and programs for girls in Scottsdale, AZ. Girls Mentorship helps girls ages 10 to 18 build confidence, friendships and leadership through camps, clubs and coaching." section=""-->
+<style>
+.home-hero h1{font-size:clamp(2.9rem,1.8rem + 5.4vw,6.2rem);line-height:.95}
+.home-hero h1 .hl{padding:0 .12em}
+.camp-card{margin-top:30px;border:2px solid var(--ink);border-radius:22px;background:var(--pink-soft);box-shadow:6px 6px 0 var(--ink);padding:20px 22px;max-width:580px;display:grid;gap:14px}
+.camp-card .top{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:baseline}
+.camp-card .top b{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.05em;font-size:1.1rem}
+.camp-card .top span{font-weight:700;font-size:.9rem;color:var(--muted)}
+.camp-card .weeks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.camp-card .weeks span{background:#fff;border:2px solid var(--ink);border-radius:10px;padding:6px 4px;text-align:center;font-weight:800;font-size:.82rem;line-height:1.2}
+.camp-card .weeks small{display:block;font-weight:600;color:var(--muted);font-size:.72rem}
+.camp-card .btn-row{margin-top:2px}
+.camp-card .note{font-size:.88rem;font-weight:600;color:var(--muted)}
+.home-hero .photo .frame{aspect-ratio:1100/1052}
+@media (max-width:460px){.camp-card .weeks{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.seven{display:grid;grid-template-columns:auto 1fr;gap:clamp(28px,6vw,80px);align-items:center}
+.seven .num{font-family:var(--f-display);font-weight:700;line-height:.82;font-size:clamp(6rem,3rem + 12vw,13rem);color:var(--lime)}
+.seven .num small{display:block;font-size:.28em;color:#fff;letter-spacing:.04em;margin-top:.15em}
+.seven h2{font-size:var(--step-2);color:#fff}
+.seven h2 em{font-style:normal;background:var(--pink);color:var(--ink);padding:0 .15em}
+.seven .hand{display:block;color:var(--lime);font-size:var(--step-2);margin-top:18px}
+.seven + .stats{margin-top:clamp(48px,6vw,72px);color:#fff;border-color:rgba(255,255,255,.35)}
+.seven + .stats span{color:var(--on-dark)}
+@media (max-width:760px){.seven{grid-template-columns:1fr}}
+
+.finder-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:26px}
+.finder-bar strong{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.06em;margin-right:6px}
+.grade{font:inherit;font-weight:800;border:2px solid var(--ink);background:#fff;border-radius:999px;padding:.55em 1.05em;cursor:pointer;color:var(--ink)}
+.grade[aria-pressed="true"]{background:var(--ink);color:#fff}
+.progs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.prog{position:relative;background:#fff;border:2px solid var(--ink);border-radius:22px;padding:22px 22px 24px;display:grid;gap:10px;align-content:start;text-decoration:none;transition:opacity .2s,transform .2s,box-shadow .2s;min-width:0}
+.prog:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.prog .who{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.prog h3{font-size:1.65rem}
+.prog p{color:var(--muted)}
+.prog .meta{font-weight:800;font-size:.95rem}
+.prog .go{font-weight:800;display:inline-flex;gap:6px;align-items:center;color:var(--blue)}
+.prog .go svg{width:1em;height:1em}
+.prog.flag{background:var(--pink-soft);grid-row:span 3;align-content:space-between}
+.prog.flag h3{font-size:var(--step-3);line-height:.95}
+.prog.flag img{border-radius:16px;border:2px solid var(--ink);aspect-ratio:4/3;object-fit:cover;width:100%}
+.progs.filtering .prog.dim{opacity:.32;transform:none;box-shadow:none}
+.progs.filtering .prog.fit{box-shadow:6px 6px 0 var(--blue)}
+.finder-out{margin-top:20px;font-weight:700;min-height:1.6em}
+@media (max-width:980px){.progs{grid-template-columns:repeat(2,minmax(0,1fr))}.prog.flag{grid-column:1 / -1;grid-row:auto}}
+@media (max-width:600px){.progs{grid-template-columns:1fr}}
+
+.heart .pic{aspect-ratio:456/616;max-width:440px}
+.heart .sign{margin-top:22px;font-family:var(--f-hand);font-size:var(--step-2);color:var(--blue)}
+
+.paths2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pathcard{border:2px solid var(--ink);border-radius:26px;padding:clamp(24px,4vw,40px);display:grid;gap:14px;align-content:start}
+.pathcard.a{background:var(--lime)} .pathcard.b{background:var(--sky-soft)}
+.pathcard h3{font-size:var(--step-2)}
+.pathcard ul{list-style:none;padding:0;display:grid;gap:10px}
+.pathcard li{display:grid;grid-template-columns:1fr auto;gap:10px;border-top:2px dashed rgba(17,22,58,.25);padding-top:10px;font-weight:700}
+.pathcard li span{font-family:var(--f-display);font-weight:600}
+@media (max-width:760px){.paths2{grid-template-columns:1fr}}
+</style>
+
+<!-- HERO -->
+<section class="hero home-hero t-camp">
+  <svg viewBox="0 0 100 100" class="doodle d-star hide-sm" style="left:2%;top:36px;width:60px;transform:rotate(-12deg)" aria-hidden="true"><use href="#sq-star"/></svg>
+  <svg class="doodle d-sky hide-sm" style="right:3%;bottom:28px;width:150px" viewBox="0 0 220 120" aria-hidden="true"><use href="#sq-loop"/></svg>
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">Mentoring girls since 2020 · Scottsdale, AZ</p>
+      <h1>Confidence isn't luck. <span class="hl">It's built.</span></h1>
+      <p class="lede">We help girls ages 10 to 18 build confidence, healthier friendships and real leadership skills through camps, clubs and coaching, so she can show up as herself before the world tells her who to be.</p>
+
+      <div class="camp-card">
+        <div class="top"><b>Pursue More Summer Camp 2027</b><span>Ages 10–13 · $799 a week</span></div>
+        <div class="weeks" aria-label="Camp 2027 weeks">
+          <span>May 31–Jun 4<small>Week 1</small></span><span>Jun 7–11<small>Week 2</small></span><span>Jun 14–18<small>Week 3</small></span><span>Jun 21–25<small>Week 4</small></span>
+        </div>
+        <div class="btn-row">
+          <a class="btn btn-accent" href="@/camp-vip">Join the Camp 2027 VIP list <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+        <p class="note">VIPs get 48-hour early access to Black Friday pricing, 20% off, starting Nov 25.</p>
+      </div>
+      <p style="margin-top:18px;font-weight:700">Not sure where she fits? <a class="btn-link" href="@/find-her-program">Find her program <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+    </div>
+    <div class="photo">
+      <div class="frame"><img src="img/crowd.jpg" alt="A big group of campers making heart shapes with their hands at Pursue More Summer Camp" width="1100" height="1052"></div>
+      <div class="burst" aria-hidden="true"><svg viewBox="0 0 100 100"><path stroke="#11163A" stroke-width="2" d="M50 2l7 10 12-5 2 12 13 1-4 12 11 7-9 9 7 11-12 4 1 13-13-2-5 12-10-8-10 8-5-12-13 2 1-13-12-4 7-11-9-9 11-7-4-12 13-1 2-12 12 5z"/></svg><span><b>3,000+</b>girls</span></div>
+      <p class="tag">Sold out the last<br>four summers.</p>
+    </div>
+  </div>
+</section>
+
+<section class="partners" aria-label="Partners">
+  <div class="wrap"><p>Partners with</p>
+    <div class="logo-track"><div class="logo-row">
+      <img src="img/partners.jpg" alt="Rancho Solano Preparatory School, Phoenix Country Day, Glendale Elementary School District, notMYkid, Xavier College Prep, Paradise Valley Unified School District, Scottsdale Christian Academy, Girl Scouts">
+      <img src="img/partners.jpg" alt="" aria-hidden="true">
+    </div></div>
+  </div>
+</section>
+
+<!-- 7 IN 10 -->
+<section class="band blue clip">
+  <svg class="doodle d-lime hide-sm" style="right:-20px;top:40px;width:190px" viewBox="0 0 140 140" aria-hidden="true"><use href="#sq-curl"/></svg>
+  <div class="wrap">
+    <div class="seven">
+      <p class="num" aria-hidden="true">7<small>in 10 girls</small></p>
+      <div class="measure">
+        <h2>7 in 10 girls believe they are <em>not good enough</em> or don't measure up in some way, including their looks, performance in school, and relationships with friends and family.</h2>
+        <span class="hand">Let's change that.</span>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>90%</b><span>of campers left feeling ready to take on new challenges</span></div>
+      <div class="stat"><b>78%</b><span>of attendees felt more confident and reassured</span></div>
+      <div class="stat"><b>90%</b><span>of campers made new friends</span></div>
+      <div class="stat"><b>80%+</b><span>developed practical tools to navigate friendships</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAM FINDER -->
+<section class="band" id="programs">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Empowering your girl, wherever she's at</p>
+      <h2>Pick her grade. See what fits.</h2>
+    </div>
+    <div class="finder-bar" role="group" aria-label="Her grade this school year">
+      <strong>She's in</strong>
+      <button class="grade" aria-pressed="false" data-g="4">4th</button>
+      <button class="grade" aria-pressed="false" data-g="5">5th</button>
+      <button class="grade" aria-pressed="false" data-g="6">6th</button>
+      <button class="grade" aria-pressed="false" data-g="7">7th</button>
+      <button class="grade" aria-pressed="false" data-g="8">8th</button>
+      <button class="grade" aria-pressed="false" data-g="9">High school</button>
+    </div>
+    <div class="progs" id="progs">
+      <a class="prog flag" href="@/summercamp" data-g="4 5 6 7 8">
+        <div style="display:grid;gap:10px">
+          <div class="who"><span class="chip accent" style="--accent:#E2369F">Flagship</span><span class="meta">Entering 5th–8th · ages 10–13</span></div>
+          <h3>Pursue More Summer Camp</h3>
+          <p>One purpose-driven week in Scottsdale built on our POWER framework, with guest speakers, the Talent Show, Secret Buddy and Mary's famous Snack Shack. Capped at 50 girls a week.</p>
+        </div>
+        <img src="img/talent.jpg" alt="Campers watching the stage during the camp Talent Show">
+        <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap"><span class="meta">4 weeks in June 2027 · $799</span><span class="go">See camp <svg aria-hidden="true"><use href="#i-arrow"/></svg></span></div>
+      </a>
+      <a class="prog" href="@/one-days" data-g="5 6 7 8">
+        <div class="who"><span class="chip">Try us first</span><span class="meta">Grades 5–8</span></div>
+        <h3>One-Days</h3>
+        <p>Six hours of friendship, communication and confidence tools, practiced out loud. About once a quarter.</p>
+        <span class="meta">Next: Nov 7 &amp; 8 · $149</span>
+      </a>
+      <a class="prog" href="@/power-up-club" data-g="4 5 6">
+        <div class="who"><span class="chip sky">At her school</span><span class="meta">Grades 4–6</span></div>
+        <h3>Power Up Club</h3>
+        <p>A six-week after-school program on campus at participating schools. One session a week.</p>
+        <span class="meta">$149 per girl · 6 sessions</span>
+      </a>
+      <a class="prog" href="@/peer-leader" data-g="9">
+        <div class="who"><span class="chip sky">For teens</span><span class="meta">Ages 14–18</span></div>
+        <h3>Peer Leader Program</h3>
+        <p>High school girls mentor younger campers and practice leadership with real responsibility and support built in.</p>
+        <span class="meta">Applications open in March · $799</span>
+      </a>
+      <a class="prog" href="@/mastermind" data-g="9">
+        <div class="who"><span class="chip sky">For teens</span><span class="meta">High school</span></div>
+        <h3>Peer Leader Mastermind</h3>
+        <p>A six-month online leadership cohort, two Sundays a month.</p>
+        <span class="meta">Cohort 2 · $1,297</span>
+      </a>
+      <a class="prog" href="@/workshops" data-g="4 5 6 7 8 9">
+        <div class="who"><span class="chip">With her group</span><span class="meta">Troops, teams, NCL</span></div>
+        <h3>Workshops</h3>
+        <p>A 90-minute POWER session brought to her school, troop, NCL chapter or team.</p>
+        <span class="meta">$200 + $50 per girl</span>
+      </a>
+      <a class="prog" href="@/power-coaching" data-g="4 5 6 7 8 9">
+        <div class="who"><span class="chip pink">1:1</span><span class="meta">Ages 10–18</span></div>
+        <h3>Power Coaching</h3>
+        <p>Private weekly coaching with Jill and Mary, 60 minutes online, in six-lesson chunks.</p>
+        <span class="meta">From $2,500</span>
+      </a>
+    </div>
+    <p class="finder-out" id="finder-out" aria-live="polite"></p>
+    <p style="margin-top:10px;font-weight:700">Want a personal recommendation? <a class="btn-link" href="@/find-her-program">Take the 6-question quiz <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+  </div>
+</section>
+
+<!-- POWER -->
+<section class="band peri">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">How confidence is actually built</p>
+      <h2>Every program runs on POWER.</h2>
+      <p class="lede">Confidence isn't a personality trait. It's the result of how a girl learns to think, respond and trust herself, especially when things feel uncomfortable. Our signature framework gives her a simple, repeatable way to lead herself in real life.</p>
+    </div>
+    <div class="power">
+      <div class="pillar"><span class="L">P</span><h3>Perspective</h3><p>Slow down her thinking, challenge unhelpful stories, and see situations clearly so emotions don't run the show.</p></div>
+      <div class="pillar"><span class="L">O</span><h3>Ownership</h3><p>Take responsibility for how she responds, communicates and shows up. Confidence comes from choices, not approval.</p></div>
+      <div class="pillar"><span class="L">W</span><h3>Worthiness</h3><p>Build an internal sense of "I'm enough" that doesn't depend on likes, attention or comparison.</p></div>
+      <div class="pillar"><span class="L">E</span><h3>Empowerment</h3><p>Use her voice in small moments and bigger ones: speak up, set boundaries, and act even when it's uncomfortable.</p></div>
+      <div class="pillar"><span class="L">R</span><h3>Reassurance</h3><p>Regulate emotions, recover from mistakes, and move forward without losing trust in herself.</p></div>
+    </div>
+    <p style="margin-top:26px;font-weight:700"><a class="btn-link" href="@/power-framework">See how POWER shows up in each program <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+  </div>
+</section>
+
+<!-- HEART -->
+<section class="band heart">
+  <div class="wrap split">
+    <div class="pic"><img src="img/founders.jpg" alt="Jill and Mary, founders of Girls Mentorship, in matching pink outfits in front of the Pursue More camp sign" width="456" height="616"></div>
+    <div>
+      <p class="eyebrow">Inspired to lead</p>
+      <h2>The heart behind Girls Mentorship.</h2>
+      <div class="prose measure">
+        <p>You want your daughter to thrive: to feel confident in who she is, navigate friendships with ease, and grow into a leader with purpose. But today's world can make that feel like an uphill battle.</p>
+        <p>We get it because we've been there too. Back in August 2020, we asked ourselves what our younger selves could have done with the tools we have now. Everywhere we looked, girls were grappling with confidence, negative self-talk, and anxiety. Weren't we in those same shoes 20 years ago?</p>
+        <p><b>So we built the place we wish we'd had.</b> Since then we've worked with over 100 schools and youth organizations and more than 3,000 girls, with a proven curriculum and a whole lot of fun.</p>
+      </div>
+      <p class="sign">Jill &amp; Mary</p>
+      <div class="btn-row" style="margin-top:20px"><a class="btn btn-white" href="@/about">Read our story <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+    </div>
+  </div>
+</section>
+
+<!-- PARENTS -->
+<section class="band tint t-camp" style="background:var(--pink-soft)">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow" style="color:#C2187F">Word on the streets</p>
+      <h2>Parents say it better than we can.</h2>
+    </div>
+    <div class="quotes">
+      <figure class="quote"><blockquote class="big">"Life changers!! She came home today the most positive I've ever heard her be."</blockquote><figcaption><i>C</i>Chevon M.</figcaption></figure>
+      <figure class="quote"><blockquote>"Middle school is such a hard time, and I was worried my daughter wouldn't open up or connect, but this program was exactly what she needed. My daughter left feeling empowered, capable, and genuinely happy. I have started seeing her light again."</blockquote><figcaption><i>A</i>Amber J.</figcaption></figure>
+      <figure class="quote"><blockquote>"Our daughter can't stop talking about all that she's learned. Her confidence has grown and her ability to handle friend drama is improving. She can't wait for next year."</blockquote><figcaption><i>R</i>Rachel V.</figcaption></figure>
+      <figure class="quote"><blockquote>"She mentioned she has some friends she can laugh and be silly around, be herself. I haven't seen her do that in years!"</blockquote><figcaption><i>K</i>Katie G.</figcaption></figure>
+      <figure class="quote"><blockquote class="big">"Seeing her hug a new friend when I walked in the door almost brought me to tears."</blockquote><figcaption><i>♥</i>Camp parent</figcaption></figure>
+      <figure class="quote"><blockquote>"Never seen so much growth in my child in such a quick amount of time."</blockquote><figcaption><i>J</i>Jon S.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- OTHER PATHS -->
+<section class="band">
+  <div class="wrap">
+    <div class="sec-head"><p class="eyebrow">Not a parent?</p><h2>Two more ways in.</h2></div>
+    <div class="paths2">
+      <div class="pathcard a">
+        <span class="chip ink">Schools &amp; Orgs</span>
+        <h3>Bring Girls Mentorship to your girls.</h3>
+        <p>For schools, troops, NCL chapters and sports teams.</p>
+        <ul>
+          <li>Workshops, 90 minutes <span>$200 + $50 a girl</span></li>
+          <li>Power Up Club, 6 weeks after school <span>$149 a girl</span></li>
+        </ul>
+        <div class="btn-row"><a class="btn btn-white" href="@/workshops">Request a workshop</a><a class="btn-link" href="@/power-up-club">Power Up Club</a></div>
+      </div>
+      <div class="pathcard b">
+        <span class="chip ink">Lead Girls</span>
+        <h3>Teach the POWER Method yourself.</h3>
+        <p>For teachers, troop and NCL leaders, coaches, studio owners, homeschool moms and therapists.</p>
+        <ul>
+          <li>Facilitator Certification <span>$1,997</span></li>
+          <li>Free Girls' Circle Kit <span>Free</span></li>
+        </ul>
+        <div class="btn-row"><a class="btn btn-white" href="@/the-power-method">See the certification</a><a class="btn-link" href="@/girls-circle-kit">Get the free kit</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section class="band blue clip final">
+  <svg class="doodle d-lime hide-sm" style="left:4%;top:40px;width:170px" viewBox="0 0 220 120" aria-hidden="true"><use href="#sq-loop"/></svg>
+  <svg class="doodle d-pink hide-sm" style="right:5%;bottom:40px;width:150px" viewBox="0 0 140 140" aria-hidden="true"><use href="#sq-curl"/></svg>
+  <div class="wrap">
+    <p class="eyebrow">Camp 2027 sells out every year</p>
+    <h2>Get first access before Black Friday.</h2>
+    <p class="lede">Join the VIP list and you'll get the 2027 camp dates first, plus 48 hours of early access to 20% off before it opens to everyone on Nov 27.</p>
+    <div class="btn-row"><a class="btn btn-lime" href="@/camp-vip">Join the Camp 2027 VIP list <svg aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="btn btn-white" href="@/one-days">Not sure yet? Try a One-Day</a></div>
+  </div>
+</section>
+
+<div class="mbar"><div><b>Camp 2027 VIP list</b>First access to Black Friday pricing</div><a class="btn btn-lime" href="@/camp-vip" tabindex="-1">Join</a></div>
+
+<script>
+(function(){
+  var btns=[].slice.call(document.querySelectorAll(".grade")),wrap=document.getElementById("progs"),out=document.getElementById("finder-out");
+  var cards=[].slice.call(wrap.querySelectorAll(".prog"));
+  var label={4:"4th grade",5:"5th grade",6:"6th grade",7:"7th grade",8:"8th grade",9:"high school"};
+  btns.forEach(function(b){
+    b.addEventListener("click",function(){
+      var on=b.getAttribute("aria-pressed")!=="true", g=b.dataset.g, n=0;
+      btns.forEach(function(x){x.setAttribute("aria-pressed",x===b&&on?"true":"false");});
+      wrap.classList.toggle("filtering",on);
+      cards.forEach(function(c){var fit=on&&c.dataset.g.split(" ").indexOf(g)>-1;c.classList.toggle("fit",fit);c.classList.toggle("dim",on&&!fit);if(fit)n++;});
+      out.textContent=on?(n+" programs fit a girl in "+label[g]+"."):"";
+    });
+  });
+})();
+</script>

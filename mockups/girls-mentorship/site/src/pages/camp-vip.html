@@ -1,0 +1,99 @@
+<!--meta route="/camp-vip" title="Camp 2027 VIP List · Girls Mentorship" desc="Join the Pursue More Summer Camp 2027 VIP list: get the 2027 dates first and 48-hour early access to Black Friday pricing, 20% off, starting Nov 25." theme="t-camp" section="programs"-->
+<style>
+.vip{padding-block:clamp(40px,6vw,84px) clamp(56px,7vw,96px);position:relative;overflow:hidden}
+.vip-grid{display:grid;grid-template-columns:1fr .95fr;gap:clamp(30px,5vw,72px);align-items:start;position:relative;z-index:1}
+.vip h1{font-size:var(--step-4);font-weight:700;margin-top:16px}
+.vip h1 .accent{color:var(--accent)}
+.vip .lede{margin-top:20px}
+.perks{list-style:none;padding:0;margin-top:28px;display:grid;gap:12px;max-width:540px}
+.perks li{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;border:2px solid var(--ink);border-radius:18px;padding:14px 16px;background:#fff}
+.perks li:nth-child(2){background:var(--pink-soft)}
+.perks .d{font-family:var(--f-display);font-weight:700;font-size:1.05rem;text-transform:uppercase;background:var(--ink);color:#fff;border-radius:10px;padding:.35em .6em;text-align:center;min-width:76px;line-height:1.1}
+.perks b{display:block;font-weight:800}
+.perks span{color:var(--muted);font-size:.95rem}
+.vip-strip{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:28px;max-width:540px}
+.vip-strip img{width:100%;height:auto;aspect-ratio:408/248;object-fit:cover;border-radius:14px;border:2px solid var(--ink)}
+.form-card .small-note{margin-top:0}
+.thanks{display:grid;gap:16px}
+.thanks[hidden]{display:none}
+.thanks:focus{outline:none}
+.thanks .big{font-family:var(--f-hand);font-size:var(--step-2);line-height:1.1;color:var(--accent)}
+.tl{list-style:none;padding:0;margin:4px 0 0;border-left:3px solid var(--ink);display:grid;gap:0}
+.tl li{position:relative;padding:0 0 16px 22px}
+.tl li::before{content:"";position:absolute;left:-9px;top:5px;width:14px;height:14px;border-radius:50%;background:#fff;border:3px solid var(--ink)}
+.tl li.key::before{background:var(--accent)}
+.tl .d{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.05em;font-weight:600;color:var(--accent);font-size:.95rem}
+.tl .t{font-weight:700}
+.meanwhile{border:2px solid var(--ink);border-radius:18px;background:var(--lime);padding:16px 18px;display:grid;gap:10px}
+.meanwhile p{font-weight:700}
+@media (max-width:900px){.vip-grid{grid-template-columns:1fr}}
+@media (max-width:440px){.perks li{grid-template-columns:1fr;gap:8px}.perks .d{justify-self:start}}
+</style>
+
+<section class="vip">
+  <svg viewBox="0 0 100 100" class="doodle d-star hide-sm" style="left:2%;top:40px;width:58px;transform:rotate(-12deg)" aria-hidden="true"><use href="#sq-star"/></svg>
+  <svg class="doodle d-pink hide-sm" style="right:2%;bottom:24px;width:150px" viewBox="0 0 160 80" aria-hidden="true"><use href="#sq-zig"/></svg>
+  <div class="wrap vip-grid">
+    <div>
+      <p class="eyebrow">Pursue More Summer Camp 2027 · VIP list</p>
+      <h1>Get first dibs on camp <span class="accent">before Black Friday.</span></h1>
+      <p class="lede">Camp has sold out four years in a row, with just 50 girls a week. VIPs see the 2027 weeks first and get 48 hours of early access to our best price of the year.</p>
+      <ul class="perks">
+        <li><span class="d">Nov 16</span><div><b>The 2027 dates, first</b><span>Four weeks, May 31 to June 25, sent to VIPs before anyone else.</span></div></li>
+        <li><span class="d">Nov 25</span><div><b>48-hour early access to 20% off</b><span>Your VIP link opens two days before Black Friday.</span></div></li>
+        <li><span class="d">Free</span><div><b>No cost, no commitment</b><span>Just a heads-up so you don't miss her week.</span></div></li>
+      </ul>
+      <div class="vip-strip" aria-hidden="true">
+        <img src="img/inst1.jpg" alt="" width="408" height="248"><img src="img/inst2.jpg" alt="" width="408" height="248"><img src="img/inst3.jpg" alt="" width="416" height="248">
+      </div>
+    </div>
+
+    <div>
+      <div class="form-card" data-form-wrap>
+        <h3>Join the VIP list</h3>
+        <p>Three quick things and you're in.</p>
+        <form class="form" data-preview-form data-swap="vip-thanks">
+          <label for="vip-name">Your first name<input id="vip-name" type="text" autocomplete="given-name" required></label>
+          <label for="vip-email">Email<input id="vip-email" type="email" autocomplete="email" required></label>
+          <label for="vip-age">Your daughter's age
+            <select id="vip-age" required>
+              <option value="">Choose her age</option>
+              <option>9</option><option>10</option><option>11</option><option>12</option><option>13</option>
+              <option value="14-18">14–18 (Peer Leader)</option>
+            </select>
+            <span class="hint">So we only send what fits her. Camp is for ages 10–13; ages 14–18 join as Peer Leaders.</span>
+          </label>
+          <button class="btn btn-accent" type="submit">Make me a VIP <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          <p class="preview-note">We'll never share your email. Preview only: this form doesn't send anything.</p>
+        </form>
+      </div>
+
+      <div class="form-card thanks" id="vip-thanks" tabindex="-1" hidden>
+        <p class="big">You're a VIP!</p>
+        <h3>Here's what happens next.</h3>
+        <ol class="tl">
+          <li><div class="d">Nov 16</div><div class="t">The 2027 camp dates land in your inbox.</div></li>
+          <li><div class="d">Nov 23</div><div class="t">A reminder: your VIP link opens Wednesday.</div></li>
+          <li class="key"><div class="d">Nov 25</div><div class="t">VIP early access: 20% off, 48 hours before everyone.</div></li>
+          <li class="key"><div class="d">Nov 27</div><div class="t">Black Friday opens to everyone.</div></li>
+          <li><div class="d">Dec 1</div><div class="t">The sale closes.</div></li>
+        </ol>
+        <div class="meanwhile">
+          <p>In the meantime: our next One-Days are Nov 7 &amp; 8. Six hours of friendship and confidence tools for grades 5–8, $149.</p>
+          <a class="btn btn-white sm" href="@/one-days">See One-Days</a>
+        </div>
+        <a class="btn-link" href="@/summercamp">Read more about camp <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="band tight tint">
+  <div class="wrap">
+    <div class="quotes" style="columns:2 320px">
+      <figure class="quote"><blockquote class="big">"Life changers!! She came home today the most positive I've ever heard her be."</blockquote><figcaption><i>C</i>Chevon, camp parent</figcaption></figure>
+      <figure class="quote"><blockquote>"Couldn't be more thankful for the program you ladies have created. Never seen so much growth in my child in such a quick amount of time."</blockquote><figcaption><i>J</i>Jon S., camp parent</figcaption></figure>
+    </div>
+    <p style="margin-top:12px;font-weight:700">Want the full picture first? <a class="btn-link" href="@/summercamp">See what a week at Pursue More looks like <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+  </div>
+</section>

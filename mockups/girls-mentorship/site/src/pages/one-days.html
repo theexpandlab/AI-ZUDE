@@ -1,0 +1,513 @@
+<!--meta route="/one-days" title="One-Days · Girls Mentorship" desc="A six-hour, in-person Girls Mentorship experience for 5th–8th grade girls. November 7 & 8, 2026 in Scottsdale, AZ. $149." section="programs"-->
+<style>
+/* Hero day picker */
+.od-hero .photo .frame{aspect-ratio:650/706}
+.od-hero .photo .frame img{object-position:right center}
+.picker{margin-top:30px;background:var(--peri);border:2px solid var(--ink);border-radius:22px;padding:18px;box-shadow:6px 6px 0 var(--ink);max-width:560px}
+.picker-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.picker-head strong{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.06em}
+.picker-head span{font-size:.88rem;color:var(--muted)}
+.days{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.day{position:relative}
+.day input{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.day label{display:block;background:#fff;border:2px solid var(--line);border-radius:14px;padding:12px 14px;cursor:pointer;height:100%}
+.day label .d{font-family:var(--f-display);font-weight:600;font-size:1.2rem;line-height:1.1;display:block}
+.day label .g{font-size:.9rem;color:var(--muted);font-weight:600}
+.day input:checked + label{border-color:var(--blue);box-shadow:inset 0 0 0 2px var(--blue)}
+.day input:checked + label .d{color:var(--blue)}
+.day input:focus-visible + label{outline:3px solid var(--pink);outline-offset:2px}
+.picker-cta{display:flex;align-items:center;gap:14px;margin-top:14px;flex-wrap:wrap}
+.picker-cta .btn{flex:1 1 220px}
+.picker-meta{font-size:.86rem;color:var(--muted);line-height:1.45}
+.picker-meta b{color:var(--ink)}
+.proof-row{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:26px;font-weight:600;font-size:.95rem;color:var(--muted)}
+.proof-row b{font-family:var(--f-display);color:var(--ink);font-size:1.25rem;font-weight:600;margin-right:6px}
+@media (max-width:440px){.days{grid-template-columns:1fr}}
+
+/* Front row */
+.frontrow .wrap{display:grid;grid-template-columns:auto 1fr;gap:clamp(28px,6vw,90px);align-items:center}
+.stat-stack{font-family:var(--f-display);font-weight:700;line-height:.9;text-transform:uppercase}
+.stat-stack div{font-size:clamp(3.4rem,2rem + 6vw,7.4rem)}
+.stat-stack small{display:block;font-size:.2em;letter-spacing:.12em;font-weight:600;color:var(--lime);margin-top:.4em}
+.stat-stack div + div{margin-top:.25em}
+.frontrow h2{font-size:var(--step-2)}
+.frontrow .measure > p{color:var(--on-dark);margin-top:16px}
+.frontrow .kicker{font-size:var(--step-1);color:#fff!important;font-weight:800;line-height:1.4;margin-top:22px!important}
+.frontrow .kicker em{font-family:var(--f-hand);font-style:normal;color:var(--lime);font-weight:400}
+@media (max-width:800px){.frontrow .wrap{grid-template-columns:1fr}.stat-stack{display:flex;gap:28px;flex-wrap:wrap}.stat-stack div + div{margin-top:0}}
+
+/* Practice tabs */
+.tabs{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:28px;position:relative;z-index:1}
+.tab{font:inherit;font-weight:800;font-size:.95rem;border:2px solid var(--ink);background:#fff;color:var(--ink);border-radius:999px;padding:.7em 1.2em;cursor:pointer}
+.tab[aria-selected="true"]{background:var(--ink);color:#fff}
+.scenario{display:grid;grid-template-columns:.8fr 1.2fr;background:#fff;border:2px solid var(--ink);border-radius:28px;overflow:hidden;box-shadow:8px 8px 0 var(--blue);max-width:1000px;margin-inline:auto;position:relative;z-index:1}
+.scenario img{width:100%;height:100%;object-fit:cover;min-height:280px}
+.sheet{padding:clamp(22px,4vw,44px);display:grid;gap:4px;align-content:center}
+.srow{display:grid;grid-template-columns:118px 1fr;gap:16px;padding-block:16px;border-bottom:2px dashed var(--line);align-items:baseline}
+.srow:last-child{border-bottom:0}
+.srow .k{font-family:var(--f-display);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:.95rem}
+.srow.fact .k{color:var(--blue)} .srow.story .k{color:#8A90B0} .srow.tool .k{color:#D62F98}
+.srow .v{font-size:var(--step-1);line-height:1.35;font-weight:600;min-width:0}
+.srow.story .v{color:#6B7194;font-style:italic}
+.strike{position:relative;display:inline}
+.strike::after{content:"";position:absolute;left:-4px;right:-4px;top:55%;height:6px;background:var(--pink);border-radius:6px;transform:scaleX(0);transform-origin:left;transition:transform .5s cubic-bezier(.7,0,.2,1) .25s;opacity:.85}
+.scenario.on .strike::after{transform:scaleX(1)}
+.srow.tool .v strong{display:block;font-family:var(--f-display);font-weight:600;font-size:var(--step-2);line-height:1.05;margin-bottom:8px}
+.say{display:inline-block;margin-top:6px;background:var(--lime);border:2px solid var(--ink);border-radius:18px 18px 18px 4px;padding:10px 14px;font-weight:800;font-size:1.05rem;line-height:1.35}
+.srow.tool .note{display:block;font-size:.98rem;color:var(--muted);font-weight:400;margin-top:10px}
+.practice-foot{text-align:center;margin-top:28px;color:var(--muted)}
+@media (max-width:780px){.scenario{grid-template-columns:1fr}.scenario img{aspect-ratio:16/10;min-height:0}.srow{grid-template-columns:1fr;gap:4px}}
+
+/* Why now */
+.chat{margin-top:30px;display:grid;gap:10px;max-width:420px}
+.bubble{background:var(--peri);border-radius:22px 22px 22px 6px;padding:12px 18px;font-weight:600;width:fit-content;max-width:100%;border:1.5px solid var(--line)}
+.bubble:nth-child(even){justify-self:end;background:var(--blue);color:#fff;border-color:var(--blue);border-radius:22px 22px 6px 22px}
+.both{background:var(--ink);color:#fff;border-radius:28px;padding:clamp(26px,4vw,44px)}
+.both .eyebrow{color:var(--lime)}
+.both h3{font-size:var(--step-2);margin-top:10px}
+.both > p{color:var(--on-dark-muted);margin-top:12px}
+.paths{display:grid;gap:14px;margin-top:24px}
+.path{border-radius:18px;padding:18px 20px;border:2px solid #2C335E}
+.path .who{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.06em;font-size:.9rem;color:var(--sky)}
+.path p{font-weight:800;font-size:var(--step-1);margin-top:6px;line-height:1.3}
+.path.hi{background:var(--lime);border-color:var(--lime);color:var(--ink)}
+.path.hi .who{color:var(--blue)}
+
+/* What one day can give */
+.gives{list-style:none;padding:0;border-top:2px solid rgba(255,255,255,.25)}
+.gives li{display:grid;grid-template-columns:34px 1fr;gap:12px;padding-block:14px;border-bottom:2px solid rgba(255,255,255,.25);font-weight:600;font-size:1.06rem}
+.gives svg{width:26px;height:26px;color:var(--lime)}
+.goal{margin-top:clamp(56px,7vw,90px);text-align:center}
+.goal p{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.08em;color:var(--lime);font-weight:600}
+.goal blockquote{margin:14px auto 0;font-family:var(--f-display);font-weight:700;font-size:var(--step-4);line-height:1;max-width:16ch;text-wrap:balance}
+.goal blockquote span{color:var(--lime)}
+
+/* Intro */
+.intro h2 small{display:block;font-size:.42em;color:var(--blue);letter-spacing:.06em;text-transform:uppercase;margin-bottom:12px}
+.reps{margin-top:20px;background:var(--pink-soft);border-radius:18px;padding:22px 24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.reps strong{font-family:var(--f-hand);font-weight:400;font-size:var(--step-2);line-height:1}
+.reps span{font-weight:600}
+.vs-row .can b{background:var(--lime);padding:0 .2em}
+
+/* Practice + fun */
+.pstrip{margin-top:clamp(48px,6vw,80px);display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pcard{border-radius:28px;padding:clamp(26px,4vw,44px);border:2px solid var(--ink)}
+.pcard.ink{background:var(--ink);color:#fff}
+.pcard.pink{background:var(--pink)}
+.pcard h3{font-size:var(--step-2);text-transform:uppercase}
+.pcard > p{margin-top:12px}
+.pcard.ink > p{color:var(--on-dark-muted)}
+.verbs{display:flex;flex-wrap:wrap;gap:8px 10px;margin-top:20px}
+.verbs span{font-family:var(--f-display);font-weight:600;text-transform:uppercase;font-size:clamp(1.2rem,1rem + .9vw,1.7rem);line-height:1.1}
+.verbs span:nth-child(4){color:var(--pink);text-decoration:line-through;text-decoration-thickness:3px}
+.verbs span:last-child{background:var(--lime);color:var(--ink);padding:0 .25em}
+.pcard .tail{margin-top:20px;font-weight:800;color:#fff!important}
+.pcard .tail b{color:var(--lime)}
+.pcard .pills{margin-top:20px}
+@media (max-width:860px){.pstrip{grid-template-columns:1fr}}
+
+/* Wait vs now */
+.choice-photo{height:clamp(200px,32vw,380px);background:url("img/oneday-strip.jpg") center 35%/cover;border-block:2px solid var(--ink)}
+.fork{display:grid;grid-template-columns:1fr 1fr}
+.fork > div{padding:clamp(40px,6vw,90px) max(20px,env(safe-area-inset-right,0px)) clamp(40px,6vw,90px) max(20px,env(safe-area-inset-left,0px))}
+.fork .inner{max-width:520px;margin-left:auto;padding-right:clamp(0px,3vw,40px)}
+.fork .now .inner{margin-left:0;margin-right:auto;padding-left:clamp(0px,3vw,40px);padding-right:0}
+.fork .wait{background:#F3F4F8}
+.fork .now{background:var(--blue);color:#fff}
+.fork h2{font-size:var(--step-2)}
+.fork .wait h2{color:#6B7194}
+.until{list-style:none;padding:0;margin-top:20px;display:grid;gap:12px;color:#6B7194}
+.until li{padding-left:22px;position:relative}
+.until li::before{content:"";position:absolute;left:0;top:.65em;width:10px;height:2px;background:#9AA0BE}
+.fork .now p{margin-top:16px;color:var(--on-dark)}
+.fork .now p strong{color:#fff}
+.fork .now .closer{font-size:var(--step-1);font-weight:800;color:#fff}
+.fork .now .closer span{background:var(--lime);color:var(--ink);padding:0 .2em}
+@media (max-width:860px){.fork{grid-template-columns:1fr}.fork .inner,.fork .now .inner{margin:0;max-width:640px;padding:0}}
+
+/* Tickets extras */
+.od-tickets{max-width:980px;margin-inline:auto}
+.t-meta{display:grid;gap:6px;font-size:.95rem}
+.t-meta div{display:flex;gap:10px;align-items:flex-start}
+.t-meta svg{width:18px;height:18px;flex:none;margin-top:4px;color:var(--blue)}
+.included{max-width:980px;margin:clamp(30px,4vw,44px) auto 0;display:grid;grid-template-columns:1.3fr 1fr;gap:16px}
+.inc-box,.esa-box{border:2px solid var(--ink);border-radius:22px;padding:24px 26px}
+.inc-box{background:var(--peri)} .esa-box{background:var(--pink-soft);display:grid;gap:8px;align-content:start}
+.inc-box h3,.esa-box h3{font-size:1.25rem;text-transform:uppercase;letter-spacing:.04em}
+.inc-box .ticks{grid-template-columns:1fr 1fr;gap:8px 18px;margin-top:14px}
+.esa-box .mail{font-weight:800;user-select:all;word-break:break-all}
+@media (max-width:820px){.included{grid-template-columns:1fr}.inc-box .ticks{grid-template-columns:1fr}}
+
+/* Wait list */
+.waitlist{max-width:980px;margin:clamp(30px,4vw,44px) auto 0;display:grid;grid-template-columns:1fr 1.1fr;gap:clamp(20px,4vw,40px);align-items:center;border:2px solid var(--ink);border-radius:26px;background:var(--lime);padding:clamp(22px,4vw,36px);box-shadow:8px 8px 0 var(--ink);scroll-margin-top:130px}
+.waitlist h3{font-size:var(--step-2)}
+.waitlist > div > p{margin-top:10px;font-weight:600}
+.waitlist .ok{font-weight:800}
+@media (max-width:820px){.waitlist{grid-template-columns:1fr}}
+</style>
+
+<!-- HERO -->
+<section class="hero od-hero">
+  <svg viewBox="0 0 100 100" class="doodle d-star hide-sm" style="left:2%;top:40px;width:62px;transform:rotate(-12deg)" aria-hidden="true"><use href="#sq-star"/></svg>
+  <svg class="doodle d-pink hide-sm" style="right:3%;bottom:30px;width:150px" viewBox="0 0 220 120" aria-hidden="true"><use href="#sq-loop"/></svg>
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow"><span class="hl">One-Day.</span> Big life skills.</p>
+      <h1>Give her the tools <span class="accent">before she needs them.</span></h1>
+      <p class="lede">A six-hour, in-person Girls Mentorship experience that helps 5th–8th grade girls navigate friendships, communication, confidence, comparison, and all the stuff that comes with being a girl right now.</p>
+
+      <form class="picker" id="picker" aria-labelledby="pick-title">
+        <div class="picker-head"><strong id="pick-title">Pick her day</strong><span>Two days, grouped by age</span></div>
+        <div class="days" role="radiogroup" aria-labelledby="pick-title">
+          <div class="day"><input type="radio" name="day" id="day-sat" value="sat" checked><label for="day-sat"><span class="d">Sat, Nov 7</span><span class="g">5th + 6th grade</span></label></div>
+          <div class="day"><input type="radio" name="day" id="day-sun" value="sun"><label for="day-sun"><span class="d">Sun, Nov 8</span><span class="g">7th + 8th grade</span></label></div>
+        </div>
+        <div class="picker-cta">
+          <a class="btn btn-primary" id="pick-go" href="https://www.girlsmentorship.com/resource_redirect/offers/x2eLHXVs">Save her spot · $149 <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <p class="picker-meta"><b>9 AM–3 PM</b> · Rancho Solano Prep,<br>Scottsdale · ESA funds accepted</p>
+        </div>
+      </form>
+      <div class="proof-row"><span><b>6</b>years</span><span><b>3,000+</b>girls mentored</span><span><b>1</b>intentional, really fun day</span></div>
+    </div>
+    <div class="photo">
+      <div class="frame"><img src="img/oneday-hero.jpg" alt="Middle-school girls laughing together during a Girls Mentorship session in a bright pink and yellow room" width="650" height="706"></div>
+      <div class="burst" aria-hidden="true"><svg viewBox="0 0 100 100"><path stroke="#11163A" stroke-width="2" d="M50 2l7 10 12-5 2 12 13 1-4 12 11 7-9 9 7 11-12 4 1 13-13-2-5 12-10-8-10 8-5-12-13 2 1-13-12-4 7-11-9-9 11-7-4-12 13-1 2-12 12 5z"/></svg><span><b>6 hrs</b>in person</span></div>
+      <p class="tag">Less second-guessing.<br>More self-trust.</p>
+    </div>
+  </div>
+</section>
+
+<section class="partners" aria-label="Partners">
+  <div class="wrap"><p>Partners with</p>
+    <div class="logo-track"><div class="logo-row">
+      <img src="img/partners.jpg" alt="Rancho Solano Preparatory School, Phoenix Country Day, Glendale Elementary School District, notMYkid, Xavier College Prep, Paradise Valley Unified School District, Scottsdale Christian Academy, Girl Scouts">
+      <img src="img/partners.jpg" alt="" aria-hidden="true">
+    </div></div>
+  </div>
+</section>
+
+<!-- FRONT ROW -->
+<section class="band blue clip frontrow">
+  <svg class="doodle d-lime hide-sm" style="right:-20px;top:30px;width:200px" viewBox="0 0 140 140" aria-hidden="true"><use href="#sq-curl"/></svg>
+  <div class="wrap">
+    <div class="stat-stack" aria-hidden="true"><div>6 yrs<small>Since 2020</small></div><div>3,000+<small>Girls and counting</small></div></div>
+    <div class="measure">
+      <h2>A front-row seat to what girls are navigating.</h2>
+      <p>Since 2020, we've worked alongside tween and teen girls through summer camps, after-school programs, school partnerships, workshops, and mentorship. We've listened to their stories, watched them practice these skills in real time, and learned a whole lot about what girls are navigating, and what actually helps.</p>
+      <p class="kicker">Our curriculum isn't built around what we <em>think</em> girls need. It's shaped by what we've watched them navigate in real life.</p>
+    </div>
+  </div>
+</section>
+
+<!-- OUTCOMES -->
+<section class="band" id="outcomes">
+  <div class="wrap">
+    <div class="sec-head"><p class="eyebrow">What she walks away with</p><h2>Imagine her walking away with…</h2></div>
+    <div class="outcomes">
+      <article class="outcome"><span class="mark"><svg aria-hidden="true"><use href="#i-check"/></svg></span><div><h3>More confidence navigating friendship shifts.</h3><p>Not because friendships suddenly become easy, but because she has a framework for slowing down, figuring out what's actually happening, and deciding what she wants to do next.</p></div></article>
+      <article class="outcome"><span class="mark"><svg aria-hidden="true"><use href="#i-check"/></svg></span><div><h3>Language for the conversations that feel hard.</h3><p>Instead of knowing something feels off but having no idea what to say, she's practiced communicating clearly, speaking up for herself, and navigating uncomfortable conversations.</p></div></article>
+      <article class="outcome"><span class="mark"><svg aria-hidden="true"><use href="#i-check"/></svg></span><div><h3>Tools to stop a story before it runs away with her.</h3><p>One unanswered text can become <i>"she's mad at me,"</i> <i>"I did something wrong,"</i> or <i>"nobody likes me"</i> pretty freaking fast. She'll practice separating <b>what actually happened</b> from the story she's telling herself.</p></div></article>
+      <article class="outcome"><span class="mark"><svg aria-hidden="true"><use href="#i-check"/></svg></span><div><h3>More clarity around what's hers to own, and what isn't.</h3><p>Not taking all the blame. Not placing all the blame. Learning to own her choices, her words, her reactions, and what she can do next, without carrying the whole pie.</p></div></article>
+      <article class="outcome"><span class="mark"><svg aria-hidden="true"><use href="#i-check"/></svg></span><div><h3>Practice knowing when to speak up and when to let it go.</h3><p>Not every uncomfortable moment requires a confrontation, and not every one should be ignored. She'll practice asking: <i>Does this need a conversation? A boundary? A different perspective? Or is this something I can release?</i></p></div></article>
+      <article class="outcome"><span class="mark"><svg aria-hidden="true"><use href="#i-check"/></svg></span><div><h3>More trust in herself to figure out what comes next.</h3><p>She doesn't need to have every answer. <strong>We want her to start trusting that she has what it takes to find one.</strong></p></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- PRACTICE -->
+<section class="band peri clip" id="practice">
+  <svg class="doodle d-pink hide-sm" style="left:-30px;top:60px;width:170px" viewBox="0 0 140 140" aria-hidden="true"><use href="#sq-curl"/></svg>
+  <svg viewBox="0 0 100 100" class="doodle d-star hide-sm" style="right:6%;top:70px;width:56px;transform:rotate(14deg)" aria-hidden="true"><use href="#sq-star"/></svg>
+  <div class="wrap">
+    <div class="sec-head center"><p class="eyebrow">A peek at the practice</p><h2 style="max-width:18ch">"Okay, but what do I actually say?"</h2><p class="lede">We make room for that question. Pick a moment and see the tool she'll practice.</p></div>
+    <div class="tabs" role="tablist" aria-label="Practice scenarios">
+      <button class="tab" role="tab" id="t0" aria-controls="sc" aria-selected="true">The photo she wasn't in</button>
+      <button class="tab" role="tab" id="t1" aria-controls="sc" aria-selected="false" tabindex="-1">The joke in the chat</button>
+      <button class="tab" role="tab" id="t2" aria-controls="sc" aria-selected="false" tabindex="-1">The borrowed stuff</button>
+    </div>
+    <article class="scenario on" id="sc" role="tabpanel" aria-labelledby="t0" aria-live="polite">
+      <img id="sc-img" src="img/oneday-p1.jpg" alt="A mentor taking a selfie with four smiling girls" width="400" height="400">
+      <div class="sheet">
+        <div class="srow fact"><span class="k">The fact</span><span class="v" id="sc-fact">You see a photo of friends together. You weren't there.</span></div>
+        <div class="srow story"><span class="k">The story</span><span class="v"><span class="strike" id="sc-story">"They don't like me anymore."</span></span></div>
+        <div class="srow tool"><span class="k">A tool to try</span><span class="v"><strong id="sc-tool">Pause the story. Get curious.</strong><span class="say" id="sc-say">"I saw you all hung out. I'd love to join next time!"</span><span class="note" id="sc-note">Then notice what happens, rather than deciding what everyone thinks.</span></span></div>
+      </div>
+    </article>
+    <p class="practice-foot">She practices all three, out loud, with girls her age, before the stakes feel real.</p>
+  </div>
+</section>
+
+<!-- WHY NOW -->
+<section class="band">
+  <div class="wrap split" style="align-items:start">
+    <div>
+      <p class="eyebrow">Why now?</p>
+      <h2>We're nearly halfway through the school year. And we're starting to see it.</h2>
+      <p class="lede" style="margin-top:18px">We work with girls every day, and the same things show up again and again.</p>
+      <div class="chat" aria-label="What we're seeing">
+        <p class="bubble">Friendships are shifting.</p><p class="bubble">Group chats are complicated.</p>
+        <p class="bubble">Comparison is creeping in.</p><p class="bubble">Confidence is taking some hits.</p>
+      </div>
+      <p class="muted measure" style="margin-top:24px">Girls are overthinking what someone said, what they meant, why they weren't included, whether they should speak up… or whether they should just let it go. <b style="color:var(--ink)">And we're hearing it from parents, too.</b></p>
+    </div>
+    <aside class="both">
+      <p class="eyebrow">Maybe you're seeing some of it at home. Or maybe she's doing great.</p>
+      <h3>We think both girls deserve the tools.</h3>
+      <p>We don't believe we have to wait until something becomes a problem before we teach girls how to navigate it.</p>
+      <div class="paths">
+        <div class="path"><span class="who">If she's already struggling</span><p>Let's give her somewhere to practice.</p></div>
+        <div class="path hi"><span class="who">If she's thriving</span><p>Let's give her the tools before she needs them.</p></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<!-- ONE DAY CAN GIVE -->
+<section class="band blue clip">
+  <svg class="doodle d-sky hide-sm" style="left:3%;bottom:40px;width:150px" viewBox="0 0 220 120" aria-hidden="true"><use href="#sq-loop"/></svg>
+  <div class="wrap">
+    <div class="split" style="align-items:start">
+      <div>
+        <h2>One day can give her something to reach for when real life happens.</h2>
+        <p class="lede" style="margin-top:18px">No, we're not promising to solve every friendship problem, eliminate comparison, or make middle school magically easy in one day. That's not how this works. But one intentional day <b style="color:#fff">can</b> give her:</p>
+      </div>
+      <ul class="gives">
+        <li><svg aria-hidden="true"><use href="#i-sparkle"/></svg>Questions she knows how to ask herself.</li>
+        <li><svg aria-hidden="true"><use href="#i-sparkle"/></svg>Language for a conversation she didn't know how to have.</li>
+        <li><svg aria-hidden="true"><use href="#i-sparkle"/></svg>A way to separate what happened from what she's assuming it means.</li>
+        <li><svg aria-hidden="true"><use href="#i-sparkle"/></svg>Practice speaking up before she has to do it when the stakes feel higher.</li>
+        <li><svg aria-hidden="true"><use href="#i-sparkle"/></svg>A framework for deciding what's hers to own.</li>
+        <li><svg aria-hidden="true"><use href="#i-sparkle"/></svg>A reminder that someone else's choices don't determine her worth.</li>
+        <li><svg aria-hidden="true"><use href="#i-sparkle"/></svg>A little more trust in herself to decide what comes next.</li>
+      </ul>
+    </div>
+    <div class="goal"><p>Our goal is for her to walk away thinking</p><blockquote>"I have tools. I trust myself. <span>I know what I can do next.</span>"</blockquote></div>
+  </div>
+</section>
+
+<!-- INTRODUCING -->
+<section class="band intro">
+  <div class="wrap split" style="align-items:start">
+    <div>
+      <h2><small>Introducing ONE-DAY</small>A Girls Mentorship experience, packed into one really intentional, really fun day.</h2>
+      <div class="pills" style="margin-top:24px"><span>6 hours</span><span>In person</span><span>Small groups</span><span>POWER curriculum</span></div>
+    </div>
+    <div>
+      <div class="prose measure">
+        <p>ONE-DAY gives girls time to <b>learn, talk about, practice, and actually USE</b> the skills that are hard to figure out in the moment.</p>
+        <p>We're taking some of our favorite lessons and tools from our signature POWER curriculum (the same one we use in our camps, after-school programs, mentorship programs, and workshops) and building one day around what girls are navigating <b>right now.</b> We're not going to spend six hours talking <i>at</i> them. We'll practice these skills in real time.</p>
+      </div>
+      <div class="vs" style="margin-top:26px">
+        <div class="vs-row"><span class="told">Knowing she <i>should</i> speak up</span><svg aria-hidden="true"><use href="#i-arrow"/></svg><span class="can">Knowing <b>how</b> to speak up</span></div>
+        <div class="vs-row"><span class="told">Being told "don't overthink it"</span><svg aria-hidden="true"><use href="#i-arrow"/></svg><span class="can">Separating <b>fact from story</b></span></div>
+        <div class="vs-row"><span class="told">Hearing "just be confident"</span><svg aria-hidden="true"><use href="#i-arrow"/></svg><span class="can">Trusting herself to decide <b>what to do next</b></span></div>
+      </div>
+      <div class="reps"><strong>Girls need reps.</strong><span>And ONE-DAY gives them somewhere to get them.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- THE DAY -->
+<section class="band peri clip">
+  <svg class="doodle d-lime hide-sm" style="right:2%;top:50px;width:130px" viewBox="0 0 160 80" aria-hidden="true"><use href="#sq-zig"/></svg>
+  <div class="wrap">
+    <div class="sec-head"><p class="eyebrow">One day. A whole lot packed into it.</p><h2>Real-life tools for the stuff girls are actually navigating.</h2></div>
+    <div class="cards">
+      <article class="card"><span class="chip">Fact vs. story</span><h3>Get Curious Before You Get Carried Away</h3><p>Learn to separate what actually happened from the story she's telling herself about it.</p></article>
+      <article class="card"><span class="chip pink">Communication</span><h3>Say What You Mean (Without Being Mean)</h3><p>Practice using her voice, communicating clearly, and saying the hard thing respectfully.</p></article>
+      <article class="card"><span class="chip sky">Ownership</span><h3>Own Your Slice of the Pie</h3><p>Recognize what's hers to take responsibility for without taking the blame for everything.</p></article>
+      <article class="card"><span class="chip">Comparison</span><h3>Stop Measuring Herself Against Everyone Else</h3><p>Notice when comparison is taking over and practice bringing the focus back to her own worth.</p></article>
+      <article class="card"><span class="chip pink">Boundaries</span><h3>Know When to Speak Up (and When to Move On)</h3><p>Practice recognizing when a situation calls for a conversation, a boundary, or a little perspective.</p></article>
+      <article class="card"><span class="chip sky">Friendship</span><h3>Navigate Friendships Without Losing Herself</h3><p>Explore changing dynamics, different perspectives, and how to stay true to herself along the way.</p></article>
+    </div>
+    <div class="pstrip">
+      <div class="pcard ink">
+        <h3>Real-life practice</h3>
+        <p>Having a tool and being able to use it when emotions are high are two very different things. Throughout the day, she'll:</p>
+        <div class="verbs"><span>Talk it out.</span><span>Role-play it.</span><span>Try it.</span><span>Mess it up.</span><span>Try again.</span><span>Build the reps.</span></div>
+        <p class="tail">So when real life gives her a chance to use the skill, <b>it won't be the first time.</b></p>
+      </div>
+      <div class="pcard pink">
+        <h3>And yes… it's actually fun.</h3>
+        <p>This is Girls Mentorship. We're not putting your daughter in a chair for six hours and lecturing her about communication.</p>
+        <div class="pills"><span>Games + movement</span><span>Small-group conversations</span><span>Real-life scenarios + role-play</span><span>Peer Leader connection</span><span>Lunch with new friends</span><span>Snack Shack</span><span>Reflection + take-home tools</span><span>Plenty of FUN</span></div>
+      </div>
+    </div>
+    <div class="btn-row" style="justify-content:center;margin-top:clamp(36px,5vw,56px)"><a class="btn btn-lime" href="#tickets">Yes, this sounds amazing <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+  </div>
+</section>
+
+<!-- PARENTS -->
+<section class="band" id="parents">
+  <div class="wrap">
+    <div class="sec-head"><p class="eyebrow">Don't just take our word for it</p><h2>What parents told us after Girls Mentorship camp.</h2></div>
+    <div class="quotes">
+      <figure class="quote"><blockquote class="big">"Life changers!! She came home today the most positive I've ever heard her be."</blockquote><figcaption><i>C</i>Chevon, camp parent</figcaption></figure>
+      <figure class="quote"><blockquote>"Couldn't be more thankful for the program you ladies have created. Never seen so much growth in my child in such a quick amount of time."</blockquote><figcaption><i>J</i>Jon S., camp parent</figcaption></figure>
+      <figure class="quote"><blockquote>"Kinley gave you the HIGHEST of compliments! She told me that you pulled her aside to check in with her. She said "you're really cool" and "she just gets it, ya know."</blockquote><figcaption><i>B</i>Beth S., camp parent</figcaption></figure>
+      <figure class="quote"><blockquote>"The spark it put back in her has been so good to see. These past few years have been rough and the skills she learned at camp and the energy she was surrounded with has been truly transformative."</blockquote><figcaption><i>T</i>Taylor's mom</figcaption></figure>
+      <figure class="quote"><blockquote class="big">"Seeing her hug a new friend when I walked in the door almost brought me to tears."</blockquote><figcaption><i>♥</i>Camp parent, by text</figcaption></figure>
+      <figure class="quote"><blockquote>"I see the wheels turning in Julia. I am thankful to have found a place that focuses on teaching girls how to speak up, how to stand strong in who they are, and how to lift each other up with kindness and compassion."</blockquote><figcaption><i>J</i>Jennifer S., camp parent</figcaption></figure>
+      <figure class="quote"><blockquote>"Lindsay has continued to bring up ah-ha moments and things she learned and felt good about. Also loved that you posted things that I could also start conversations about."</blockquote><figcaption><i>L</i>Lindsay's mom</figcaption></figure>
+      <figure class="quote"><blockquote>"Mills said this is the most positive feeling she has felt in a really long time."</blockquote><figcaption><i>A</i>Amber J., camp parent</figcaption></figure>
+    </div>
+    <p class="small-note">Messages shared with permission from Girls Mentorship summer camp families. ONE-DAY uses the same POWER curriculum.</p>
+  </div>
+</section>
+
+<!-- WAIT VS NOW -->
+<section aria-label="Wait, or give her the tools now">
+  <div class="choice-photo" role="img" aria-label="Girls smiling together at a Girls Mentorship session"></div>
+  <div class="fork">
+    <div class="wait"><div class="inner">
+      <h2>We can wait until she needs the tools.</h2>
+      <ul class="until">
+        <li>Until the friendship gets complicated.</li>
+        <li>Until she's replaying the group chat in her head.</li>
+        <li>Until comparison starts messing with how she sees herself.</li>
+        <li>Until she knows something feels off but has no idea what to say.</li>
+        <li>Until you're sitting on the edge of her bed trying to help her navigate something you wish she already felt more equipped to handle.</li>
+      </ul>
+    </div></div>
+    <div class="now"><div class="inner">
+      <h2>Or we can give her the tools now.</h2>
+      <p>Before the friendship gets hard. Before the uncomfortable conversation. Before she's standing in the middle of a situation trying to figure out what the heck to do next.</p>
+      <p>We can't prepare her for every single thing she'll experience. <strong>But we can give her language, frameworks, chances to practice, and a little more trust in her own ability to figure things out.</strong></p>
+      <p class="closer">She doesn't have to be struggling to start. And if she is? <span>Let's give her somewhere to practice.</span></p>
+    </div></div>
+  </div>
+</section>
+
+<!-- TICKETS -->
+<section class="band clip" id="tickets">
+  <svg viewBox="0 0 100 100" class="doodle d-star hide-sm" style="left:6%;top:70px;width:60px;transform:rotate(-18deg)" aria-hidden="true"><use href="#sq-star"/></svg>
+  <svg class="doodle d-pink hide-sm" style="right:4%;top:50px;width:140px" viewBox="0 0 160 80" aria-hidden="true"><use href="#sq-zig"/></svg>
+  <div class="wrap">
+    <div class="sec-head center"><p class="eyebrow">Her day starts here</p><h2>Choose her ONE-DAY.</h2><p class="lede">Same foundational skills. Two separate days designed to meet girls where they actually are.</p></div>
+    <div class="tickets od-tickets">
+      <article class="ticket">
+        <div class="t-top"><p class="when">Saturday</p><p class="big">5th + 6th grade</p><p class="date">November 7, 2026</p></div>
+        <div class="perf" aria-hidden="true"></div>
+        <div class="t-body">
+          <div class="price"><b>$149</b><span>full day</span></div>
+          <p class="for">For girls beginning to navigate bigger shifts in friendships, communication, comparison, confidence, and social dynamics.</p>
+          <div class="t-meta"><div><svg aria-hidden="true"><use href="#i-clock"/></svg>9:00 AM – 3:00 PM</div><div><svg aria-hidden="true"><use href="#i-pin"/></svg>Rancho Solano Prep Upper Campus, Scottsdale, AZ</div></div>
+          <a class="btn btn-primary" href="https://www.girlsmentorship.com/resource_redirect/offers/x2eLHXVs">We're in for Saturday <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+      </article>
+      <article class="ticket">
+        <div class="t-top"><p class="when">Sunday</p><p class="big">7th + 8th grade</p><p class="date">November 8, 2026</p></div>
+        <div class="perf" aria-hidden="true"></div>
+        <div class="t-body">
+          <div class="price"><b>$149</b><span>full day</span></div>
+          <p class="for">For girls navigating more complex friendships, group chats, communication, comparison, boundaries, confidence, and middle-school social dynamics.</p>
+          <div class="t-meta"><div><svg aria-hidden="true"><use href="#i-clock"/></svg>9:00 AM – 3:00 PM</div><div><svg aria-hidden="true"><use href="#i-pin"/></svg>Rancho Solano Prep Upper Campus, Scottsdale, AZ</div></div>
+          <a class="btn btn-primary" href="https://www.girlsmentorship.com/resource_redirect/offers/vEVe4hTD">We're in for Sunday <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+      </article>
+    </div>
+    <div class="included">
+      <div class="inc-box">
+        <h3>What the $149 includes</h3>
+        <ul class="ticks">
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>The full six-hour experience</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>POWER curriculum</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Activities and materials</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Small-group practice</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Snack Shack</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Take-home tools</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Parent follow-up</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>She brings her own lunch</li>
+        </ul>
+      </div>
+      <div class="esa-box">
+        <h3>ESA funds accepted</h3>
+        <p>Girls Mentorship accepts ESA funds. Need help with reimbursement? Email us and we'll walk you through it.</p>
+        <p class="mail">hello@girlsmentorship.com</p>
+        <a class="btn-link" href="@/esa">How ESA works <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+
+    <div class="waitlist" id="waitlist">
+      <div>
+        <span class="chip ink">Next One-Day: January</span>
+        <h3 style="margin-top:12px">Can't make November?</h3>
+        <p>Join the One-Day wait list. You'll hear the January date first and get to register before everyone else.</p>
+      </div>
+      <div data-form-wrap>
+        <form class="form" data-preview-form>
+          <div class="row">
+            <label for="w-name">Your first name<input id="w-name" autocomplete="given-name" required></label>
+            <label for="w-age">Daughter's age<select id="w-age" required><option value="">Choose</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option></select></label>
+          </div>
+          <label for="w-email">Email<input id="w-email" type="email" autocomplete="email" required></label>
+          <button class="btn btn-white" type="submit">Put me on the wait list</button>
+        </form>
+        <p class="ok" hidden style="margin-top:12px">You're on the January wait list. (Preview only: nothing was sent.)</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="band peri" id="faq">
+  <div class="wrap faq-grid">
+    <div class="sec-head"><p class="eyebrow">For the girl moms (and dads)</p><h2>Good questions. Real answers.</h2><p class="muted">Because you're choosing more than a way to fill a Saturday or Sunday.</p></div>
+    <div class="faq">
+      <details open><summary>Does she need to be struggling with friendships or confidence?<span class="pm"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></summary><p class="a">No. That's one of the biggest reasons we created ONE-DAYs. If she's doing great, amazing, let's keep building that. We don't think girls should have to wait until they're struggling to build the skills they'll need. And if she's already having a hard time, she's welcome here too.</p></details>
+      <details><summary>What if she's coming alone or she's shy?<span class="pm"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></summary><p class="a">Please don't let this keep you from sending her! Girls come into Girls Mentorship experiences without knowing anyone all the time. Connection is built into the day through small groups, games, activities, and chances to get comfortable. <b>She does not need to bring a friend to belong here.</b></p></details>
+      <details><summary>Are 5th–8th graders all together?<span class="pm"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></summary><p class="a">No. 5th + 6th graders attend Saturday, November 7. 7th + 8th graders attend Sunday, November 8. The foundational skills are similar, but the conversations, examples, scenarios, and depth are adjusted for what girls are actually navigating at each age.</p></details>
+      <details><summary>What should she bring?<span class="pm"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></summary><p class="a">A packed lunch and a water bottle. We'll provide everything she needs for the day's activities, and we'll have snacks and treats for purchase at the Girls Mentorship Snack Shack. Registered families get final arrival, pickup, and event details in the days before the event.</p></details>
+      <details><summary>Where is ONE-DAY held?<span class="pm"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></summary><p class="a">Rancho Solano Prep School Upper Campus in Scottsdale, Arizona.</p></details>
+      <details><summary>What does the $149 include?<span class="pm"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></summary><p class="a">The full six-hour experience, POWER curriculum, activities and materials, small-group practice, Snack Shack, take-home tools, and parent follow-up. Girls bring their own lunch.</p></details>
+      <details><summary>Can I use ESA funds for her ONE-DAY?<span class="pm"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></summary><p class="a">Absolutely! Girls Mentorship accepts ESA funds. If you need help with the reimbursement process, email <b>hello@girlsmentorship.com</b> and we'll be happy to help.</p></details>
+      <details><summary>Does she need to have attended Girls Mentorship before?<span class="pm"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></summary><p class="a">Not at all! For returning girls, ONE-DAY is a POWER refresh: a chance to reconnect and get more reps with tools they've already started building. For girls new to Girls Mentorship, it's a perfect introduction to the curriculum.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section class="band blue clip final">
+  <svg class="doodle d-lime hide-sm" style="left:4%;top:40px;width:170px" viewBox="0 0 220 120" aria-hidden="true"><use href="#sq-loop"/></svg>
+  <svg class="doodle d-pink hide-sm" style="right:5%;bottom:40px;width:150px" viewBox="0 0 140 140" aria-hidden="true"><use href="#sq-curl"/></svg>
+  <div class="wrap">
+    <h2>One day won't remove every hard moment she'll face.</h2>
+    <p class="lede">But it can help her feel more equipped for the next one. We don't have to wait until she needs the tools. <b style="color:#fff">We can give them to her now.</b></p>
+    <div class="btn-row">
+      <a class="btn btn-lime" href="https://www.girlsmentorship.com/resource_redirect/offers/x2eLHXVs">5th + 6th grade · Sat, Nov 7</a>
+      <a class="btn btn-lime" href="https://www.girlsmentorship.com/resource_redirect/offers/vEVe4hTD">7th + 8th grade · Sun, Nov 8</a>
+    </div>
+    <p style="margin-top:22px;color:var(--on-dark);font-weight:600">9 AM–3 PM · Scottsdale, AZ · $149 · Loved it? <a href="@/summercamp" style="color:var(--lime)">Summer camp is the next step.</a></p>
+  </div>
+</section>
+
+<div class="mbar" data-hide-at="#tickets"><div><b>Nov 7 &amp; 8 · $149</b>Scottsdale · 5th–8th grade</div><a class="btn btn-lime" href="#tickets" tabindex="-1">Save her spot</a></div>
+
+<script>
+(function(){
+  var links={sat:"https://www.girlsmentorship.com/resource_redirect/offers/x2eLHXVs",sun:"https://www.girlsmentorship.com/resource_redirect/offers/vEVe4hTD"};
+  var go=document.getElementById("pick-go");
+  document.querySelectorAll('#picker input[name="day"]').forEach(function(r){r.addEventListener("change",function(){go.href=links[r.value];});});
+  document.getElementById("picker").addEventListener("submit",function(e){e.preventDefault();});
+
+  var S=[
+    {img:"img/oneday-p1.jpg",alt:"A mentor taking a selfie with four smiling girls",fact:"You see a photo of friends together. You weren't there.",story:"“They don't like me anymore.”",tool:"Pause the story. Get curious.",say:"“I saw you all hung out. I'd love to join next time!”",note:"Then notice what happens, rather than deciding what everyone thinks."},
+    {img:"img/oneday-p2.jpg",alt:"Girls sitting in a circle on the floor during a small-group conversation",fact:"Someone makes a joke about another girl in the chat.",story:"“If I don't laugh, they'll turn on me.”",tool:"Choose your response. Keep your values.",say:"“Let's leave her out of this.”",note:"Practice a clear response, stepping away, and asking a trusted adult for support when needed."},
+    {img:"img/oneday-p3.jpg",alt:"Three girls with name tags smiling together in front of a colorful wall",fact:"A friend keeps borrowing your things without asking.",story:"“If I say something, I'll be a bad friend.”",tool:"Clarity is kindness.",say:"“I'm happy to share sometimes. Please ask first.”",note:"Practice saying what you need with a calm voice and a clear boundary."}
+  ];
+  var sc=document.getElementById("sc"),tabs=[].slice.call(document.querySelectorAll(".tab"));
+  function $(id){return document.getElementById(id);}
+  function show(i){
+    var s=S[i];
+    tabs.forEach(function(t,j){t.setAttribute("aria-selected",j===i?"true":"false");t.tabIndex=j===i?0:-1;});
+    sc.setAttribute("aria-labelledby","t"+i);sc.classList.remove("on");
+    $("sc-img").src=s.img;$("sc-img").alt=s.alt;$("sc-fact").textContent=s.fact;$("sc-story").textContent=s.story;
+    $("sc-tool").textContent=s.tool;$("sc-say").textContent=s.say;$("sc-note").textContent=s.note;
+    void sc.offsetWidth;sc.classList.add("on");
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener("click",function(){show(i);});
+    t.addEventListener("keydown",function(e){var n=e.key==="ArrowRight"?(i+1)%3:e.key==="ArrowLeft"?(i+2)%3:-1;if(n>-1){e.preventDefault();show(n);tabs[n].focus();}});
+  });
+})();
+</script>

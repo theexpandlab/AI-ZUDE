@@ -1,0 +1,260 @@
+<!--meta route="/find-her-program" title="Find Her Program · Girls Mentorship" desc="Take a 6-question quiz to find the Girls Mentorship program that fits your daughter, or compare every program by age, format and price." section="programs"-->
+<style>
+.fhp-hero{padding-block:clamp(36px,5vw,64px) 0;position:relative;overflow:hidden}
+.fhp-hero h1{font-size:var(--step-4);font-weight:700;margin-top:14px;max-width:16ch}
+.fhp-hero .lede{margin-top:18px}
+.quiz-wrap{display:grid;grid-template-columns:1.25fr .75fr;gap:clamp(24px,4vw,48px);align-items:start;margin-top:clamp(28px,4vw,44px)}
+.quiz{background:#fff;border:2px solid var(--ink);border-radius:28px;box-shadow:10px 10px 0 var(--blue);padding:clamp(22px,4vw,40px);position:relative;z-index:1;min-width:0}
+.qprog{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.qprog .bar{flex:1;height:12px;border-radius:999px;border:2px solid var(--ink);background:var(--peri);overflow:hidden}
+.qprog .bar i{display:block;height:100%;background:var(--lime);border-right:2px solid var(--ink);width:16.66%;transition:width .3s ease}
+.qprog span{font-family:var(--f-display);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:.9rem;white-space:nowrap}
+.q h2{font-size:var(--step-2);line-height:1.08}
+.q .sub{color:var(--muted);margin-top:8px}
+.opts{display:grid;gap:10px;margin-top:22px}
+.opts.grid3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.opt{font:inherit;text-align:left;font-weight:700;border:2px solid var(--ink);background:#fff;color:var(--ink);border-radius:16px;padding:14px 18px;cursor:pointer;display:flex;gap:12px;align-items:center;transition:background .15s,transform .15s,box-shadow .15s;line-height:1.35}
+.opt:hover{background:var(--peri);transform:translate(-2px,-2px);box-shadow:4px 4px 0 var(--ink)}
+.opt .k{flex:none;width:30px;height:30px;border-radius:50%;border:2px solid var(--ink);display:grid;place-items:center;font-family:var(--f-display);font-weight:600;font-size:.9rem;background:var(--lime)}
+.opts.grid3 .opt{justify-content:center;text-align:center;font-family:var(--f-display);font-size:1.15rem;font-weight:600}
+.opt[aria-pressed="true"]{background:var(--ink);color:#fff}
+.qnav{display:flex;justify-content:space-between;align-items:center;margin-top:20px;gap:12px;flex-wrap:wrap}
+.qnav button{font:inherit;font-weight:800;background:none;border:0;color:var(--blue);cursor:pointer;text-decoration:underline;text-underline-offset:4px;padding:6px 0}
+.qnav button[disabled]{visibility:hidden}
+.qnav small{color:var(--muted);font-weight:600}
+.gate h2{font-size:var(--step-2)}
+.gate > p{color:var(--muted);margin:10px 0 20px}
+.result .rtag{display:inline-block;font-family:var(--f-display);text-transform:uppercase;letter-spacing:.06em;font-weight:600;background:var(--lime);border:2px solid var(--ink);border-radius:8px;padding:.25em .7em}
+.result h2{font-size:var(--step-3);margin-top:12px}
+.result .why{color:var(--muted);margin-top:12px;max-width:56ch}
+.result .pillar-note{margin-top:14px;font-weight:700}
+.result .pillar-note b{color:var(--blue)}
+.recs{display:grid;gap:12px;margin-top:22px}
+.rec{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;border:2px solid var(--ink);border-radius:18px;padding:16px 18px;text-decoration:none;background:#fff}
+.rec.top{background:var(--pink-soft);box-shadow:5px 5px 0 var(--ink)}
+.rec b{font-family:var(--f-display);font-size:1.35rem;font-weight:600;display:block;line-height:1.1}
+.rec span{color:var(--muted);font-weight:600;font-size:.95rem}
+.rec em{font-style:normal;font-family:var(--f-display);text-transform:uppercase;letter-spacing:.05em;font-size:.78rem;color:var(--blue);display:block;margin-bottom:2px}
+.rec svg{width:22px;height:22px}
+.restart{margin-top:18px}
+.aside{display:grid;gap:16px;position:relative;z-index:1}
+.aside .card{box-shadow:6px 6px 0 var(--ink)}
+.aside .card h3{font-size:1.35rem}
+.results4{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px}
+.results4 span{border:2px solid var(--ink);border-radius:12px;padding:8px 10px;font-weight:800;font-size:.92rem;text-align:center}
+.results4 span:nth-child(1){background:var(--lime)} .results4 span:nth-child(2){background:var(--pink-soft)} .results4 span:nth-child(3){background:var(--sky)} .results4 span:nth-child(4){background:var(--peri)}
+.aside .pic{border-radius:22px;overflow:hidden;border:2px solid var(--ink)}
+.aside .pic img{width:100%;aspect-ratio:4/3;object-fit:cover}
+@media (max-width:900px){.quiz-wrap{grid-template-columns:1fr}}
+@media (max-width:520px){.opts.grid3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.tbl-wrap{overflow-x:auto;border:2px solid var(--ink);border-radius:22px;background:#fff;box-shadow:8px 8px 0 var(--ink)}
+.cmp{border-collapse:collapse;width:100%;min-width:860px;font-size:.98rem}
+.cmp th,.cmp td{text-align:left;padding:16px 18px;border-bottom:2px solid var(--line);vertical-align:top}
+.cmp thead th{background:var(--ink);color:#fff;font-family:var(--f-display);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:.85rem;border-bottom:0}
+.cmp tbody tr:last-child td{border-bottom:0}
+.cmp td:first-child a{font-family:var(--f-display);font-weight:600;font-size:1.25rem;text-decoration:none;line-height:1.1;display:block}
+.cmp td:first-child a:hover{text-decoration:underline}
+.cmp td:first-child small{display:block;color:var(--muted);font-weight:600;margin-top:4px}
+.cmp .age{font-weight:800;white-space:nowrap}
+.cmp .pr{font-family:var(--f-display);font-weight:600;font-size:1.25rem;white-space:nowrap;font-variant-numeric:tabular-nums}
+.cmp .pr small{display:block;font-family:var(--f-body);font-weight:600;font-size:.82rem;color:var(--muted);white-space:normal}
+.cmp tr.flag td{background:var(--pink-soft)}
+.scroll-hint{display:none;font-size:.85rem;color:var(--muted);font-weight:700;margin-top:10px}
+@media (max-width:900px){.scroll-hint{display:block}}
+</style>
+
+<section class="fhp-hero">
+  <svg viewBox="0 0 100 100" class="doodle d-star hide-sm" style="right:4%;top:40px;width:58px;transform:rotate(14deg)" aria-hidden="true"><use href="#sq-star"/></svg>
+  <svg class="doodle d-pink hide-sm" style="left:-24px;bottom:120px;width:150px" viewBox="0 0 140 140" aria-hidden="true"><use href="#sq-curl"/></svg>
+  <div class="wrap">
+    <p class="eyebrow">Which program is right for her?</p>
+    <h1>What does your daughter need <span class="hl">most</span> right now?</h1>
+    <p class="lede">Six quick questions. You'll get her result (Confidence, Friendship, Speaking Up or Leadership), a few tips, and the program that fits her age. Rather compare on your own? <a class="btn-link" href="#compare">Every program, side by side <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+
+    <div class="quiz-wrap">
+      <div class="quiz" id="quiz" aria-live="polite">
+        <div class="qprog" id="qprog"><div class="bar" aria-hidden="true"><i id="qbar"></i></div><span id="qcount">Question 1 of 6</span></div>
+        <div id="qstage">
+          <div class="q">
+            <h2 id="qtitle">What grade is she in this school year?</h2>
+            <p class="sub" id="qsub">So we can match her to programs built for her age.</p>
+            <div class="opts grid3" id="qopts">
+              <button class="opt" type="button">4th</button><button class="opt" type="button">5th</button><button class="opt" type="button">6th</button>
+              <button class="opt" type="button">7th</button><button class="opt" type="button">8th</button><button class="opt" type="button">High school</button>
+            </div>
+          </div>
+        </div>
+        <div class="qnav" id="qnav"><button type="button" id="qback" disabled>&larr; Back</button><small>Takes about a minute</small></div>
+
+        <div class="gate" id="gate" hidden data-form-wrap>
+          <span class="chip">Almost there</span>
+          <h2 style="margin-top:12px">Where should we send her result?</h2>
+          <p>Get her result, tips you can use this week, and the program that fits her. Just three things.</p>
+          <form class="form" id="gate-form">
+            <div class="row">
+              <label for="g-name">Your first name<input id="g-name" name="name" autocomplete="given-name" required></label>
+              <label for="g-age">Daughter's age
+                <select id="g-age" name="age" required>
+                  <option value="">Choose</option><option>9</option><option>10</option><option>11</option><option>12</option><option>13</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option>
+                </select>
+              </label>
+            </div>
+            <label for="g-email">Email<input id="g-email" name="email" type="email" autocomplete="email" required></label>
+            <button class="btn btn-primary" type="submit">Show her result <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+            <p class="preview-note">Preview only: nothing is sent. On the live site this adds you to the Mentor Minute with her result.</p>
+          </form>
+        </div>
+
+        <div class="result" id="result" hidden tabindex="-1"></div>
+      </div>
+
+      <aside class="aside">
+        <div class="card">
+          <h3>Four possible results</h3>
+          <div class="results4"><span>Confidence</span><span>Friendship</span><span>Speaking Up</span><span>Leadership</span></div>
+          <p>Each one links to a part of our POWER framework and the program that teaches it best at her age.</p>
+        </div>
+        <div class="pic"><img src="img/inst1.jpg" alt="Two smiling girls making crafts at a camp table" width="1100" height="660"></div>
+        <div class="card" style="background:var(--lime)">
+          <h3>Still not sure?</h3>
+          <p style="color:var(--ink)">Start with a One-Day. Six hours, $149, and a real feel for how we work.</p>
+          <a class="btn-link" href="@/one-days">See One-Days <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="band" id="compare">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Compare by age</p>
+      <h2>Every program, side by side.</h2>
+      <p class="lede">Every program uses the same POWER curriculum. What changes is her age, the format, and how much time she spends with us.</p>
+    </div>
+    <div class="tbl-wrap">
+      <table class="cmp">
+        <thead><tr><th scope="col">Program</th><th scope="col">Who</th><th scope="col">Format</th><th scope="col">When</th><th scope="col">Price</th></tr></thead>
+        <tbody>
+          <tr><td><a href="@/power-up-club">Power Up Club</a><small>At her school</small></td><td class="age">Grades 4–6</td><td>After school, once a week for 6 weeks, on campus at participating schools</td><td>Dates vary by school</td><td class="pr">$149<small>per girl, 6 sessions</small></td></tr>
+          <tr><td><a href="@/one-days">One-Days</a><small>Try us first</small></td><td class="age">Grades 5–8</td><td>One day, 9 AM–3 PM, Rancho Solano Prep, Scottsdale</td><td>Nov 7 (gr 5–6) &amp; Nov 8 (gr 7–8), next in January</td><td class="pr">$149<small>per girl</small></td></tr>
+          <tr class="flag"><td><a href="@/summercamp">Pursue More Summer Camp</a><small>Our flagship</small></td><td class="age">Entering 5th–8th<br>Ages 10–13</td><td>Five days in Scottsdale, capped at 50 girls a week</td><td>May 31–Jun 4, Jun 7–11, Jun 14–18, Jun 21–25, 2027</td><td class="pr">$799<small>Early Bird $699, Feb 23–Mar 29</small></td></tr>
+          <tr><td><a href="@/peer-leader">Peer Leader Program</a><small>For teens</small></td><td class="age">Ages 14–18</td><td>Mentors younger girls at camp, with training and a Preview Day</td><td>June 2027, applications open in March</td><td class="pr">$799<small>Leadership Lab add-on $99</small></td></tr>
+          <tr><td><a href="@/mastermind">Peer Leader Mastermind</a><small>For teens</small></td><td class="age">High school</td><td>Six months online, two Sundays a month</td><td>Cohort 2 starts end of August 2027</td><td class="pr">$1,297<small>six-month cohort</small></td></tr>
+          <tr><td><a href="@/power-coaching">Power Coaching</a><small>1:1 with Jill &amp; Mary</small></td><td class="age">Ages 10–18</td><td>Private, weekly, 60 minutes online</td><td>Year round</td><td class="pr">$2,500<small>6 sessions · $5,000 for 12</small></td></tr>
+          <tr><td><a href="@/workshops">Workshops</a><small>For her troop, team or school</small></td><td class="age">Groups of girls</td><td>90 minutes, brought to your group</td><td>On request</td><td class="pr">$200<small>+ $50 per girl</small></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="scroll-hint">Swipe the table sideways to see every column.</p>
+    <p class="small-note" style="margin-top:16px">Families can use Arizona ESA funds for camp, Peer Leader and One-Days. <a class="btn-link" href="@/esa">How ESA works</a></p>
+  </div>
+</section>
+
+<section class="band blue clip final">
+  <svg class="doodle d-lime hide-sm" style="left:4%;top:40px;width:170px" viewBox="0 0 220 120" aria-hidden="true"><use href="#sq-loop"/></svg>
+  <div class="wrap">
+    <p class="eyebrow">Camp 2027 sells out every year</p>
+    <h2>Already know camp is the one?</h2>
+    <p class="lede">Join the VIP list for the 2027 dates first and 48 hours of early access to Black Friday pricing, 20% off.</p>
+    <div class="btn-row"><a class="btn btn-lime" href="@/camp-vip">Join the Camp 2027 VIP list <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></div>
+  </div>
+</section>
+
+<div hidden id="plinks"><a data-k="camp" href="@/summercamp"></a><a data-k="oneday" href="@/one-days"></a><a data-k="puc" href="@/power-up-club"></a><a data-k="peer" href="@/peer-leader"></a><a data-k="mm" href="@/mastermind"></a><a data-k="coach" href="@/power-coaching"></a></div>
+<script>
+(function(){
+  // Q1 is her grade; Q2–Q6 each score one of four results: C Confidence, F Friendship, S Speaking Up, L Leadership.
+  var Q=[
+    {t:"What grade is she in this school year?",s:"So we can match her to programs built for her age.",grade:true,o:["4th","5th","6th","7th","8th","High school"]},
+    {t:"Lately, what's showing up most at home?",s:"Pick the one that sounds most like this month.",o:[
+      ["She's second-guessing herself or says she's “not good at” things","C"],
+      ["Friend drama, group chats, or feeling left out","F"],
+      ["She knows something feels off but won't say it","S"],
+      ["Honestly? She's doing great and ready for a bigger challenge","L"]]},
+    {t:"When something goes wrong at school, she usually…",o:[
+      ["Decides it's her fault, or that she just can't do it","C"],
+      ["Replays what her friends said and what they meant","F"],
+      ["Goes quiet and lets it slide","S"],
+      ["Jumps in to fix it for everyone","L"]]},
+    {t:"Which would you love to hear her say?",o:[
+      ["“I'm actually proud of myself.”","C"],
+      ["“I have friends who get me.”","F"],
+      ["“I told her how I felt, and it went okay.”","S"],
+      ["“They asked me to lead, and I said yes.”","L"]]},
+    {t:"Where does comparison hit her hardest?",o:[
+      ["Her looks, her grades, how she measures up","C"],
+      ["Who's hanging out with who (and who wasn't invited)","F"],
+      ["Whose opinion counts in the group","S"],
+      ["It doesn't much. She'd rather lift other girls up","L"]]},
+    {t:"What kind of support sounds right for her right now?",o:[
+      ["Building her up from the inside","C"],
+      ["Practice handling friendships, before the next hard one","F"],
+      ["Practice speaking up and setting boundaries","S"],
+      ["Real responsibility, with support built in","L"]]}
+  ];
+  var R={
+    C:{name:"Confidence",h:"She's ready to trust herself.",why:"Right now the loudest voice in her head might be the one telling her she's not enough. Girls like her grow fastest when they practice catching that story and replacing it with what's actually true.",p:"Worthiness and Reassurance",tips:"Try this week: when she says “I'm bad at this,” ask “What's one thing that went okay?”"},
+    F:{name:"Friendship",h:"She's ready for friendships that feel good.",why:"Friendships shift a lot at this age, and group chats make every shift public. She doesn't need easier friendships. She needs a way to slow down, separate what happened from the story she's telling herself, and decide what to do next.",p:"Perspective",tips:"Try this week: when she's upset about a friend, ask “What do you know for sure, and what are you guessing?”"},
+    S:{name:"Speaking Up",h:"She's ready to use her voice.",why:"She often knows something feels off but has no idea what to say. The words come with practice, and she gets the best practice somewhere safe, before the stakes feel high.",p:"Empowerment",tips:"Try this week: role-play one small ask with her, like “Can you please ask before borrowing my things?”"},
+    L:{name:"Leadership",h:"She's ready to lead.",why:"She's got a strong foundation and she's looking for more. Girls like her grow when they're trusted with real responsibility, with guidance and feedback built in.",p:"Ownership",tips:"Try this week: hand her one real decision for the family, then ask how it went."}
+  };
+  // Programs by grade this school year (camp is for girls entering 5th–8th next summer)
+  var P={
+    camp:{n:"Pursue More Summer Camp 2027",d:"Entering 5th–8th · four weeks in June · $799"},
+    oneday:{n:"One-Days",d:"Grades 5–8 · one day · $149"},
+    puc:{n:"Power Up Club",d:"Grades 4–6 · six weeks after school · $149"},
+    peer:{n:"Peer Leader Program",d:"Ages 14–18 · mentor at camp · $799"},
+    mm:{n:"Peer Leader Mastermind",d:"High school · six months online · $1,297"},
+    coach:{n:"Power Coaching",d:"Ages 10–18 · 1:1 with Jill & Mary · from $2,500"}
+  };
+  var BY=["camp,puc,coach","camp,oneday,puc","camp,oneday,puc","camp,oneday,coach","oneday,peer,coach","peer,mm,coach"];
+  var LINKS={}; document.querySelectorAll("#plinks a").forEach(function(a){LINKS[a.dataset.k]=a.getAttribute("href");});
+  var step=0, ans=[], stage=document.getElementById("qstage"), bar=document.getElementById("qbar"), cnt=document.getElementById("qcount"),
+      back=document.getElementById("qback"), nav=document.getElementById("qnav"), prog=document.getElementById("qprog"),
+      gate=document.getElementById("gate"), res=document.getElementById("result");
+  function esc(s){var d=document.createElement("div");d.textContent=s;return d.innerHTML;}
+  function draw(){
+    var q=Q[step];
+    bar.style.width=((step+1)/Q.length*100)+"%"; cnt.textContent="Question "+(step+1)+" of "+Q.length; back.disabled=step===0;
+    var h='<div class="q"><h2>'+esc(q.t)+'</h2>'+(q.s?'<p class="sub">'+esc(q.s)+'</p>':'')+'<div class="opts'+(q.grade?' grid3':'')+'">';
+    q.o.forEach(function(o,i){
+      var label=q.grade?o:o[0], sel=ans[step]===i?' aria-pressed="true"':'';
+      h+='<button class="opt" type="button" data-i="'+i+'"'+sel+'>'+(q.grade?'':'<span class="k">'+"ABCD"[i]+'</span>')+esc(label)+'</button>';
+    });
+    stage.innerHTML=h+'</div></div>';
+    var first=stage.querySelector(".opt"); if(first&&step>0) first.focus({preventScroll:true});
+  }
+  stage.addEventListener("click",function(e){
+    var b=e.target.closest(".opt"); if(!b) return;
+    ans[step]=+b.dataset.i||0;
+    if(step<Q.length-1){step++;draw();}
+    else{stage.hidden=true;nav.hidden=true;prog.hidden=true;gate.hidden=false;document.getElementById("g-name").focus({preventScroll:true});}
+  });
+  // First question is in the HTML for a complete page at rest; wire it the same way
+  stage.querySelectorAll(".opt").forEach(function(b,i){b.dataset.i=i;});
+  back.addEventListener("click",function(){if(step>0){step--;draw();}});
+  function score(){
+    var t={C:0,F:0,S:0,L:0}, last;
+    for(var i=1;i<Q.length;i++){ if(ans[i]==null) continue; last=Q[i].o[ans[i]][1]; t[last]++; }
+    var best=last, m=-1; ["C","F","S","L"].forEach(function(k){ if(t[k]>m||(t[k]===m&&k===last)){m=t[k];best=k;} });
+    return best;
+  }
+  document.getElementById("gate-form").addEventListener("submit",function(e){
+    e.preventDefault();
+    var k=score(), r=R[k], g=ans[0]||0, list=BY[g].split(",");
+    if(k==="L"&&g>=3&&list.indexOf("peer")<0) list.splice(1,0,"peer");
+    var name=document.getElementById("g-name").value.trim();
+    var h='<span class="rtag">Her result: '+r.name+'</span><h2>'+esc(r.h)+'</h2><p class="why">'+(name?esc(name)+', ':'')+esc(r.why)+'</p>'+
+      '<p class="pillar-note">In our POWER framework, this is <b>'+esc(r.p)+'</b>.</p><p class="why">'+esc(r.tips)+'</p><div class="recs">';
+    list.slice(0,3).forEach(function(id,i){
+      var p=P[id], href=LINKS[id]||"#compare";
+      h+='<a class="rec'+(i===0?' top':'')+'" href="'+href+'"><div><em>'+(i===0?'Best fit for her age':'Also a great fit')+'</em><b>'+esc(p.n)+'</b><span>'+esc(p.d)+'</span></div><svg aria-hidden="true"><use href="#i-arrow"/></svg></a>';
+    });
+    h+='</div><div class="restart"><button class="btn-link" type="button" id="again" style="background:none;border:0;font:inherit;font-weight:800;cursor:pointer;padding:0">Retake the quiz</button></div>';
+    gate.hidden=true; res.innerHTML=h; res.hidden=false; res.focus({preventScroll:true});
+    document.getElementById("again").addEventListener("click",function(){step=0;ans=[];res.hidden=true;stage.hidden=false;nav.hidden=false;prog.hidden=false;draw();});
+  });
+})();
+</script>

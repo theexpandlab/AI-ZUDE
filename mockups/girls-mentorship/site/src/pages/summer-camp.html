@@ -1,0 +1,493 @@
+<!--meta route="/summercamp" title="Pursue More Summer Camp 2027 · Girls Mentorship" desc="Pursue More Summer Camp: a five-day, purpose-driven week in Scottsdale for girls ages 10 to 13. Four weeks in June 2027, $799. Join the VIP list for first access to Black Friday pricing." theme="t-camp" section="programs"-->
+<style>
+.camp-hero .photo .frame{aspect-ratio:4/5}
+.camp-hero .photo .frame img{object-position:center 30%}
+.camp-hero .lede em{font-style:normal;font-weight:800;color:var(--ink)}
+.not-sure{margin-top:16px;font-weight:700}
+
+.outcomes .outcome:last-child:nth-child(odd){grid-column:1 / -1;background:var(--lime);border:2px solid var(--ink);border-radius:22px;padding:22px 24px;box-shadow:6px 6px 0 var(--ink)}
+.outcomes .outcome:last-child:nth-child(odd) .mark{background:#fff}
+.outcomes .outcome:last-child:nth-child(odd) p{color:var(--ink)}
+
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(36px,6vw,90px);align-items:start}
+@media (max-width:860px){.why-grid{grid-template-columns:1fr}}
+.why-grid h2{font-size:var(--step-3);color:#fff}
+.why-grid h2 em{font-style:normal;color:var(--pink)}
+.signs{display:grid;gap:22px}
+.signs h3{font-size:1.2rem;text-transform:uppercase;letter-spacing:.05em;color:var(--lime);margin-bottom:10px}
+.signs ul{list-style:none;padding:0;display:grid;gap:8px}
+.signs li{display:flex;gap:10px;font-weight:600;color:#fff}
+.signs li svg{width:18px;height:18px;flex:none;margin-top:5px;color:var(--pink)}
+.not-you{margin-top:clamp(36px,5vw,56px);border:2px solid var(--lime);border-radius:22px;padding:22px 26px;display:grid;gap:6px}
+.not-you b{font-family:var(--f-display);font-size:var(--step-2);font-weight:600;line-height:1.05;color:var(--lime)}
+.not-you span{color:var(--on-dark)}
+
+.shift .card.photo-card img{aspect-ratio:408/248;height:auto}
+.shift .told{color:var(--muted);font-style:italic}
+.shift .card h3{font-size:1.35rem}
+.shift-foot{margin-top:28px;display:grid;grid-template-columns:1fr auto;gap:20px;align-items:center}
+.shift-foot p{font-weight:700;max-width:60ch}
+@media (max-width:760px){.shift-foot{grid-template-columns:1fr}}
+
+/* Traditions explorer */
+.trad-tabs{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:22px}
+.trad-tab{font:inherit;font-weight:800;font-size:.9rem;border:2px solid var(--ink);background:#fff;color:var(--ink);border-radius:999px;padding:.55em .9em;cursor:pointer}
+.trad-tab[aria-selected="true"]{background:var(--ink);color:#fff}
+.trad{display:grid;grid-template-columns:.85fr 1.15fr;background:#fff;border:2px solid var(--ink);border-radius:28px;overflow:hidden;box-shadow:8px 8px 0 var(--accent);min-height:460px}
+.trad[hidden]{display:none}
+.trad .media{position:relative;border-right:2px solid var(--ink);background:var(--pink-soft);min-height:300px}
+.trad .media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.trad .body{padding:clamp(24px,4vw,44px);display:grid;gap:14px;align-content:start}
+.trad .when{display:inline-flex;gap:8px;align-items:center;font-weight:800;font-size:.92rem;background:var(--lime);border:2px solid var(--ink);border-radius:999px;padding:.3em .85em;justify-self:start}
+.trad .when svg{width:16px;height:16px}
+.trad h3{font-size:var(--step-2)}
+.trad .kick{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.06em;color:var(--accent);font-weight:600}
+.trad p{color:var(--muted)}
+.trad p b{color:var(--ink)}
+.trad .ticks li{font-weight:700}
+.trad .shift-line{font-family:var(--f-hand);font-size:1.35rem;line-height:1.25;color:var(--ink)}
+.mini-power{display:grid;gap:8px;list-style:none;padding:0}
+.mini-power li{display:grid;grid-template-columns:38px 1fr;gap:10px;align-items:baseline}
+.mini-power b{font-family:var(--f-display);font-size:1.6rem;color:var(--accent);line-height:1}
+.mini-power span{color:var(--muted);font-size:.97rem}
+.mini-power span strong{color:var(--ink)}
+.tees{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:18px;align-content:center}
+.tee{background:#fff;border:2px solid var(--ink);border-radius:16px;padding:12px 14px;display:grid;gap:2px}
+.tee:nth-child(2){background:var(--lime)} .tee:nth-child(3){background:var(--sky)}
+.tee b{font-family:var(--f-display);font-size:1.6rem;line-height:1}
+.tee span{font-weight:800;font-size:.95rem}
+.tee small{font-size:.8rem;color:var(--muted);line-height:1.35}
+.tee:nth-child(3) small{color:var(--ink)}
+.dressup{position:absolute;inset:0;display:grid;align-content:center;gap:10px;padding:24px;background:var(--blue)}
+.dressup span{background:#fff;border:2px solid var(--ink);border-radius:999px;padding:.45em 1em;font-weight:800;justify-self:start}
+.dressup span:nth-child(even){justify-self:end;background:var(--lime)}
+@media (max-width:820px){
+  .trad{grid-template-columns:1fr;min-height:0}
+  .trad .media{border-right:0;border-bottom:2px solid var(--ink);min-height:0;aspect-ratio:4/3}
+  .trad .media.tall{aspect-ratio:auto;height:330px}
+}
+
+.paths{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.pathbox{border:2px solid var(--ink);border-radius:26px;padding:clamp(24px,4vw,40px);display:grid;gap:14px;align-content:start}
+.pathbox.now{background:var(--lime);box-shadow:8px 8px 0 var(--ink)}
+.pathbox.wait{background:#F3F4F8;color:#5A6080}
+.pathbox .lab{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.pathbox h3{font-size:var(--step-2)}
+.pathbox.wait h3{color:#6B7194}
+.pathbox p b{color:var(--ink)}
+.sellout{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px}
+.sellout span{background:var(--ink);color:#fff;border-radius:999px;padding:.45em 1em;font-weight:800;font-size:.92rem}
+@media (max-width:760px){.paths{grid-template-columns:1fr}}
+
+.t-top .big{font-size:clamp(1.6rem,1.2rem + 1vw,2.1rem)}
+.price-notes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:clamp(28px,4vw,40px)}
+.pn{border:2px solid var(--ink);border-radius:18px;padding:16px 18px;background:#fff;display:grid;gap:4px;align-content:start}
+.pn b{font-family:var(--f-display);text-transform:uppercase;letter-spacing:.04em;font-size:1.1rem}
+.pn span{color:var(--muted);font-size:.94rem;line-height:1.45}
+.pn.hot{background:var(--pink);}
+.pn.hot span{color:var(--ink)}
+@media (max-width:900px){.price-notes{grid-template-columns:1fr 1fr}}
+@media (max-width:480px){.price-notes{grid-template-columns:1fr}}
+.isnot{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+.isnot ul{list-style:none;padding:0;display:grid;gap:6px}
+.isnot li{padding-left:22px;position:relative}
+.isnot li::before{position:absolute;left:0;font-weight:800}
+.isnot .yes li::before{content:"✓";color:#1E8A4C}
+.isnot .no li::before{content:"✕";color:#C2187F}
+@media (max-width:560px){.isnot{grid-template-columns:1fr}}
+</style>
+
+<!-- HERO -->
+<section class="hero camp-hero">
+  <svg viewBox="0 0 100 100" class="doodle d-star hide-sm" style="left:2%;top:40px;width:58px;transform:rotate(-12deg)" aria-hidden="true"><use href="#sq-star"/></svg>
+  <svg class="doodle d-pink hide-sm" style="right:3%;bottom:26px;width:150px" viewBox="0 0 220 120" aria-hidden="true"><use href="#sq-loop"/></svg>
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">Pursue More Summer Camp 2027 · Scottsdale</p>
+      <h1>One week can shift the way <span class="accent">she sees herself.</span></h1>
+      <p class="lede">The summer camp for girls ages 10–13 who want more confidence, healthier friendships, and a stronger sense of who they are. We help her build a strong inner foundation <em>before the world tells her who to be.</em></p>
+      <dl class="facts">
+        <div><dt>Who</dt><dd>Girls entering 5th–8th, ages 10–13</dd></div>
+        <div><dt>When</dt><dd>4 weeks, May 31–Jun 25, 2027</dd></div>
+        <div><dt>Where</dt><dd>Rancho Solano Prep, Scottsdale</dd></div>
+        <div><dt>Price</dt><dd>$799 a week</dd></div>
+      </dl>
+      <div class="btn-row">
+        <a class="btn btn-accent" href="@/camp-vip">Join the Camp 2027 VIP list <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn-link" href="#weeks">See the 4 weeks</a>
+      </div>
+      <p class="not-sure">Not sure yet? <a class="btn-link" href="@/one-days">Start with a One-Day <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+    </div>
+    <div class="photo">
+      <div class="frame"><img src="img/chair.jpg" alt="A camper stretching out her arms on a pink chair in front of the Girls Mentorship sign" width="504" height="768"></div>
+      <div class="burst" aria-hidden="true"><svg viewBox="0 0 100 100"><path stroke="#11163A" stroke-width="2" d="M50 2l7 10 12-5 2 12 13 1-4 12 11 7-9 9 7 11-12 4 1 13-13-2-5 12-10-8-10 8-5-12-13 2 1-13-12-4 7-11-9-9 11-7-4-12 13-1 2-12 12 5z"/></svg><span><b>50</b>girls a week</span></div>
+      <p class="tag">80%+ of parents saw<br>a shift in one week.</p>
+    </div>
+  </div>
+</section>
+
+<section class="partners" aria-label="Partners">
+  <div class="wrap"><p>Partners with</p>
+    <div class="logo-track"><div class="logo-row">
+      <img src="img/partners.jpg" alt="Rancho Solano Preparatory School, Phoenix Country Day, Glendale Elementary School District, notMYkid, Xavier College Prep, Paradise Valley Unified School District, Scottsdale Christian Academy, Girl Scouts">
+      <img src="img/partners.jpg" alt="" aria-hidden="true">
+    </div></div>
+  </div>
+</section>
+
+<!-- OUTCOMES -->
+<section class="band" id="outcomes">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">What she walks away with</p>
+      <h2>By the end of camp, she'll have:</h2>
+    </div>
+    <div class="outcomes">
+      <article class="outcome"><span class="mark"><svg aria-hidden="true"><use href="#i-check"/></svg></span><div><h3>Confidence to think for herself and speak with conviction.</h3><p>Instead of shrinking to fit in or parroting the loudest voice in the group, she learns to trust herself, speak up respectfully, and stand firm in who she is, even under pressure.</p></div></article>
+      <article class="outcome"><span class="mark"><svg aria-hidden="true"><use href="#i-check"/></svg></span><div><h3>Friendships rooted in kindness, boundaries and self-respect.</h3><p>She learns to build supportive friendships, recognize unhealthy dynamics, and move away from drama, in person and online, without losing herself or her values.</p></div></article>
+      <article class="outcome"><span class="mark"><svg aria-hidden="true"><use href="#i-check"/></svg></span><div><h3>Emotional regulation skills for a pressure-filled world.</h3><p>Instead of being ruled by big emotions, social stress or comparison, she learns tools to pause, reset and respond thoughtfully, so anxiety stays in check instead of "crashing out."</p></div></article>
+      <article class="outcome"><span class="mark"><svg aria-hidden="true"><use href="#i-check"/></svg></span><div><h3>Leadership from within, not from following the crowd.</h3><p>Quiet or totally outspoken, she discovers that leadership starts with self-awareness, empathy and integrity, not popularity, peer pressure or performance.</p></div></article>
+      <article class="outcome"><span class="mark"><svg aria-hidden="true"><use href="#i-check"/></svg></span><div><h3>A strong inner foundation that lasts beyond summer.</h3><p>She leaves grounded in self-worth, confident in her voice, and equipped with tools for school, friends, online and home, long after camp ends.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="band dark clip">
+  <svg class="doodle d-pink hide-sm" style="right:-20px;top:40px;width:180px" viewBox="0 0 140 140" aria-hidden="true"><use href="#sq-curl"/></svg>
+  <div class="wrap">
+    <div class="why-grid">
+      <div>
+        <p class="eyebrow">Why it matters now</p>
+        <h2>Raising a daughter today is <em>fundamentally different</em> than it was a decade ago.</h2>
+        <div class="prose" style="margin-top:20px">
+          <p>Kids are exposed to more information, more opinions, more content and more pressure, at younger ages than any generation before them. Social dynamics are more public, more permanent and less forgiving.</p>
+          <p>When a girl doesn't have a strong sense of who she is, the world is quick to step in and define it for her. <b>Those skills don't magically appear later.</b> Girls who don't practice them early often learn the hard way, through missed chances, strained friendships and moments they wish they'd felt brave enough to speak up.</p>
+        </div>
+      </div>
+      <div class="signs">
+        <div>
+          <h3>You see it showing up</h3>
+          <ul>
+            <li><svg aria-hidden="true"><use href="#i-sparkle"/></svg>Increased anxiety and emotional swings</li>
+            <li><svg aria-hidden="true"><use href="#i-sparkle"/></svg>Difficulty focusing or staying present</li>
+            <li><svg aria-hidden="true"><use href="#i-sparkle"/></svg>Friendships that feel fragile, confusing or hard to navigate</li>
+            <li><svg aria-hidden="true"><use href="#i-sparkle"/></svg>Attitudes that don't match the values you teach at home</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Girls today are asked to</h3>
+          <ul>
+            <li><svg aria-hidden="true"><use href="#i-sparkle"/></svg>Regulate big emotions</li>
+            <li><svg aria-hidden="true"><use href="#i-sparkle"/></svg>Manage constant comparison</li>
+            <li><svg aria-hidden="true"><use href="#i-sparkle"/></svg>Navigate social media and group dynamics</li>
+            <li><svg aria-hidden="true"><use href="#i-sparkle"/></svg>Make decisions in a world full of influence</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="not-you">
+      <b>This isn't because parents aren't doing enough.</b>
+      <span>It's because the environment has changed faster than the tools we're given to handle it.</span>
+    </div>
+  </div>
+</section>
+
+<!-- SHIFT -->
+<section class="band shift">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">But it doesn't have to be this way</p>
+      <h2>Not changing who she is. Helping her become more of herself.</h2>
+      <p class="lede">At Pursue More, confidence is built through intentional, immersive experiences where girls practice self-leadership in real time.</p>
+    </div>
+    <div class="cards">
+      <article class="card photo-card"><img src="img/inst1.jpg" alt="Two campers smiling at a craft table" width="408" height="248"><div class="in"><p class="told">Instead of second-guessing herself</p><h3>She learns to pause and respond.</h3></div></article>
+      <article class="card photo-card"><img src="img/inst2.jpg" alt="Campers talking around a table during a small-group session" width="408" height="248"><div class="in"><p class="told">Instead of shrinking to fit in</p><h3>She practices taking up space and speaking up.</h3></div></article>
+      <article class="card photo-card"><img src="img/inst3.jpg" alt="Campers cheering with their arms in the air" width="416" height="248"><div class="in"><p class="told">Instead of following the crowd</p><h3>She begins leading herself.</h3></div></article>
+    </div>
+    <div class="shift-foot">
+      <p>With consistent guidance, supportive peers and daily chances to practice, girls leave camp grounded in who they are and more confident navigating the world they're growing up in.</p>
+      <a class="btn btn-accent" href="@/camp-vip">Save her a VIP spot</a>
+    </div>
+  </div>
+</section>
+
+<!-- TRADITIONS (interactive) -->
+<section class="band tint clip" id="week">
+  <svg viewBox="0 0 100 100" class="doodle d-star hide-sm" style="right:6%;top:64px;width:56px;transform:rotate(14deg)" aria-hidden="true"><use href="#sq-star"/></svg>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Inside a week at Pursue More</p>
+      <h2>Seven traditions. Not a camp built to keep girls busy.</h2>
+      <p class="lede">From the moment she arrives to the moment she leaves, every detail is intentional. Tap a tradition to see what it is and why it's there.</p>
+    </div>
+    <div class="trad-tabs" role="tablist" aria-label="Camp traditions">
+      <button class="trad-tab" role="tab" id="tt-power" aria-controls="tp-power" aria-selected="true">The POWER Framework</button>
+      <button class="trad-tab" role="tab" id="tt-speakers" aria-controls="tp-speakers" aria-selected="false">Guest Speakers</button>
+      <button class="trad-tab" role="tab" id="tt-talent" aria-controls="tp-talent" aria-selected="false">The Talent Show</button>
+      <button class="trad-tab" role="tab" id="tt-buddy" aria-controls="tp-buddy" aria-selected="false">Secret Buddy</button>
+      <button class="trad-tab" role="tab" id="tt-snack" aria-controls="tp-snack" aria-selected="false">Mary's Snack Shack</button>
+      <button class="trad-tab" role="tab" id="tt-swag" aria-controls="tp-swag" aria-selected="false">Camp Swag</button>
+      <button class="trad-tab" role="tab" id="tt-friday" aria-controls="tp-friday" aria-selected="false">Fun Friday</button>
+    </div>
+
+    <article class="trad" id="tp-power" role="tabpanel" aria-labelledby="tt-power">
+      <div class="media"><img src="img/crowd.jpg" alt="Campers making heart shapes with their hands" width="544" height="520"></div>
+      <div class="body">
+        <span class="when"><svg aria-hidden="true"><use href="#i-clock"/></svg>Every day of camp</span>
+        <p class="kick">How confidence is actually built</p>
+        <h3>The P.O.W.E.R. Framework</h3>
+        <p>Confidence isn't a personality trait. Every day is structured around POWER, a simple, repeatable way girls learn to lead themselves in real life. <b>Not someday. Not when they're older. Now.</b></p>
+        <ul class="mini-power">
+          <li><b>P</b><span><strong>Perspective:</strong> slow down, challenge unhelpful stories, see clearly.</span></li>
+          <li><b>O</b><span><strong>Ownership:</strong> confidence comes from choices, not approval.</span></li>
+          <li><b>W</b><span><strong>Worthiness:</strong> "I'm enough," without likes or comparison.</span></li>
+          <li><b>E</b><span><strong>Empowerment:</strong> speak up, set boundaries, take action.</span></li>
+          <li><b>R</b><span><strong>Reassurance:</strong> recover from mistakes and keep trusting herself.</span></li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="trad" id="tp-speakers" role="tabpanel" aria-labelledby="tt-speakers" hidden>
+      <div class="media tall"><img src="img/speaker.jpg" alt="Two guest speakers, one wearing a pageant sash, at camp" width="360" height="784" style="object-position:center 25%"></div>
+      <div class="body">
+        <span class="when"><svg aria-hidden="true"><use href="#i-clock"/></svg>Throughout the week</span>
+        <p class="kick">Expanding what she believes is possible</p>
+        <h3>Real women. Real stories.</h3>
+        <p>Entrepreneurs, creatives, athletes and leaders who've taken different paths and learned to trust themselves. Not polished TED Talks: honest conversations about what confidence really takes. Girls don't just listen. They connect, ask questions, and see their own future in women who feel real.</p>
+        <ul class="ticks">
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Wardrobe stylists and makeup artists</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Comedians and pageant leaders, including 2024 Miss Arizona</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Jewelry makers and florists</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Newscasters and entrepreneurs</li>
+        </ul>
+      </div>
+    </article>
+
+    <article class="trad" id="tp-talent" role="tabpanel" aria-labelledby="tt-talent" hidden>
+      <div class="media"><img src="img/talent.jpg" alt="Campers watching the stage during the Talent Show" width="592" height="808"></div>
+      <div class="body">
+        <span class="when"><svg aria-hidden="true"><use href="#i-clock"/></svg>Later in the week, once trust is built</span>
+        <p class="kick">Brave moments. Big growth.</p>
+        <h3>The Talent Show</h3>
+        <p>Often the most anticipated (and fun) moment of the week. By then friendships have formed and the room feels different, so when girls step on stage they're met with encouragement, not comparison. Some sing. Some dance. Some do comedy. Some surprise themselves by participating at all.</p>
+        <p class="shift-line">"I showed up, and I did it."</p>
+        <p>It's not about what she performs. It's that she chose to step forward.</p>
+      </div>
+    </article>
+
+    <article class="trad" id="tp-buddy" role="tabpanel" aria-labelledby="tt-buddy" hidden>
+      <div class="media"><img src="img/buddy.jpg" alt="A camper leaving a note in a wall of named cubbies" width="624" height="640"></div>
+      <div class="body">
+        <span class="when"><svg aria-hidden="true"><use href="#i-clock"/></svg>Assigned day one, revealed Friday</span>
+        <p class="kick">Feeling seen, heard, loved and valued</p>
+        <h3>Secret Buddy</h3>
+        <p>On day one each girl fills out an "About Me" page and is thoughtfully paired with a Secret Buddy. All week she practices focusing outside herself:</p>
+        <ul class="ticks">
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Leaving kind notes and encouraging messages</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Noticing what makes someone feel special and seen</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Paying attention, being curious, showing care</li>
+        </ul>
+        <p class="shift-line">Instead of "Do I fit in?" she begins to feel "I matter to someone."</p>
+      </div>
+    </article>
+
+    <article class="trad" id="tp-snack" role="tabpanel" aria-labelledby="tt-snack" hidden>
+      <div class="media"><img src="img/snack.jpg" alt="Campers gathered and laughing at the Snack Shack" width="584" height="576"></div>
+      <div class="body">
+        <span class="when"><svg aria-hidden="true"><use href="#i-clock"/></svg>Every day, between the big moments</span>
+        <p class="kick">The social hub of camp</p>
+        <h3>Mary's Famous Snack Shack</h3>
+        <p>Where camp life unfolds. Girls linger, laugh, recharge and connect, with no agenda and no forced bonding. It's also everyday independence: making choices, handling small purchases, and navigating social moments with confidence.</p>
+        <ul class="ticks">
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Buying something for a friend "just because"</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Inside jokes and impromptu dances</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Conversations that wander into real-life stuff</li>
+        </ul>
+        <p class="shift-line">A little sugar. A lot of laughter.</p>
+      </div>
+    </article>
+
+    <article class="trad" id="tp-swag" role="tabpanel" aria-labelledby="tt-swag" hidden>
+      <div class="media">
+        <div class="tees" aria-label="Past camp tees">
+          <div class="tee"><b>2022</b><span>The Band Tee Era</span><small>Major pop-star tour-tee energy.</small></div>
+          <div class="tee"><b>2023</b><span>Disco Ball Summer</span><small>A sparkly nod to owning all your eras.</small></div>
+          <div class="tee"><b>2024</b><span>Friendship Bracelets</span><small>Bright, bold and full of meaning.</small></div>
+          <div class="tee"><b>2025</b><span>90s Throwback</span><small>Smiley-tee "cool girl confidence."</small></div>
+        </div>
+      </div>
+      <div class="body">
+        <span class="when"><svg aria-hidden="true"><use href="#i-clock"/></svg>All week, and long after</span>
+        <p class="kick">More than just a t-shirt</p>
+        <h3>Camp Swag</h3>
+        <p>Every camper gets an exclusive Pursue More tee, soft and actually wearable. They get worn to school, to practice and around the house until they're threadbare. Parents have reached out in a panic when one goes missing, because it means something:</p>
+        <ul class="ticks">
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>A week where she felt confident and included</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Friendships that mattered</li>
+          <li><svg aria-hidden="true"><use href="#i-check"/></svg>Moments where she surprised herself</li>
+        </ul>
+        <p class="shift-line">The 2027 tee is coming…</p>
+      </div>
+    </article>
+
+    <article class="trad" id="tp-friday" role="tabpanel" aria-labelledby="tt-friday" hidden>
+      <div class="media">
+        <div class="dressup" aria-label="Who girls have dressed as">
+          <span>Marie Curie</span><span>Amelia Earhart</span><span>Visionaries + creators</span><span>Athletes + performers</span><span>Guest speakers</span><span>A very stylish Jill &amp; Mary</span>
+        </div>
+      </div>
+      <div class="body">
+        <span class="when"><svg aria-hidden="true"><use href="#i-clock"/></svg>Friday</span>
+        <p class="kick">Identity, inspiration and possibility</p>
+        <h3>Fun Friday</h3>
+        <p>Campers dress as someone who inspires them or someone they aspire to be like, then share why they chose that person and what it says about who they're becoming.</p>
+        <p>It's also when Secret Buddies are revealed: <b>laughter, surprises, and tears of joy.</b> By the end of the week you can hear the shift: more confidence in their voices, more connection with each other.</p>
+        <p class="shift-line">Not just a send-off. A celebration of who she's becoming.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- PARENTS -->
+<section class="band" id="parents">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">What parents are saying</p>
+      <h2>Real stories from real families.</h2>
+    </div>
+    <div class="quotes">
+      <figure class="quote"><blockquote class="big">"Life changers!! She came home today the most positive I've ever heard her be."</blockquote><figcaption><i>C</i>Chevon, camp parent</figcaption></figure>
+      <figure class="quote"><blockquote>"Couldn't be more thankful for the program you ladies have created. Never seen so much growth in my child in such a quick amount of time."</blockquote><figcaption><i>J</i>Jon S., camp parent</figcaption></figure>
+      <figure class="quote"><blockquote>"The spark it put back in her has been so good to see. These past few years have been rough and the skills she learned at camp and the energy she was surrounded with has been truly transformative."</blockquote><figcaption><i>T</i>Taylor's mom</figcaption></figure>
+      <figure class="quote"><blockquote>"I see the wheels turning in Julia. I am thankful to have found a place that focuses on teaching girls how to speak up, how to stand strong in who they are, and how to lift each other up."</blockquote><figcaption><i>J</i>Jennifer S., camp parent</figcaption></figure>
+      <figure class="quote"><blockquote class="big">"Mills said this is the most positive feeling she has felt in a really long time."</blockquote><figcaption><i>A</i>Amber J., camp parent</figcaption></figure>
+      <figure class="quote"><blockquote>"The girls have been having an absolute amazing time. I wish it could go on longer. Such a great and needed camp!!"</blockquote><figcaption><i>U</i>Usma, camp parent</figcaption></figure>
+      <figure class="quote"><blockquote>"Kinley gave you the HIGHEST of compliments! She told me that you pulled her aside to check in with her. She said "she just gets it, ya know.""</blockquote><figcaption><i>B</i>Beth S., camp parent</figcaption></figure>
+      <figure class="quote"><blockquote>"You. Are. Both. Amazing. Thank you for everything you're doing to make our kiddos achieve their best selves."</blockquote><figcaption><i>A</i>Amanda M., camp parent</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- TWO PATHS -->
+<section class="band peri">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">This window doesn't stay open for long</p>
+      <h2>Right now, you have two paths.</h2>
+      <p class="lede">These are the years when identity forms, confidence grows and self-trust is built. They move fast, and they don't repeat.</p>
+    </div>
+    <div class="paths">
+      <div class="pathbox now">
+        <span class="lab">Path one · You act now</span>
+        <h3>A week away from the noise.</h3>
+        <p>She spends five days strengthening her inner voice, learning what healthy friendship looks like, and exploring who she is without being watched, judged or compared. <b>She walks into the school year steadier, not because the noise disappeared, but because she learned how to stand within it.</b></p>
+        <a class="btn btn-white" href="@/camp-vip">Join the Camp 2027 VIP list</a>
+      </div>
+      <div class="pathbox wait">
+        <span class="lab">Path two · You wait</span>
+        <h3>Another summer of screens and passive influence.</h3>
+        <p>She'll still grow and learn. But often those lessons come later, at a much higher emotional cost: second-guessing herself, hesitating to take chances, and feeling unsure in friendships, still without the tools to navigate it.</p>
+      </div>
+    </div>
+    <div class="sellout"><span>Sold out four years in a row</span><span>Capped at 50 girls a week</span><span>Enrollment closes when weeks fill</span></div>
+  </div>
+</section>
+
+<!-- WEEKS -->
+<section class="band" id="weeks">
+  <svg viewBox="0 0 100 100" class="doodle d-star hide-sm" style="left:5%;top:70px;width:56px;transform:rotate(-18deg)" aria-hidden="true"><use href="#sq-star"/></svg>
+  <div class="wrap">
+    <div class="sec-head center">
+      <p class="eyebrow">Camp 2027 · Rancho Solano Prep Upper Campus</p>
+      <h2>Pick her week.</h2>
+      <p class="lede">Same POWER curriculum every week. Different girls, Peer Leaders and guest speakers make each one its own. Enrollment opens to VIPs first on Nov 25.</p>
+    </div>
+    <div class="tickets four">
+      <article class="ticket">
+        <div class="t-top"><p class="when">Week 1</p><p class="big">May 31–Jun 4</p><p class="date">Mon–Fri, 2027</p></div>
+        <div class="perf" aria-hidden="true"></div>
+        <div class="t-body"><div class="price"><b>$799</b><span>/ week</span></div><p class="for">Up to 50 girls, ages 10–13.</p><a class="btn btn-accent sm" href="@/camp-vip">Get VIP access</a></div>
+      </article>
+      <article class="ticket">
+        <div class="t-top"><p class="when">Week 2</p><p class="big">Jun 7–11</p><p class="date">Mon–Fri, 2027</p></div>
+        <div class="perf" aria-hidden="true"></div>
+        <div class="t-body"><div class="price"><b>$799</b><span>/ week</span></div><p class="for">Up to 50 girls, ages 10–13.</p><a class="btn btn-accent sm" href="@/camp-vip">Get VIP access</a></div>
+      </article>
+      <article class="ticket">
+        <div class="t-top"><p class="when">Week 3</p><p class="big">Jun 14–18</p><p class="date">Mon–Fri, 2027</p></div>
+        <div class="perf" aria-hidden="true"></div>
+        <div class="t-body"><div class="price"><b>$799</b><span>/ week</span></div><p class="for">Up to 50 girls, ages 10–13.</p><a class="btn btn-accent sm" href="@/camp-vip">Get VIP access</a></div>
+      </article>
+      <article class="ticket">
+        <div class="t-top"><p class="when">Week 4</p><p class="big">Jun 21–25</p><p class="date">Mon–Fri, 2027</p></div>
+        <div class="perf" aria-hidden="true"></div>
+        <div class="t-body"><div class="price"><b>$799</b><span>/ week</span></div><p class="for">Up to 50 girls, ages 10–13.</p><a class="btn btn-accent sm" href="@/camp-vip">Get VIP access</a></div>
+      </article>
+    </div>
+    <div class="price-notes">
+      <div class="pn hot"><b>Black Friday · 20% off</b><span>VIPs get 48 hours early on Nov 25. Everyone else Nov 27.</span></div>
+      <div class="pn"><b>Early Bird · $699</b><span>Feb 23 to Mar 29, 2027.</span></div>
+      <div class="pn"><b>More than one week</b><span>Add weeks at a discounted rate at checkout.</span></div>
+      <div class="pn"><b>ESA accepted</b><span>Approved Arizona ESA vendor. <a class="btn-link" href="@/esa">How it works</a></span></div>
+    </div>
+    <p style="text-align:center;margin-top:26px;font-weight:700">High schooler? <a class="btn-link" href="@/peer-leader">She can join as a Peer Leader <svg aria-hidden="true"><use href="#i-arrow"/></svg></a></p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="band peri" id="faq">
+  <div class="wrap faq-grid">
+    <div class="sec-head">
+      <p class="eyebrow">Frequently asked</p>
+      <h2>Camp questions, answered.</h2>
+      <p class="muted">Still wondering about something? Email <b style="color:var(--ink);user-select:all">info@girlsmentorship.com</b></p>
+    </div>
+    <div class="faq">
+      <details open><summary>Who is this camp for?<span class="pm"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></summary><div class="a"><p>All girls entering 5th through 8th grade, ages 10–13. Whether she's already confident or still finding her voice, camp isn't about "fixing" girls. It celebrates who she is right now while giving her space to grow.</p><p>Ages 14–18 can join as a <a class="btn-link" href="@/peer-leader">Peer Leader</a>.</p></div></details>
+      <details><summary>What is this camp, and what is it not?<span class="pm"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></summary><div class="a">
+        <div class="isnot">
+          <ul class="yes"><li>A safe space to talk about friendships, confidence and leadership</li><li>High-energy, where girls get to be kids while building lasting skills</li><li>A welcoming community where every girl belongs</li><li>A place to step outside her comfort zone</li></ul>
+          <ul class="no"><li>Therapy. We're supportive, but we don't diagnose or treat</li><li>A political, gender or religious discussion space</li><li>Passive. Confidence is built through action</li><li>A guaranteed fix. Growth continues after camp</li></ul>
+        </div></div></details>
+      <details><summary>Can she enroll in more than one week?<span class="pm"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></summary><div class="a"><p>Absolutely. Many campers join for two, three or all four weeks. The POWER curriculum stays consistent so she gets more practice; the girls, Peer Leaders and guest speakers make each week feel different. You'll see the option to add weeks at a discounted rate at checkout.</p></div></details>
+      <details><summary>Do you offer a sibling discount?<span class="pm"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></summary><div class="a"><p>Yes. During Early Bird, every family automatically gets $100 off each ticket, so a separate sibling discount isn't applied then. After Early Bird, email <b>hello@girlsmentorship.com</b> and we'll share the sibling discount.</p></div></details>
+      <details><summary>Where is camp held?<span class="pm"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></summary><div class="a"><p><b>Rancho Solano Preparatory School, Upper Campus</b><br>9180 E. Via de Ventura, Scottsdale, AZ 85258</p></div></details>
+      <details><summary>When does registration end?<span class="pm"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></summary><div class="a"><p>Registration stays open until weeks are full. We've sold out four years in a row, so enrolling early is the best way to secure her spot and the best price. If a week fills we open a waitlist, but spots rarely reopen.</p></div></details>
+      <details><summary>What if my daughter is younger than 10?<span class="pm"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></summary><div class="a"><p>Camp is designed for ages 10–13, where the lessons really land. A 9-year-old who's young for her grade or especially mature may still be a great fit. Not sure? Email <b>info@girlsmentorship.com</b> and we'll talk it through.</p></div></details>
+      <details><summary>What is your refund policy?<span class="pm"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></summary><div class="a"><p><b>Before May 1:</b> full refund, minus a $50 processing fee.<br><b>May 1 through May 29:</b> 50% refund.<br><b>After May 30:</b> no refunds, since her spot is reserved and planning is final.</p></div></details>
+      <details><summary>Can I use ESA funds for camp?<span class="pm"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></summary><div class="a"><p>Yes. We're an approved ESA vendor for both camp and Peer Leader enrollment. Email <b>hello@girlsmentorship.com</b> and we'll create an invoice for you to submit through ClassWallet for reimbursement.</p></div></details>
+      <details><summary>Are sponsorships available?<span class="pm"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></summary><div class="a"><p>Yes. To sponsor a camper or explore a partnership, email <b>info@girlsmentorship.com</b> or see <a class="btn-link" href="@/GMF#sponsor-a-girl">Sponsor a Girl</a>.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL -->
+<section class="band accent clip final">
+  <svg class="doodle d-lime hide-sm" style="left:4%;top:40px;width:170px" viewBox="0 0 220 120" aria-hidden="true"><use href="#sq-loop"/></svg>
+  <svg class="doodle d-sky hide-sm" style="right:5%;bottom:40px;width:150px" viewBox="0 0 140 140" aria-hidden="true"><use href="#sq-curl"/></svg>
+  <div class="wrap">
+    <p class="eyebrow">Confidence is built, practiced and strengthened from within</p>
+    <h2>Make this her summer.</h2>
+    <p class="lede">Join the VIP list for the 2027 dates first and 48 hours of early access to 20% off, starting Nov 25.</p>
+    <div class="btn-row"><a class="btn btn-lime" href="@/camp-vip">Join the Camp 2027 VIP list <svg aria-hidden="true"><use href="#i-arrow"/></svg></a><a class="btn btn-white" href="@/one-days">Not sure yet? Try a One-Day</a></div>
+  </div>
+</section>
+
+<div class="mbar" data-hide-at="#weeks"><div><b>Camp 2027 · $799/week</b>VIPs get Black Friday first</div><a class="btn btn-lime" href="@/camp-vip" tabindex="-1">Join VIP</a></div>
+
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll(".trad-tab"));
+  function show(i,focus){
+    tabs.forEach(function(t,j){var on=j===i;t.setAttribute("aria-selected",on?"true":"false");t.tabIndex=on?0:-1;document.getElementById(t.getAttribute("aria-controls")).hidden=!on;});
+    if(focus)tabs[i].focus();
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener("click",function(){show(i);});
+    t.addEventListener("keydown",function(e){var n=e.key==="ArrowRight"?(i+1)%tabs.length:e.key==="ArrowLeft"?(i-1+tabs.length)%tabs.length:-1;if(n>-1){e.preventDefault();show(n,true);}});
+  });
+  show(0);
+})();
+</script>

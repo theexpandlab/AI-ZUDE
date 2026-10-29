@@ -1,0 +1,337 @@
+<!--meta route="/peer-leader" title="Peer Leader Program · Girls Mentorship" desc="A hands-on leadership experience for girls ages 14 to 18 at Pursue More Summer Camp in Scottsdale, AZ. $799. Applications open in March." theme="t-teen" section="teens"-->
+<style>
+[hidden]{display:none!important}
+.pl-hero .photo .frame{aspect-ratio:512/720;max-width:440px;margin-left:auto}
+.recognize{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,90px);align-items:start}
+.recognize ul{list-style:none;padding:0;display:grid;gap:10px;margin-top:18px}
+.recognize li{display:flex;gap:10px;font-weight:700;background:#fff;border:2px solid var(--ink);border-radius:14px;padding:12px 14px}
+.recognize li svg{width:20px;height:20px;flex:none;margin-top:3px;color:var(--accent)}
+.recognize .kicker{margin-top:22px;font-family:var(--f-display);font-size:var(--step-2);line-height:1.1}
+@media (max-width:860px){.recognize{grid-template-columns:1fr}}
+.inst{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.inst .card img{aspect-ratio:1100/970}
+.inst h3{font-size:1.25rem}
+.inst h3 span{display:block;color:var(--muted);font-family:var(--f-body);font-weight:600;font-size:.95rem;font-style:italic;margin-bottom:4px}
+@media (max-width:860px){.inst{grid-template-columns:1fr}}
+.week{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:28px}
+.week .card{background:var(--sky-soft)}
+.week .card:nth-child(even){background:#fff}
+@media (max-width:900px){.week{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.week{grid-template-columns:1fr}}
+.paths-tabs{display:inline-flex;border:2px solid var(--ink);border-radius:999px;padding:4px;background:#fff;gap:4px;margin-bottom:24px;flex-wrap:wrap}
+.paths-tabs button{font:inherit;font-weight:800;border:0;border-radius:999px;padding:.65em 1.2em;background:transparent;cursor:pointer;color:var(--ink)}
+.paths-tabs button[aria-selected="true"]{background:var(--accent);color:#fff}
+.path-panel{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;align-items:start}
+.path-panel .card{gap:14px}
+.path-panel h3{font-size:var(--step-2)}
+.path-panel h4{font-size:1.15rem;text-transform:uppercase;letter-spacing:.04em;margin-top:6px}
+.path-panel .best{background:var(--lime);border:2px solid var(--ink);border-radius:16px;padding:14px 16px}
+.path-panel .best ul,.path-panel .ticks{margin-top:8px}
+.path-panel ul.dots{padding-left:1.1em;display:grid;gap:6px;color:var(--muted)}
+.path-side{display:grid;gap:16px}
+@media (max-width:860px){.path-panel{grid-template-columns:1fr}}
+.prep{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-top:22px}
+.prep div{background:#fff;color:var(--ink);border:2px solid var(--ink);border-radius:16px;padding:16px;font-weight:700}
+@media (max-width:900px){.prep{grid-template-columns:1fr 1fr}}
+.lab{display:grid;grid-template-columns:1fr auto;gap:22px;align-items:center;border:2px solid var(--ink);border-radius:26px;background:var(--lime);padding:clamp(22px,4vw,36px);box-shadow:8px 8px 0 var(--ink)}
+.lab h3{font-size:var(--step-2)}
+.lab .pills{margin-top:14px}
+.lab .price b{font-size:3.4rem}
+@media (max-width:760px){.lab{grid-template-columns:1fr}}
+.fork2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.fork2 > div{border:2px solid var(--ink);border-radius:24px;padding:clamp(22px,4vw,36px);display:grid;gap:12px;align-content:start}
+.fork2 .one{background:var(--accent);color:#fff}
+.fork2 .two{background:#F3F4F8;color:#4B5175}
+.fork2 h3{font-size:var(--step-2)}
+.fork2 ul{list-style:none;padding:0;display:grid;gap:8px;font-weight:700}
+@media (max-width:760px){.fork2{grid-template-columns:1fr}}
+.wait-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,6vw,80px);align-items:start}
+.wait-grid .ticks{margin-top:18px}
+.done{text-align:center;display:grid;gap:10px;justify-items:center}
+.done h3{font-size:var(--step-2)}
+@media (max-width:860px){.wait-grid{grid-template-columns:1fr}}
+</style>
+
+<!-- HERO -->
+<section class="hero pl-hero">
+  <svg viewBox="0 0 100 100" class="doodle d-star hide-sm" style="left:2%;top:36px;width:58px;transform:rotate(-12deg)" aria-hidden="true"><use href="#sq-star"/></svg>
+  <svg class="doodle d-sky hide-sm" style="right:3%;bottom:28px;width:140px" viewBox="0 0 160 80" aria-hidden="true"><use href="#sq-zig"/></svg>
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow">Peer Leader Program · Ages 14–18</p>
+      <h1>Leadership is practiced. <span class="accent">Give her the reps.</span></h1>
+      <p class="lede">High school girls step into a real leadership role at Pursue More Summer Camp: mentoring younger campers, leading camp-wide moments, and learning what it feels like to be depended on, with support built in.</p>
+      <div class="btn-row">
+        <a class="btn btn-accent" href="#waitlist">Join the wait list <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+        <a class="btn-link" href="#paths">Compare the two paths</a>
+      </div>
+      <dl class="facts">
+        <div><dt>Who</dt><dd>Girls 14–18, high school</dd></div>
+        <div><dt>When</dt><dd>Camp weeks, June 2027</dd></div>
+        <div><dt>Where</dt><dd>Rancho Solano Prep, Scottsdale</dd></div>
+        <div><dt>Price</dt><dd>$799 · apps open March</dd></div>
+      </dl>
+    </div>
+    <div class="photo">
+      <div class="frame"><img src="img/peer-intro.jpg" alt="A Peer Leader posing in front of the Pursue More camp backdrop" width="512" height="720"></div>
+      <div class="burst" aria-hidden="true"><svg viewBox="0 0 100 100"><path stroke="#11163A" stroke-width="2" d="M50 2l7 10 12-5 2 12 13 1-4 12 11 7-9 9 7 11-12 4 1 13-13-2-5 12-10-8-10 8-5-12-13 2 1-13-12-4 7-11-9-9 11-7-4-12 13-1 2-12 12 5z"/></svg><span><b>2</b>paths</span></div>
+      <p class="tag">She doesn't just attend.<br>She shows up with purpose.</p>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT SHE GAINS -->
+<section class="band">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">What she gains as a Peer Leader</p>
+      <h2>Responsibility, while support is still built in.</h2>
+      <p class="lede">High school moves fast. Expectations rise quickly. And the chance to practice leadership before it's expected is rare.</p>
+    </div>
+    <div class="outcomes">
+      <article class="outcome"><span class="mark"><svg aria-hidden="true"><use href="#i-check"/></svg></span><div><h3>Leadership that's practiced, not theorized.</h3><p>She gains real leadership experience supporting campers, guiding group dynamics, and modeling maturity, kindness, and accountability.</p></div></article>
+      <article class="outcome"><span class="mark"><svg aria-hidden="true"><use href="#i-check"/></svg></span><div><h3>Clearer communication and people skills.</h3><p>She learns to speak clearly, listen intentionally, navigate challenges, and guide younger girls with confidence and empathy.</p></div></article>
+      <article class="outcome"><span class="mark"><svg aria-hidden="true"><use href="#i-check"/></svg></span><div><h3>A peer group that raises the standard.</h3><p>Meaningful connections with other girls who are also choosing growth, leadership, and accountability. A community built on effort, character, and mutual respect.</p></div></article>
+      <article class="outcome"><span class="mark"><svg aria-hidden="true"><use href="#i-check"/></svg></span><div><h3>Experience that prepares her for what's next.</h3><p>Yes, it strengthens applications and résumés. More importantly, it prepares her for high school, leadership roles, work, and adulthood by giving her real responsibility now.</p></div></article>
+      <article class="outcome"><span class="mark"><svg aria-hidden="true"><use href="#i-check"/></svg></span><div><h3>Confidence rooted in capability.</h3><p>Built through responsibility, trust, and follow-through. She doesn't just <i>feel</i> more confident. She becomes more capable.</p></div></article>
+      <article class="outcome"><span class="mark"><svg aria-hidden="true"><use href="#i-check"/></svg></span><div><h3>The same fun, from the leadership seat.</h3><p>She still gets the energy, community, and traditions of camp, from icebreakers to the Talent Show, while she helps lead them.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- RECOGNIZE -->
+<section class="band tint">
+  <div class="wrap recognize">
+    <div>
+      <p class="eyebrow">Raising a high school daughter today</p>
+      <h2 class="h-l">She's not a little kid. She's not an adult yet.</h2>
+      <div class="prose measure" style="margin-top:18px">
+        <p>Girls this age are expected to be confident, responsible, emotionally aware, and ready for what's next, often before they've had many chances to practice those skills.</p>
+        <p>This generation gets labeled distracted, unmotivated, and not ready to lead. <b>But many girls aren't lacking capability. They're lacking opportunities</b> to practice leadership in environments that expect more of them and support them.</p>
+      </div>
+    </div>
+    <div>
+      <h3 class="h-m">You may recognize this in her:</h3>
+      <ul>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg>She's capable, but hesitant to step forward</li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg>She waits to be told what to do instead of trusting her judgment</li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg>She avoids leadership roles because she doesn't feel prepared</li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg>She has confidence, but struggles to turn it into action</li>
+      </ul>
+      <p class="kicker">If she doesn't get leadership reps now, she'll be expected to lead later without them.</p>
+    </div>
+  </div>
+</section>
+
+<!-- INSTEAD OF -->
+<section class="band">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">The right experience can change the trajectory</p>
+      <h2>One summer, designed on purpose.</h2>
+    </div>
+    <div class="inst">
+      <article class="card photo-card"><img src="img/peer1.jpg" alt="Peer Leaders cheering and throwing paper airplanes" width="408" height="360"><div class="in"><h3><span>Instead of wondering if she's ready to lead,</span>she steps into a role that expects more of her, and shows her she can rise to it.</h3></div></article>
+      <article class="card photo-card"><img src="img/peer2.jpg" alt="Three Peer Leaders posing in front of the Pursue More sign" width="408" height="360"><div class="in"><h3><span>Instead of being told to figure it out,</span>she gets real leadership practice with guidance, feedback, and mentorship.</h3></div></article>
+      <article class="card photo-card"><img src="img/peer3.jpg" alt="A smiling Peer Leader taking a photo at camp" width="408" height="360"><div class="in"><h3><span>Instead of sitting on the sidelines,</span>she learns what it feels like to be depended on and trusted.</h3></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- THE WEEK -->
+<section class="band peri">
+  <div class="wrap split">
+    <div>
+      <p class="eyebrow">This is Pursue More from the leadership seat</p>
+      <h2>What the week looks like.</h2>
+      <div class="prose" style="margin-top:18px">
+        <p>For five intentional days, she becomes part of the backbone of camp: helping shape the experience, supporting younger girls, and modeling the kind of leadership Pursue More is built on.</p>
+        <p><b>This isn't about being in charge.</b> It's about learning how to show up, take responsibility, and lead with purpose.</p>
+      </div>
+    </div>
+    <div class="pic" style="aspect-ratio:616/640"><img src="img/peer-room.jpg" alt="A Peer Leader leading a small group of campers seated on the floor" width="616" height="640"></div>
+  </div>
+  <div class="wrap">
+    <div class="week">
+      <div class="card"><span class="chip sky">Mentor</span><h3>Real leadership roles</h3><p>Mentoring and supporting younger campers.</p></div>
+      <div class="card"><span class="chip">Lead</span><h3>Camp-wide moments</h3><p>Icebreakers, group activities, and the Talent Show.</p></div>
+      <div class="card"><span class="chip pink">Connect</span><h3>Her own peer group</h3><p>Strong ties with other Peer Leaders choosing growth.</p></div>
+      <div class="card"><span class="chip sky">Enjoy</span><h3>All the camp energy</h3><p>The same fun, traditions, and community.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PATHS -->
+<section class="band" id="paths">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Two Peer Leader paths</p>
+      <h2>Designed to meet her where she is.</h2>
+      <p class="lede">Leadership doesn't look the same for every girl. Both paths are structured and supported. The difference is how much responsibility she owns.</p>
+    </div>
+    <div class="paths-tabs" role="tablist" aria-label="Peer Leader paths">
+      <button role="tab" id="tab-f" aria-selected="true" aria-controls="pp" data-p="f">Foundations · first year</button>
+      <button role="tab" id="tab-a" aria-selected="false" aria-controls="pp" data-p="a" tabindex="-1">Advanced · returning</button>
+    </div>
+    <div id="pp" role="tabpanel" aria-labelledby="tab-f" aria-live="polite">
+      <div class="path-panel" data-panel="f">
+        <div class="card">
+          <h3>Peer Leader (Foundations)</h3>
+          <div class="best"><b>Best if she…</b><ul class="dots"><li>is stepping into leadership for the first time</li><li>benefits from structure and guidance</li><li>wants to build confidence through responsibility</li></ul></div>
+          <h4>What she practices</h4>
+          <ul class="dots"><li>Responsibility and follow-through</li><li>Clear communication and emotional awareness</li><li>Supporting younger girls with empathy and patience</li><li>Understanding how her choices and energy affect others</li><li>Asking for help, receiving feedback, and reflecting on growth</li></ul>
+          <h4>What she does</h4>
+          <ul class="dots"><li>Supports small groups of campers alongside mentors</li><li>Helps with camp flow, transitions, and daily activities</li><li>Models Girls Mentorship values through her behavior</li><li>Encourages connection, confidence, and inclusion</li><li>Joins daily leadership check-ins and reflection</li></ul>
+        </div>
+        <div class="path-side">
+          <article class="ticket"><div class="t-top"><p class="when">First-time Peer Leaders</p><p class="big">Foundations</p></div><div class="perf" aria-hidden="true"></div>
+            <div class="t-body"><div class="price"><b>$799</b><span>per summer</span></div>
+              <ul class="ticks"><li><svg aria-hidden="true"><use href="#i-check"/></svg>Up to 2 weeks of camp as a Peer Leader</li><li><svg aria-hidden="true"><use href="#i-check"/></svg>Training videos + PDF guides</li><li><svg aria-hidden="true"><use href="#i-check"/></svg>Peer Leader Preview Day</li><li><svg aria-hidden="true"><use href="#i-check"/></svg>Always supported by mentors and leadership staff</li></ul>
+              <a class="btn btn-accent" href="#waitlist">Join the wait list</a></div></article>
+        </div>
+      </div>
+      <div class="path-panel" data-panel="a" hidden>
+        <div class="card">
+          <h3>Peer Leader (Advanced)</h3>
+          <div class="best"><b>Best if she…</b><ul class="dots"><li>has already experienced Peer Leadership</li><li>wants to mentor others and step up further</li><li>is ready for more ownership, with support</li></ul></div>
+          <h4>What she practices</h4>
+          <ul class="dots"><li>Leadership presence and confidence</li><li>Mentoring and supporting others</li><li>Problem-solving with guidance and accountability</li><li>Holding culture, expectations, and values</li><li>Representing Girls Mentorship with maturity and integrity</li></ul>
+          <h4>What she does</h4>
+          <ul class="dots"><li>Leads small groups of campers, with oversight</li><li>Supports and mentors Year One Peer Leaders</li><li>Assists with activities, reflections, and camp flow</li><li>Helps onboard campers and model expectations</li><li>Joins leadership feedback and development conversations</li></ul>
+        </div>
+        <div class="path-side">
+          <article class="ticket"><div class="t-top" style="background:var(--sky)"><p class="when">Returning Peer Leaders</p><p class="big">Advanced</p></div><div class="perf" aria-hidden="true"></div>
+            <div class="t-body"><div class="price"><b>$799</b><span>per summer</span></div>
+              <ul class="ticks"><li><svg aria-hidden="true"><use href="#i-check"/></svg>All 4 weeks of camp</li><li><svg aria-hidden="true"><use href="#i-check"/></svg>Training videos + PDF guides</li><li><svg aria-hidden="true"><use href="#i-check"/></svg>Peer Leader Preview Day</li><li><svg aria-hidden="true"><use href="#i-check"/></svg>Supported by mentors and leadership staff</li></ul>
+              <a class="btn btn-accent" href="#waitlist">Join the wait list</a></div></article>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRAINING -->
+<section class="band dark clip">
+  <svg class="doodle d-sky hide-sm" style="right:-10px;top:40px;width:170px" viewBox="0 0 140 140" aria-hidden="true"><use href="#sq-curl"/></svg>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Built-in training &amp; Preview Day</p>
+      <h2>She walks in Monday ready, not unsure.</h2>
+      <p class="lede">This isn't a casual volunteer role. Every Peer Leader completes short training videos (released in May), each paired with a simple PDF guide, then joins a required Preview Day before campers arrive to learn the space, the flow, and her role.</p>
+    </div>
+    <p style="font-family:var(--f-display);text-transform:uppercase;letter-spacing:.06em;color:var(--lime)">Through the training, she gains</p>
+    <div class="prep">
+      <div>A clearer understanding of responsibility and how to show up for others</div>
+      <div>Social confidence in new environments and group settings</div>
+      <div>Practice thinking through real-life leadership situations</div>
+      <div>A sense of belonging before camp even begins</div>
+    </div>
+  </div>
+</section>
+
+<!-- LEADERSHIP LAB -->
+<section class="band">
+  <div class="wrap">
+    <div class="lab">
+      <div>
+        <span class="chip ink">Optional add-on</span>
+        <h3 style="margin-top:12px">Leadership Lab: an internship-style experience.</h3>
+        <p style="margin-top:10px;max-width:56ch">For Peer Leaders who want to earn structured service hours through real contribution inside the organization, with exposure to operations, events, business systems, and brand storytelling.</p>
+        <div class="pills"><span>Up to 10 verified service hours</span><span>Certificate of completion</span><span>Letter of recommendation</span></div>
+        <p style="margin-top:14px;font-weight:700">Tracks may include: Marketing &amp; Content Creation · Business &amp; Merchandising · Event Planning &amp; Operations</p>
+      </div>
+      <div class="price" style="flex-direction:column;align-items:flex-start"><b>$99</b><span>added at checkout</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- TWO PATHS URGENCY -->
+<section class="band tint">
+  <div class="wrap">
+    <div class="sec-head"><p class="eyebrow">What she's catching matters</p><h2>Right now, you have two paths.</h2></div>
+    <div class="fork2">
+      <div class="one">
+        <h3>You give her the experience.</h3>
+        <p>She spends a week where leadership is practiced, not theoretical.</p>
+        <ul><li>✔ Initiative instead of hesitation</li><li>✔ Responsibility instead of avoidance</li><li>✔ Confidence rooted in action, not approval</li></ul>
+        <p>She walks into the next school year knowing she can lead, because she's done it.</p>
+      </div>
+      <div class="two">
+        <h3 style="color:#6B7194">You wait.</h3>
+        <p>Another summer passes. She keeps catching whatever the world models for her: comparison, pressure, mixed messages.</p>
+        <p>She'll still grow, but often through trial and error, and the chance to build these skills while support is built in quietly closes.</p>
+      </div>
+    </div>
+    <p class="small-note" style="margin-top:18px">Peer Leader spots are intentionally limited to protect the experience. Once leadership spots are full, registration closes.</p>
+  </div>
+</section>
+
+<!-- WAIT LIST -->
+<section class="band" id="waitlist">
+  <div class="wrap wait-grid">
+    <div>
+      <p class="eyebrow">Confidence comes from reps</p>
+      <h2 class="h-l">Applications open in March.</h2>
+      <p class="lede" style="margin-top:16px">Join the wait list and you'll hear first when Peer Leader applications open for summer 2027.</p>
+      <ul class="ticks">
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg>Ages 14–18, no prior camp or leadership experience needed</li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg>$799 per summer, ESA funds accepted</li>
+        <li><svg aria-hidden="true"><use href="#i-check"/></svg>Leadership Lab add-on available at checkout</li>
+      </ul>
+    </div>
+    <div class="form-card">
+      <div data-form-wrap>
+        <h3>Join the Peer Leader wait list</h3>
+        <p>Three things, and you're on it.</p>
+        <form class="form" data-preview-form data-swap="pl-done">
+          <label for="pl-name">Your first name<input id="pl-name" type="text" autocomplete="given-name" required></label>
+          <label for="pl-email">Email<input id="pl-email" type="email" autocomplete="email" required></label>
+          <label for="pl-age">Your daughter's age<select id="pl-age" required><option value="">Choose</option><option>14</option><option>15</option><option>16</option><option>17</option><option>18</option></select></label>
+          <button class="btn btn-accent" type="submit">Join the wait list <svg aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          <p class="preview-note">Preview only: this form doesn't send anything yet.</p>
+        </form>
+      </div>
+      <div id="pl-done" class="done" hidden tabindex="-1">
+        <span class="chip">You're on the list</span>
+        <h3>We'll email you when applications open in March.</h3>
+        <p class="muted">Want camp news too? The Mentor Minute shares first access to everything.</p>
+        <a class="btn-link" href="@/list">Join the Mentor Minute <svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="band peri">
+  <div class="wrap faq-grid">
+    <div class="sec-head">
+      <p class="eyebrow">Peer Leader questions</p>
+      <h2>Good questions. Real answers.</h2>
+      <p class="muted">Still wondering? Email info@girlsmentorship.com</p>
+    </div>
+    <div class="faq">
+      <details open><summary>How much responsibility will she actually have?<span class="pm"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></summary><div class="a"><p>Peer Leaders play a meaningful role, but they are never expected to manage safety decisions or operate independently. They support campers, assist with activities, and help model the culture of camp, with clear expectations and adult leadership present at all times.</p></div></details>
+      <details><summary>What's the difference between Foundations and Advanced?<span class="pm"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></summary><div class="a"><p>Foundations is for first-time Peer Leaders learning to lead themselves while supporting campers with guidance. Advanced is for returning Peer Leaders ready to take on more responsibility and mentor others. Both are structured and supported.</p></div></details>
+      <details><summary>Does she need to have attended camp first?<span class="pm"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></summary><div class="a"><p>No. If she's in high school and ready to grow through leadership, responsibility, and mentorship, this is a place she belongs.</p></div></details>
+      <details><summary>Can I use ESA funds?<span class="pm"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></summary><div class="a"><p>Yes. We're an approved ESA vendor. Email <b>hello@girlsmentorship.com</b> and we'll create an invoice for you to submit through ClassWallet for reimbursement.</p></div></details>
+      <details><summary>What is your refund policy?<span class="pm"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></summary><div class="a"><p><b>Before May 1:</b> full refund, minus a $50 processing fee. <b>May 1 through May 29:</b> 50% refund. <b>After that:</b> no refunds, as her spot has been reserved and camp planning is finalized.</p></div></details>
+      <details><summary>When does registration end?<span class="pm"><svg aria-hidden="true"><use href="#i-plus"/></svg></span></summary><div class="a"><p>Registration stays open until spots are full. We've sold out the last four years in a row, so we recommend joining the wait list to hear the moment applications open.</p></div></details>
+    </div>
+  </div>
+</section>
+
+<section class="band tight">
+  <div class="wrap"><div class="next"><span class="k">Younger sister?</span><p>Girls entering 5th–8th grade join us as campers at Pursue More Summer Camp.</p><a class="btn btn-white" href="@/summercamp">See Summer Camp</a></div></div>
+</section>
+
+<div class="mbar" data-hide-at="#waitlist"><div><b>Peer Leader 2027</b>Applications open in March</div><a class="btn btn-lime" href="#waitlist" tabindex="-1">Wait list</a></div>
+
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll(".paths-tabs [role=tab]")),panels=[].slice.call(document.querySelectorAll("[data-panel]")),box=document.getElementById("pp");
+  function show(i){tabs.forEach(function(t,j){t.setAttribute("aria-selected",j===i?"true":"false");t.tabIndex=j===i?0:-1;});
+    panels.forEach(function(p){p.hidden=p.dataset.panel!==tabs[i].dataset.p;});box.setAttribute("aria-labelledby",tabs[i].id);}
+  tabs.forEach(function(t,i){t.addEventListener("click",function(){show(i);});
+    t.addEventListener("keydown",function(e){if(e.key==="ArrowRight"||e.key==="ArrowLeft"){e.preventDefault();var n=(i+1)%2;show(n);tabs[n].focus();}});});
+})();
+</script>
