@@ -154,3 +154,34 @@ edit, not hard-coded."
 - **Data-deletion requests:** delete the row(s) by email in Supabase and remove
   the contact in GHL. (A self-serve deletion endpoint can be added later.)
 - Document a retention policy and align with GDPR/CCPA before launch.
+
+## Meta Pixel + Conversions API (ad tracking)
+
+Tracks two events for Meta ads, each sent from the browser (pixel) and the
+server (Conversions API) with a shared `event_id`, so Meta counts it once:
+
+| Event | Where it fires |
+| --- | --- |
+| `PageView` | Every page, on every route change |
+| `Schedule` | `/call-booked`, the page Cal.com redirects to after a booking |
+
+Setup:
+
+1. In Meta Events Manager, create or pick the pixel and copy its ID.
+2. In the pixel's Settings → Conversions API, generate an access token.
+3. In Vercel → ai-zude → Settings → Environment Variables (Production), set
+   `NEXT_PUBLIC_META_PIXEL_ID` and `META_CAPI_ACCESS_TOKEN`, then redeploy.
+4. In Cal.com, set the strategy call event type's "Redirect on booking" to
+   `https://build.theexpandlab.com/call-booked`.
+5. In Events Manager, create a custom conversion: URL contains `call-booked`,
+   category Schedule. (The page also fires the standard `Schedule` event.)
+6. To verify, copy the code from Events Manager → Test events into
+   `META_TEST_EVENT_CODE`, redeploy, load the site and `/call-booked`, then
+   remove the variable and redeploy.
+
+Nothing loads until `NEXT_PUBLIC_META_PIXEL_ID` is set. Without the token, the
+server half returns 204 and only the browser pixel runs.
+
+`/call-booked` has two values to fill at the top of `app/call-booked/page.tsx`:
+`PRE_CALL_VIDEO_EMBED_URL` and `PROOF_ROOM_URL`. While empty they show a dashed
+placeholder on preview deployments and are hidden on the live site.

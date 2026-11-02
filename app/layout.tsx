@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { JsonLd, SITE_GRAPH } from "@/components/JsonLd";
 import { FACTS } from "@/content/facts";
+import { MetaPixel } from "@/components/MetaPixel";
 
 export const metadata: Metadata = {
   metadataBase: new URL(FACTS.buildSite),
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="min-h-screen bg-paper font-sans text-ink antialiased">
         {children}
         <JsonLd data={SITE_GRAPH} />
+        <MetaPixel />
       </body>
     </html>
   );
